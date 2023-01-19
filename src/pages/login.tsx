@@ -1,17 +1,17 @@
 //import { Navbar } from '../components/Navbar';
-
+import BaseLayout from "@/components/BaseLayout";
 interface FormLogin {
   username: string;
   password: string;
 }
 
 
-const login = () => {
+const LoginPage = () => {
   const onSubmit = () => {
     console.log('LOGIN CLICK');
   };
   return (
-<section className="h-full gradient-form bg-gray-200 md:h-screen">
+<section className="h-full bg-gray-200 md:h-screen">
   <div className="container py-12 px-6 h-full">
     <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
       <div className="xl:w-10/12">
@@ -81,4 +81,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default LoginPage;
