@@ -7,7 +7,7 @@ const alltask = () => {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center items-center bg-main-color grow min-h-screen">
+      <div className="flex justify-center items-center bg-main-color grow min-h-screen mt-7">
         <div className="container py-12 px-6">
           <div className="block bg-white shadow-lg rounded-lg">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

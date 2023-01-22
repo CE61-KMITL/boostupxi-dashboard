@@ -10,7 +10,7 @@ const Navbar: NextPage = () => {
   return (
     <Fragment>
       <div className="mb-21">
-        <nav className="w-full bg-black shadow sticky top-0 z-30">
+        <nav className="w-full bg-black shadow fixed top-0 z-30">
           <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
             <div>
               <div className="flex items-center justify-between py-3 md:py-5 md:block">
