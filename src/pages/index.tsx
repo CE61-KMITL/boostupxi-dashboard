@@ -1,5 +1,12 @@
-const HomePage = () => {
-  return <div>Home</div>;
+import { Fragment } from "react";
+import Login from "./login";
+
+const Home = () => {
+  return (
+    <Fragment>
+      <Login />
+    </Fragment>
+  );
 };
 
-export default HomePage;
+export default Home;

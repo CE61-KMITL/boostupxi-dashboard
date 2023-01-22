@@ -1,128 +1,94 @@
-/*  ./components/Navbar.jsx     */
-//import Link from 'next/link';
-import BaseLayout from "./BaseLayout";
+import Image from "next/image";
+import Link from "next/link";
+import Close from "../../public/icons/close.svg";
+import Menu from "../../public/icons/menu.svg";
+import { useState, Fragment } from "react";
+import { NextPage } from "next";
 
-export const Navbar = () => {
+const Navbar: NextPage = () => {
+  const [navbar, setNavbar] = useState(false);
   return (
-    <nav className="bg-gray-800 sticky top-0 shadow-md">
-      <BaseLayout>
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-          <div className="relative flex h-16 items-center justify-between">
-            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                aria-controls="mobile-menu"
-                aria-expanded="false"
-              >
-                <span className="sr-only">Open main menu</span>
-                <svg
-                  className="block h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                  />
-                </svg>
-                <svg
-                  className="hidden h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-              <div className="flex flex-shrink-0 items-center">
-                <img
-                  className="block h-8 w-auto lg:hidden"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                  alt="Your Company"
-                ></img>
-                <img
-                  className="hidden h-8 w-auto lg:block"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                  alt="Your Company"
-                ></img>
-              </div>
-              <div className="hidden sm:ml-6 sm:block">
-                <div className="flex space-x-4">
-                  <a
-                    href="#"
-                    className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-                    aria-current="page"
-                  >
-                    Task List
-                  </a>
-                  <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                  >
-                    Task Upload
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <button
-                type="button"
-                className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              >
-                65010478@kmitl.ac.th
-              </button>
-
-              <div className="relative ml-3">
-                <div>
+    <Fragment>
+      <div className="mb-21">
+        <nav className="w-full bg-black shadow sticky top-0 z-30">
+          <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
+            <div>
+              <div className="flex items-center justify-between py-3 md:py-5 md:block">
+                <Link href="/">
+                  <h2 className="text-2xl font-bold text-white">
+                    CE Boostup Task Upload
+                  </h2>
+                </Link>
+                <div className="md:hidden">
                   <button
-                    type="button"
-                    className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    id="user-menu-button"
-                    aria-expanded="false"
+                    className="p-2 text-white rounded-md outline-none focus:border-white focus:border"
+                    onClick={() => setNavbar(!navbar)}
                   >
-                    logout
+                    {navbar ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4 6h16M4 12h16M4 18h16"
+                        />
+                      </svg>
+                    )}
                   </button>
                 </div>
               </div>
             </div>
+            <div>
+              <div
+                className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
+                  navbar ? "block" : "hidden"
+                }`}
+              >
+                <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+                  <li className="text-white hover:text-second-color">
+                    <Link href="/uploadPage" onClick={() => setNavbar(false)}>
+                      <button className="bg-green-600 p-2 hover:bg-green-800 rounded-xl">
+                        Create Task
+                      </button>
+                    </Link>
+                  </li>
+                  <li className="text-white hover:text-second-color">
+                    <Link href="/taskPage" onClick={() => setNavbar(false)}>
+                      All Task
+                    </Link>
+                  </li>
+                  <li className="text-white hover:text-second-color">
+                    <Link href="/login" onClick={() => setNavbar(false)}>
+                      65010107@KMITL.AC.TH
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div className="sm:hidden" id="mobile-menu">
-          <div className="space-y-1 px-2 pt-2 pb-3">
-            <a
-              href="#"
-              className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-              aria-current="page"
-            >
-              Task List
-            </a>
-
-            <a
-              href="#"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            >
-              Task Upload
-            </a>
-          </div>
-        </div>
-      </BaseLayout>
-    </nav>
+        </nav>
+      </div>
+    </Fragment>
   );
 };
+
+export default Navbar;
