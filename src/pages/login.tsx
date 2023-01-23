@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { NextPage } from "next";
 
-const Login: NextPage = () => {
+const LoginPage: NextPage = () => {
   return (
     <Fragment>
       <div className="flex justify-center items-center bg-main-color grow min-h-screen">
@@ -82,4 +82,4 @@ const Login: NextPage = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

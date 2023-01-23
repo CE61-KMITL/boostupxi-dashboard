@@ -3,14 +3,13 @@ import Link from "next/link";
 import Close from "../../public/icons/close.svg";
 import Menu from "../../public/icons/menu.svg";
 import { useState, Fragment } from "react";
-import { NextPage } from "next";
 
-const Navbar: NextPage = () => {
+const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
   return (
     <Fragment>
       <div className="mb-21">
-        <nav className="w-full bg-black shadow fixed top-0 z-30">
+        <nav className="w-full bg-black shadow sticky top-0 z-30">
           <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
             <div>
               <div className="flex items-center justify-between py-3 md:py-5 md:block">
