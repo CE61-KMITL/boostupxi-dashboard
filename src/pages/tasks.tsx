@@ -1,9 +1,10 @@
 import TaskList from "@/constants/task";
 import { TaskForm } from "@/interface/task";
-import { TaskTable } from "@/components/taskTable";
-import Navbar from "@/components/navbar";
+import { TaskTable } from "@/components/TaskTable";
+import { NextPage } from "next";
+import Navbar from "@/components/Navbar";
 
-const alltask = () => {
+const TasksPage: NextPage = () => {
   return (
     <>
       <Navbar />
@@ -38,6 +39,7 @@ const alltask = () => {
                   {TaskList &&
                     TaskList.map((val: TaskForm) => (
                       <TaskTable
+                        key={val.id}
                         id={val.id}
                         taskName={val.taskName}
                         author={val.author}
@@ -55,4 +57,4 @@ const alltask = () => {
   );
 };
 
-export default alltask;
+export default TasksPage;

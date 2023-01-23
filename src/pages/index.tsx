@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import Login from "./login";
-
-const Home = () => {
+import { NextPage } from "next";
+const HomePage: NextPage = () => {
   return (
     <Fragment>
       <Login />
@@ -9,4 +9,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

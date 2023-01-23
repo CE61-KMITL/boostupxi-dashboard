@@ -3,9 +3,8 @@ import Link from "next/link";
 import Close from "../../public/icons/close.svg";
 import Menu from "../../public/icons/menu.svg";
 import { useState, Fragment } from "react";
-import { NextPage } from "next";
 
-const Navbar: NextPage = () => {
+const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
   return (
     <Fragment>

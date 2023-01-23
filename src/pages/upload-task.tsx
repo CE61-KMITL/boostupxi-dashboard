@@ -1,9 +1,9 @@
-import Navbar from "@/components/navbar";
-import { UploadForm } from "../components/uploadForm";
+import Navbar from "@/components/Navbar";
+import { UploadForm } from "../components/UploadForm";
 import { Fragment } from "react";
 import { NextPage } from "next";
 
-const upload: NextPage = () => {
+const UploadTaskPage: NextPage = () => {
   return (
     <Fragment>
       <Navbar />
@@ -17,4 +17,4 @@ const upload: NextPage = () => {
   );
 };
 
-export default upload;
+export default UploadTaskPage;
