@@ -9,6 +9,7 @@ export interface TaskForm {
 export interface FormType {
   task_name: string;
   task_level: number;
+  files: any[];
   task_tags: string;
   task_hint: string;
   task_desc: string;
@@ -19,4 +20,9 @@ export interface FormType {
 export interface LoginForm {
     email: string;
     password: string;
+}
+
+export interface fileUpload {
+  file: File;
+  name: string;
 }
