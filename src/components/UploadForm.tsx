@@ -2,18 +2,11 @@ import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fileURLToPath } from "url";
 
-interface formType {
-  task_name: string;
-  task_level: number;
-  task_tags: string;
-  task_hint: string;
-  task_desc: string;
-  taskIO: { id: string; input: string; output: string }[];
-  author: string;
-}
+import { FormType } from "../interface/task"
+
 
 export let UploadForm = () => {
-  let formInitial: formType = {
+  let formInitial: FormType = {
     task_name: "",
     task_level: 1,
     task_tags: "",
