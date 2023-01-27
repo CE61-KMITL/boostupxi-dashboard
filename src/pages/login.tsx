@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { NextPage } from "next";
 import { LoginForm } from "../interface/task";
 import { ChangeEvent, useState } from "react";
+import Image from "next/image";
+import Logo from "../images/logo.png";
 
 const LoginPage: NextPage = () => {
   let LoginInitial: LoginForm = {
@@ -24,10 +26,12 @@ const LoginPage: NextPage = () => {
                   <div className="lg:w-6/12 px-4 md:px-0">
                     <div className="md:p-12 md:mx-6">
                       <div className="text-center">
-                        <img
-                          className="mx-auto w-48 md:pt-0 sm:pt-8 pt-10"
-                          src="https://scontent.fbkk5-4.fna.fbcdn.net/v/t39.30808-6/289828221_1971831866344816_306099467808647774_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeH4drNPxJ2o8JcsTks_EFuH2Z4xT6BuL5XZnjFPoG4vlTgmpsz9CB0Wh2M5GKG7uYHPthtCq-RbIeTPWtqmraAb&_nc_ohc=DJ1h0MixdZMAX-iIzPH&_nc_ht=scontent.fbkk5-4.fna&oh=00_AfDSEHbI0GhpP95nOdjJOMGWb5aSwSl1emZnrdkoJUWOUQ&oe=63CC0D93"
+                        <Image
+                          className="mx-auto w-48 md:pt-0 sm:pt-8 pt-10 rounded-full"
+                          src={Logo}
                           alt="logo"
+                          height={100}
+                          width={100}
                         />
                         <h4 className="text-xl font-semibold my-5 pb-1">
                           CE BOOSTUP TASK UPLOAD
@@ -41,9 +45,12 @@ const LoginPage: NextPage = () => {
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             id="exampleFormControlInput1"
                             placeholder="Username"
-                            value = {loginData.email}
+                            value={loginData.email}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                              setloginData({ ...loginData, email: e.target.value });
+                              setloginData({
+                                ...loginData,
+                                email: e.target.value,
+                              });
                               e.preventDefault();
                             }}
                           />
@@ -54,9 +61,12 @@ const LoginPage: NextPage = () => {
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             id="exampleFormControlInput1"
                             placeholder="Password"
-                            value = {loginData.password}
+                            value={loginData.password}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                              setloginData({ ...loginData, password: e.target.value });
+                              setloginData({
+                                ...loginData,
+                                password: e.target.value,
+                              });
                               e.preventDefault();
                             }}
                           />
