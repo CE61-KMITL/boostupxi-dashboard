@@ -1,7 +1,18 @@
 import { Fragment } from "react";
 import { NextPage } from "next";
+import { LoginForm } from "../interface/task";
+import { ChangeEvent, useState } from "react";
 
 const LoginPage: NextPage = () => {
+  let LoginInitial: LoginForm = {
+    email: "",
+    password: "",
+  };
+  const [loginData, setloginData] = useState(LoginInitial);
+
+  const submitLogin = () => {
+    console.log(loginData);
+  };
   return (
     <Fragment>
       <div className="flex justify-center items-center bg-main-color grow min-h-screen">
@@ -30,6 +41,11 @@ const LoginPage: NextPage = () => {
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             id="exampleFormControlInput1"
                             placeholder="Username"
+                            value = {loginData.email}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                              setloginData({ ...loginData, email: e.target.value });
+                              e.preventDefault();
+                            }}
                           />
                         </div>
                         <div className="mb-4">
@@ -38,6 +54,11 @@ const LoginPage: NextPage = () => {
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             id="exampleFormControlInput1"
                             placeholder="Password"
+                            value = {loginData.password}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                              setloginData({ ...loginData, password: e.target.value });
+                              e.preventDefault();
+                            }}
                           />
                         </div>
                         <div className="text-center pt-1 mb-12 pb-1">
@@ -46,6 +67,7 @@ const LoginPage: NextPage = () => {
                             type="button"
                             data-mdb-ripple="true"
                             data-mdb-ripple-color="light"
+                            onClick={submitLogin}
                           >
                             Log in
                           </button>

@@ -1,24 +1,18 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useRef  } from "react";
 import { useRouter } from "next/navigation";
 import { fileURLToPath } from "url";
 
-interface formType {
-  task_name: string;
-  task_level: number;
-  task_tags: string;
-  task_hint: string;
-  task_desc: string;
-  taskIO: { id: string; input: string; output: string }[];
-  author: string;
-}
+import { FormType } from "../interface/task"
+
 
 export let UploadForm = () => {
-  let formInitial: formType = {
+  let formInitial: FormType = {
     task_name: "",
     task_level: 1,
     task_tags: "",
     task_hint: "",
     task_desc: "",
+    files: [],
     taskIO: [{ id: "1", input: "", output: "" }],
     author: "",
   };
@@ -44,9 +38,32 @@ export let UploadForm = () => {
 
     e.preventDefault();
   };
+  // FILE INPUT
+  const [selectedFiles, setSelectedFiles] = useState([] as any);
+  const inputRef = useRef(null as any);
+  const handleFileChange = (event : any) => {
+    const newFiles = [...selectedFiles].concat(Array.from(event.target.files));
+    setSelectedFiles(newFiles);
+    console.log(newFiles)
+    setFormData({...formData, files: newFiles});
+    console.log(formData)
+    
+  }
+  const handleRemoveFile = (index : number) => {
 
+    const newFiles = [...formData.files];
+    newFiles.splice(index, 1);
+    setFormData({...formData, files : newFiles});
+    if(formData.files.length === 1) {
+      (document.getElementById("fileInput") as HTMLInputElement ).value = "";
+    }
+    
+    console.log(formData.files);
+  }
+  // ONSUBMIT FORM
   const submitTask = () => {
     console.log(formData);
+    console.log(selectedFiles);
   };
 
   return (
@@ -141,17 +158,25 @@ export let UploadForm = () => {
         ></textarea>
       </div>
 
-      <div className="flex flex-wrap mb-6">
-        <label className="block mb-2 text-md font-medium text-gray-900 dark:text-white">
-          Upload file
-        </label>
-        <input
-          className="block w-full text-md text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none   dark:placeholder-gray-400"
-          id="multiple_files"
-          type="file"
-          multiple
-        ></input>
-      </div>
+
+        <input type="file" multiple onChange={(event : any) => {
+          let newFiles = [...formData.files].concat(Array.from(event.target.files));
+          setFormData({...formData, files: newFiles as [any]});
+          event.preventDefault();
+          }
+          } ref={inputRef} id="fileInput" className="mb-6"/>
+            {formData.files.map((file:any, index:any) => (
+            <div className="flex flex-wrap mb-6" key={index}>
+              <p>{file.name}</p>
+              <br/>
+              <button type="button" className="ml-4 inline-block px-5 py-1.5 bg-red-600 text-white font-sm text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                onClick={() => handleRemoveFile(index)}>
+                remove
+              </button>
+            </div>
+        )
+        )}
+
       <ul className="list-none">
         {formData.taskIO.map((value, index) => {
           return (
@@ -201,6 +226,7 @@ export let UploadForm = () => {
                   placeholder=""
                 ></textarea>
               </div>
+              
               <button
                 onClick={(e: any) => removeTestCase(e, value.id)}
                 className="ml-auto mt-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
@@ -224,6 +250,7 @@ export let UploadForm = () => {
       {(formData.task_name && formData.taskIO[0].output) !== "" ? (
         <div className="flex flex-col mb-6 tems-center">
           <button
+            type="button"
             onClick={submitTask}
             className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2"
           >
