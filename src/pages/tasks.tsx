@@ -14,7 +14,7 @@ const TasksPage: NextPage = () => {
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
+                  <tr className="text-center">
                     <th scope="col" className="px-6 py-3">
                       Task ID
                     </th>
@@ -25,25 +25,29 @@ const TasksPage: NextPage = () => {
                       Author
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Last Edited
+                      Levels
+                    </th>
+                    <th scope="col" className=" px-6 py-3">
+                      Tags
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Status
                     </th>
-                    <th scope="col" className="md:px-20 text-center px-9 py-3">
+                    <th scope="col" className="px-9 py-3">
                       Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {TaskList &&
-                    TaskList.map((val: TaskForm) => (
+                    TaskList.map((val: TaskForm, index: number) => (
                       <TaskTable
-                        key={val.id}
+                        key={index}
                         id={val.id}
-                        taskName={val.taskName}
+                        title={val.title}
                         author={val.author}
-                        lastEdited={val.lastEdited}
+                        level={val.level}
+                        tags={val.tags}
                         status={val.status}
                       />
                     ))}

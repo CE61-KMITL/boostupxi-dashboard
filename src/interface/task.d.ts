@@ -1,8 +1,10 @@
 export interface TaskForm {
-  id: number;
-  taskName: string;
+  index?: number;
+  id: string;
+  title: string;
   author: string;
-  lastEdited: string;
+  level: number;
+  tags: string[];
   status: string;
 }
 
@@ -18,8 +20,8 @@ export interface FormType {
 }
 
 export interface LoginForm {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface fileUpload {

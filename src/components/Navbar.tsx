@@ -1,7 +1,4 @@
-import Image from "next/image";
 import Link from "next/link";
-import Close from "../../public/icons/close.svg";
-import Menu from "../../public/icons/menu.svg";
 import { useState, Fragment } from "react";
 
 const Navbar = () => {
@@ -64,14 +61,14 @@ const Navbar = () => {
               >
                 <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                   <li className="text-white hover:text-second-color">
-                    <Link href="/uploadPage" onClick={() => setNavbar(false)}>
+                    <Link href="/upload-task" onClick={() => setNavbar(false)}>
                       <button className="bg-green-600 p-2 hover:bg-green-800 rounded-xl">
                         Create Task
                       </button>
                     </Link>
                   </li>
                   <li className="text-white hover:text-second-color">
-                    <Link href="/taskPage" onClick={() => setNavbar(false)}>
+                    <Link href="/tasks" onClick={() => setNavbar(false)}>
                       All Task
                     </Link>
                   </li>
