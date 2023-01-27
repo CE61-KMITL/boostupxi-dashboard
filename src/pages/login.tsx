@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { LoginForm } from "../interface/task";
 import { ChangeEvent, useState } from "react";
 import Image from "next/image";
-import Logo from "../images/logo.png";
+import Logo from "../../public/images/logo.png";
 
 const LoginPage: NextPage = () => {
   let LoginInitial: LoginForm = {
