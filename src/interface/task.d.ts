@@ -12,7 +12,7 @@ export interface FormType {
   task_name: string;
   task_level: number;
   files: any[];
-  task_tags: string;
+  task_tags: string[];
   task_hint: string;
   task_desc: string;
   taskIO: { id: string; input: string; output: string }[];

@@ -1,15 +1,14 @@
-import { ChangeEvent, useState, useRef  } from "react";
+import { ChangeEvent, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { fileURLToPath } from "url";
 
-import { FormType } from "../interface/task"
-
+import { FormType } from "../interface/task";
 
 export let UploadForm = () => {
   let formInitial: FormType = {
     task_name: "",
     task_level: 1,
-    task_tags: "",
+    task_tags: [],
     task_hint: "",
     task_desc: "",
     files: [],
@@ -41,29 +40,61 @@ export let UploadForm = () => {
   // FILE INPUT
   const [selectedFiles, setSelectedFiles] = useState([] as any);
   const inputRef = useRef(null as any);
-  const handleFileChange = (event : any) => {
+  const handleFileChange = (event: any) => {
     const newFiles = [...selectedFiles].concat(Array.from(event.target.files));
     setSelectedFiles(newFiles);
-    console.log(newFiles)
-    setFormData({...formData, files: newFiles});
-    console.log(formData)
-    
-  }
-  const handleRemoveFile = (index : number) => {
-
+    console.log(newFiles);
+    setFormData({ ...formData, files: newFiles });
+    console.log(formData);
+  };
+  const handleRemoveFile = (index: number) => {
     const newFiles = [...formData.files];
     newFiles.splice(index, 1);
-    setFormData({...formData, files : newFiles});
-    if(formData.files.length === 1) {
-      (document.getElementById("fileInput") as HTMLInputElement ).value = "";
+    setFormData({ ...formData, files: newFiles });
+    if (formData.files.length === 1) {
+      (document.getElementById("fileInput") as HTMLInputElement).value = "";
     }
-    
+
     console.log(formData.files);
-  }
+  };
+
+  const availableTags = [
+    "Algorithm",
+    "AI",
+    "ci",
+    "Computer Engineering",
+    "Reverse Engineer",
+    "Fun",
+    "CTF",
+    "crypto",
+    "Forensics",
+    "Web",
+    "Pwn",
+    "Misc",
+    "OSINT",
+    "Stego",
+  ];
+  const [selectedTags, setSelectedTags] = useState([]);
+  const handleTagClick = (tag : any) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+    setFormData({ ...formData, task_tags: selectedTags });
+  };
+
+  const handleDeleteTag = (tag : any) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    }
+    setFormData({ ...formData, task_tags: selectedTags });
+  };
   // ONSUBMIT FORM
   const submitTask = () => {
     console.log(formData);
     console.log(selectedFiles);
+
   };
 
   return (
@@ -115,15 +146,22 @@ export let UploadForm = () => {
         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-6 md:mb-0">
           Task Tags
         </label>
-        <textarea
-          className="block w-full text-sm py-3 px-4 pr-8 md:mb-0 text-gray-900 rounded-lg bg-gray-200 border border-gray-200 focus:text-black focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Task Tags"
-          value={formData.task_tags}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-            e.preventDefault();
-            setFormData({ ...formData, task_tags: e.target.value });
-          }}
-        />
+      </div>
+
+      <div className="flex flex-wrap mb-6">
+        {availableTags.map((tag) => (
+          <button
+            className={`relative mx-1 inline-flex items-center justify-center w-full px-3 py-0.5 mb-2 text-sm font-bold leading-6 text-white bg-indigo-600 border border-transparent rounded-full md:w-auto  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 ${
+              selectedTags.includes(tag) ? "" : "bg-indigo-200"
+            }`}
+            key={tag}
+            onClick={() => handleTagClick(tag)}
+            style={{ cursor: "pointer" }}
+          >
+            {tag}
+          </button>
+        ))
+            }
       </div>
 
       <div className="flex flex-wrap mb-6">
@@ -158,24 +196,33 @@ export let UploadForm = () => {
         ></textarea>
       </div>
 
-
-        <input type="file" multiple onChange={(event : any) => {
-          let newFiles = [...formData.files].concat(Array.from(event.target.files));
-          setFormData({...formData, files: newFiles as [any]});
+      <input
+        type="file"
+        multiple
+        onChange={(event: any) => {
+          let newFiles = [...formData.files].concat(
+            Array.from(event.target.files)
+          );
+          setFormData({ ...formData, files: newFiles as [any] });
           event.preventDefault();
-          }
-          } ref={inputRef} id="fileInput" className="mb-6"/>
-            {formData.files.map((file:any, index:any) => (
-            <div className="flex flex-wrap mb-6" key={index}>
-              <p>{file.name}</p>
-              <br/>
-              <button type="button" className="ml-4 inline-block px-5 py-1.5 bg-red-600 text-white font-sm text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
-                onClick={() => handleRemoveFile(index)}>
-                remove
-              </button>
-            </div>
-        )
-        )}
+        }}
+        ref={inputRef}
+        id="fileInput"
+        className="mb-6"
+      />
+      {formData.files.map((file: any, index: any) => (
+        <div className="flex flex-wrap mb-6" key={index}>
+          <p>{file.name}</p>
+          <br />
+          <button
+            type="button"
+            className="ml-4 inline-block px-5 py-1.5 bg-red-600 text-white font-sm text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+            onClick={() => handleRemoveFile(index)}
+          >
+            remove
+          </button>
+        </div>
+      ))}
 
       <ul className="list-none">
         {formData.taskIO.map((value, index) => {
@@ -226,14 +273,13 @@ export let UploadForm = () => {
                   placeholder=""
                 ></textarea>
               </div>
-              
+
               <button
                 onClick={(e: any) => removeTestCase(e, value.id)}
                 className="ml-auto mt-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
               >
                 Remove Test Case
               </button>
-
             </li>
           );
         })}
@@ -265,9 +311,3 @@ export let UploadForm = () => {
     </form>
   );
 };
-
-
-
-
-
-
