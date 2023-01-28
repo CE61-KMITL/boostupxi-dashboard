@@ -273,13 +273,12 @@ export let UploadForm = () => {
                   placeholder=""
                 ></textarea>
               </div>
-
-              <button
+              {(index != 0) ? <button
                 onClick={(e: any) => removeTestCase(e, value.id)}
-                className="ml-auto mt-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
-              >
+                className="ml-auto mt-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
                 Remove Test Case
-              </button>
+              </button> : ""}
+              
             </li>
           );
         })}
