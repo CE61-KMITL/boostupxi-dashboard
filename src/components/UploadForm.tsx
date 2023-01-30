@@ -1,19 +1,19 @@
-import { ChangeEvent, useState, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { fileURLToPath } from "url";
+import { ChangeEvent, useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { fileURLToPath } from 'url';
 
-import { FormType } from "../interface/task";
+import { FormType } from '../interface/task';
 
 export let UploadForm = () => {
   let formInitial: FormType = {
-    task_name: "",
+    task_name: '',
     task_level: 1,
     task_tags: [],
-    task_hint: "",
-    task_desc: "",
+    task_hint: '',
+    task_desc: '',
     files: [],
-    taskIO: [{ id: "1", input: "", output: "" }],
-    author: "",
+    taskIO: [{ id: '1', input: '', output: '' }],
+    author: '',
   };
   const [formData, setFormData] = useState(formInitial);
 
@@ -22,7 +22,7 @@ export let UploadForm = () => {
       ...formData,
       taskIO: [
         ...formData.taskIO,
-        { id: String(formData.taskIO.length + 1), input: "", output: "" },
+        { id: String(formData.taskIO.length + 1), input: '', output: '' },
       ],
     });
 
@@ -52,27 +52,27 @@ export let UploadForm = () => {
     newFiles.splice(index, 1);
     setFormData({ ...formData, files: newFiles });
     if (formData.files.length === 1) {
-      (document.getElementById("fileInput") as HTMLInputElement).value = "";
+      (document.getElementById('fileInput') as HTMLInputElement).value = '';
     }
 
     console.log(formData.files);
   };
 
   const availableTags = [
-    "Algorithm",
-    "AI",
-    "ci",
-    "Computer Engineering",
-    "Reverse Engineer",
-    "Fun",
-    "CTF",
-    "crypto",
-    "Forensics",
-    "Web",
-    "Pwn",
-    "Misc",
-    "OSINT",
-    "Stego",
+    'Algorithm',
+    'AI',
+    'ci',
+    'Computer Engineering',
+    'Reverse Engineer',
+    'Fun',
+    'CTF',
+    'crypto',
+    'Forensics',
+    'Web',
+    'Pwn',
+    'Misc',
+    'OSINT',
+    'Stego',
   ];
   const [selectedTags, setSelectedTags] = useState<any>([]);
   const handleTagClick = (tag: any) => {
@@ -151,11 +151,11 @@ export let UploadForm = () => {
         {availableTags.map((tag) => (
           <button
             className={`relative mx-1 inline-flex items-center justify-center w-full px-3 py-0.5 mb-2 text-sm font-bold leading-6 text-white bg-indigo-600 border border-transparent rounded-full md:w-auto  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 ${
-              selectedTags.includes(tag) ? "" : "bg-indigo-200"
+              selectedTags.includes(tag) ? '' : 'bg-indigo-200'
             }`}
             key={tag}
             onClick={() => handleTagClick(tag)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
           >
             {tag}
           </button>
@@ -199,7 +199,7 @@ export let UploadForm = () => {
         multiple
         onChange={(event: any) => {
           let newFiles = [...formData.files].concat(
-            Array.from(event.target.files)
+            Array.from(event.target.files),
           );
           setFormData({ ...formData, files: newFiles as [any] });
           event.preventDefault();
@@ -279,7 +279,7 @@ export let UploadForm = () => {
                   Remove Test Case
                 </button>
               ) : (
-                ""
+                ''
               )}
             </li>
           );
@@ -294,7 +294,7 @@ export let UploadForm = () => {
         </button>
       </div>
 
-      {(formData.task_name && formData.taskIO[0].output) !== "" ? (
+      {(formData.task_name && formData.taskIO[0].output) !== '' ? (
         <div className="flex flex-col mb-6 tems-center">
           <button
             type="button"
