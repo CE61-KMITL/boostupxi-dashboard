@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import { UploadForm } from "../components/UploadForm";
+import UploadForm from "../components/UploadForm";
 import { Fragment } from "react";
 import { NextPage } from "next";
 
