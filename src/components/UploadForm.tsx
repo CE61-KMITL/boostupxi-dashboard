@@ -74,19 +74,19 @@ export let UploadForm = () => {
     "OSINT",
     "Stego",
   ];
-  const [selectedTags, setSelectedTags] = useState([]);
-  const handleTagClick = (tag : any) => {
+  const [selectedTags, setSelectedTags] = useState<any>([]);
+  const handleTagClick = (tag: any) => {
     if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter((t) => t !== tag));
+      setSelectedTags(selectedTags.filter((t: any) => t !== tag));
     } else {
       setSelectedTags([...selectedTags, tag]);
     }
     setFormData({ ...formData, task_tags: selectedTags });
   };
 
-  const handleDeleteTag = (tag : any) => {
+  const handleDeleteTag = (tag: any) => {
     if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter((t) => t !== tag));
+      setSelectedTags(selectedTags.filter((t: any) => t !== tag));
     }
     setFormData({ ...formData, task_tags: selectedTags });
   };
@@ -94,7 +94,6 @@ export let UploadForm = () => {
   const submitTask = () => {
     console.log(formData);
     console.log(selectedFiles);
-
   };
 
   return (
@@ -160,8 +159,7 @@ export let UploadForm = () => {
           >
             {tag}
           </button>
-        ))
-            }
+        ))}
       </div>
 
       <div className="flex flex-wrap mb-6">
@@ -273,12 +271,16 @@ export let UploadForm = () => {
                   placeholder=""
                 ></textarea>
               </div>
-              {(index != 0) ? <button
-                onClick={(e: any) => removeTestCase(e, value.id)}
-                className="ml-auto mt-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
-                Remove Test Case
-              </button> : ""}
-              
+              {index != 0 ? (
+                <button
+                  onClick={(e: any) => removeTestCase(e, value.id)}
+                  className="ml-auto mt-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+                >
+                  Remove Test Case
+                </button>
+              ) : (
+                ""
+              )}
             </li>
           );
         })}
