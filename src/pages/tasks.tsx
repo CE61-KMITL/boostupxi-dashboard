@@ -1,8 +1,8 @@
-import TaskList from "@/constants/task";
-import { TaskForm } from "@/interface/task";
-import { TaskTable } from "@/components/TaskTable";
-import { NextPage } from "next";
-import Navbar from "@/components/Navbar";
+import TaskList from '@/constants/task';
+import { TaskForm } from '@/interface/task';
+import { TaskTable } from '@/components/TaskTable';
+import { NextPage } from 'next';
+import Navbar from '@/components/Navbar';
 
 const TasksPage: NextPage = () => {
   return (

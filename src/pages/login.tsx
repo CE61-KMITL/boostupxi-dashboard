@@ -1,14 +1,14 @@
-import { Fragment } from "react";
-import { NextPage } from "next";
-import { LoginForm } from "../interface/task";
-import { ChangeEvent, useState } from "react";
-import Image from "next/image";
-import Logo from "../../public/images/logo.png";
+import { Fragment } from 'react';
+import { NextPage } from 'next';
+import { LoginForm } from '../interface/task';
+import { ChangeEvent, useState } from 'react';
+import Image from 'next/image';
+import Logo from '../../public/images/logo.png';
 
 const LoginPage: NextPage = () => {
   let LoginInitial: LoginForm = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
   const [loginData, setloginData] = useState(LoginInitial);
 

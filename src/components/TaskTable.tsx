@@ -1,4 +1,4 @@
-import { TaskForm } from "@/interface/task";
+import { TaskForm } from '@/interface/task';
 
 export const TaskTable = ({
   index,
@@ -14,7 +14,7 @@ export const TaskTable = ({
   };
 
   const handleDelete = () => {
-    console.log("Handle Delete");
+    console.log('Handle Delete');
   };
 
   return (
@@ -89,11 +89,11 @@ export const TaskTable = ({
 
       <td
         className={
-          status === "approve"
-            ? "px-6 py-4 text-green-700 font-bold uppercase"
-            : status === "queue"
-            ? "px-6 py-4 text-yellow-700 font-bold uppercase"
-            : "px-6 py-4 text-red-700 font-bold uppercase"
+          status === 'approve'
+            ? 'px-6 py-4 text-green-700 font-bold uppercase'
+            : status === 'queue'
+            ? 'px-6 py-4 text-yellow-700 font-bold uppercase'
+            : 'px-6 py-4 text-red-700 font-bold uppercase'
         }
       >
         {status}
