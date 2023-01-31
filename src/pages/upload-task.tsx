@@ -8,7 +8,7 @@ const UploadTaskPage: NextPage = () => {
     <Fragment>
       <Navbar />
       <section className="min-h-screen bg-main-color ">
-        <div className="bg-white px-6 max-w-6xl mx-auto pt-10">
+        <div className="mx-auto max-w-6xl bg-white px-6 pt-10">
           <UploadForm />
         </div>
       </section>

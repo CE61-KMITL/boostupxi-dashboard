@@ -17,23 +17,23 @@ const LoginPage: NextPage = () => {
   };
   return (
     <Fragment>
-      <div className="flex justify-center items-center bg-main-color grow min-h-screen">
+      <div className="flex min-h-screen grow items-center justify-center bg-main-color">
         <div className="container py-12 px-6">
-          <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
+          <div className="g-6 flex h-full flex-wrap items-center justify-center text-gray-800">
             <div className="xl:w-10/12">
-              <div className="block bg-white shadow-lg rounded-lg">
-                <div className="lg:flex lg:flex-wrap g-0">
-                  <div className="lg:w-6/12 px-4 md:px-0">
-                    <div className="md:p-12 md:mx-6">
+              <div className="block rounded-lg bg-white shadow-lg">
+                <div className="g-0 lg:flex lg:flex-wrap">
+                  <div className="px-4 md:px-0 lg:w-6/12">
+                    <div className="md:mx-6 md:p-12">
                       <div className="text-center">
                         <Image
-                          className="mx-auto w-48 md:pt-0 sm:pt-8 pt-10 rounded-full"
+                          className="mx-auto w-48 rounded-full pt-10 sm:pt-8 md:pt-0"
                           src={Logo}
                           alt="logo"
                           height={100}
                           width={100}
                         />
-                        <h4 className="text-xl font-semibold my-5 pb-1">
+                        <h4 className="my-5 pb-1 text-xl font-semibold">
                           CE BOOSTUP TASK UPLOAD
                         </h4>
                       </div>
@@ -42,7 +42,7 @@ const LoginPage: NextPage = () => {
                         <div className="mb-4">
                           <input
                             type="text"
-                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            className="form-control m-0 block w-full rounded border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-gray-700 transition ease-in-out focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none"
                             id="exampleFormControlInput1"
                             placeholder="Username"
                             value={loginData.email}
@@ -58,7 +58,7 @@ const LoginPage: NextPage = () => {
                         <div className="mb-4">
                           <input
                             type="password"
-                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            className="form-control m-0 block w-full rounded border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-1.5 text-base font-normal text-gray-700 transition ease-in-out focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none"
                             id="exampleFormControlInput1"
                             placeholder="Password"
                             value={loginData.password}
@@ -71,9 +71,9 @@ const LoginPage: NextPage = () => {
                             }}
                           />
                         </div>
-                        <div className="text-center pt-1 mb-12 pb-1">
+                        <div className="mb-12 pt-1 pb-1 text-center">
                           <button
-                            className="bg-fouth-color inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-main-color hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
+                            className="mb-3 inline-block w-full rounded bg-fouth-color px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-main-color hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                             type="button"
                             data-mdb-ripple="true"
                             data-mdb-ripple-color="light"
@@ -85,9 +85,9 @@ const LoginPage: NextPage = () => {
                       </form>
                     </div>
                   </div>
-                  <div className="lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none bg-fouth-color">
-                    <div className="text-white px-4 py-6 md:p-12 md:mx-6">
-                      <h4 className="text-xl font-semibold mb-6">
+                  <div className="flex items-center rounded-b-lg bg-fouth-color lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none">
+                    <div className="px-4 py-6 text-white md:mx-6 md:p-12">
+                      <h4 className="mb-6 text-xl font-semibold">
                         สูตรทำ ลาบหมู เมนูทำง่าย กับข้าวก็ได้ กับแกล้มก็ดี
                         กินอร่อยทั้งครอบครัว!
                       </h4>
