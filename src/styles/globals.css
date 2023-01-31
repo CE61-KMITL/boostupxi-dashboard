@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.gradient-radial-bg {
+.background {
   background: radial-gradient(ellipse at bottom, #d9d0f6 0%, #8d72e1 100%);
 }

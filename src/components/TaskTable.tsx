@@ -10,21 +10,21 @@ export const TaskTable = ({
   status,
 }: TaskForm) => {
   const handleEdit = () => {
-    console.log(id);
+    return id;
   };
 
   const handleDelete = () => {
-    console.log('Handle Delete');
+    return 'handle delete';
   };
 
   return (
     <tr
-      className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-center"
+      className="border-b bg-white text-center dark:border-gray-700 dark:bg-gray-900"
       key={index}
     >
       <th
         scope="row"
-        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+        className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
       >
         {id}
       </th>
@@ -80,7 +80,7 @@ export const TaskTable = ({
       </td>
       {tags.map((tags: string) => (
         <td
-          className="badge mx-1 my-1 px-5 py-4 border-l-indigo-600 bg-indigo-600"
+          className="badge mx-1 my-1 border-l-indigo-600 bg-indigo-600 px-5 py-4"
           key={index}
         >
           {tags}
@@ -90,23 +90,23 @@ export const TaskTable = ({
       <td
         className={
           status === 'approve'
-            ? 'px-6 py-4 text-green-700 font-bold uppercase'
+            ? 'px-6 py-4 font-bold uppercase text-green-700'
             : status === 'queue'
-            ? 'px-6 py-4 text-yellow-700 font-bold uppercase'
-            : 'px-6 py-4 text-red-700 font-bold uppercase'
+            ? 'px-6 py-4 font-bold uppercase text-yellow-700'
+            : 'px-6 py-4 font-bold uppercase text-red-700'
         }
       >
         {status}
       </td>
       <td className="flex flex-wrap justify-center px-6 ">
         <button
-          className="bg-blue-500 px-6 py-1 mt-3 mr-1 rounded-lg text-white hover:bg-blue-900"
+          className="mt-3 mr-1 rounded-lg bg-blue-500 px-6 py-1 text-white hover:bg-blue-900"
           onClick={handleEdit}
         >
           Edit
         </button>
         <button
-          className="bg-red-500 px-4 py-1 mt-3 rounded-lg text-white hover:bg-red-900"
+          className="mt-3 rounded-lg bg-red-500 px-4 py-1 text-white hover:bg-red-900"
           onClick={handleDelete}
         >
           Delete

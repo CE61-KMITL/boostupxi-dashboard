@@ -1,6 +1,7 @@
 import { ChangeEvent, useState, useRef, Fragment } from 'react';
 import { NextPage } from 'next';
 import { FormType } from '@/interface/task';
+import { toast } from 'react-hot-toast';
 
 const UploadForm: NextPage = () => {
   // Constants
@@ -33,8 +34,6 @@ const UploadForm: NextPage = () => {
   ];
 
   const [formData, setFormData] = useState<FormType>(formInitial);
-  const [selectedFiles, setSelectedFiles] = useState<any>([]);
-
   const inputRef = useRef<any>(null);
 
   const addTestCase = (e: any) => {
@@ -47,8 +46,9 @@ const UploadForm: NextPage = () => {
           { id: String(formData.taskIO.length + 1), input: '', output: '' },
         ],
       });
+      toast.success('Add Test Case');
     } catch (err: Error | any) {
-      console.log(err);
+      return err;
     }
   };
 
@@ -60,21 +60,21 @@ const UploadForm: NextPage = () => {
         taskIO: formData.taskIO.filter((item: any) => item.id !== id),
       });
     } catch (err: Error | any) {
-      console.log(err);
+      return err;
     }
   };
 
-  const handleFileChange = (e: any) => {
-    try {
-      const newFiles = [...selectedFiles].concat(Array.from(e.target.files));
-      setSelectedFiles(newFiles);
-      console.log(newFiles);
-      setFormData({ ...formData, files: newFiles });
-      console.log(formData);
-    } catch (err: Error | any) {
-      console.log(err);
-    }
-  };
+  // const handleFileChange = (e: any) => {
+  //   try {
+  //     const newFiles = [...selectedFiles].concat(Array.from(e.target.files));
+  //     setSelectedFiles(newFiles);
+  //     console.log(newFiles);
+  //     setFormData({ ...formData, files: newFiles });
+  //     console.log(formData);
+  //   } catch (err: Error | any) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleRemoveFile = (index: number) => {
     try {
@@ -84,9 +84,8 @@ const UploadForm: NextPage = () => {
       if (formData.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
-      console.log(formData.files);
     } catch (err: Error | any) {
-      console.log(err);
+      return err;
     }
   };
 
@@ -102,27 +101,51 @@ const UploadForm: NextPage = () => {
     }
   };
 
-  const submitTask = () => {
+  const submitTask = (e: any) => {
     try {
-      console.log(formData);
+      e.preventDefault();
+      setFormData({
+        ...formData,
+        task_name: '',
+        task_level: 1,
+        task_tags: [],
+        task_hint: '',
+        task_desc: '',
+        files: [],
+        taskIO: [{ id: '1', input: '', output: '' }],
+        author: '',
+      });
+      let fileInput = document.getElementById('fileInput') as HTMLInputElement;
+      let testCaseInput = document.getElementById(
+        'testCaseInput0',
+      ) as HTMLInputElement;
+
+      let testCaseOutput = document.getElementById(
+        'testCaseOutput0',
+      ) as HTMLInputElement;
+
+      fileInput.value = '';
+      testCaseInput.value = '';
+      testCaseOutput.value = '';
+      toast.success('Create Task Success');
     } catch (err: Error | any) {
-      console.log(err);
+      return err;
     }
   };
 
   return (
     <Fragment>
       <form>
-        <h3 className="font-medium leading-tight text-3xl mt-0 mb-2 text-blue-600">
+        <h3 className="mt-0 mb-2 text-3xl font-medium leading-tight text-blue-600">
           Task Upload
         </h3>
         <div className="flex flex-wrap">
-          <div className="w-full md:w-1/2 pr-2">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          <div className="w-full pr-2 md:w-1/2">
+            <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
               Task Name
             </label>
             <input
-              className="appearance-none lock w-full bg-gray-200 text-gray-700 border  rounded py-2.5 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              className="lock mb-3 w-full appearance-none rounded border  bg-gray-200 py-2.5 px-4 leading-tight text-gray-700 focus:bg-white focus:outline-none"
               id="grid-first-name"
               type="text"
               placeholder="Task Name"
@@ -133,18 +156,17 @@ const UploadForm: NextPage = () => {
               required
             />
           </div>
-          <div className="w-full md:w-1/2 mb-6">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          <div className="mb-6 w-full md:w-1/2">
+            <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
               Task Level
             </label>
             <select
-              className="block  lock w-full bg-gray-200  border-gray-200 text-gray-700 py-2.5 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
+              className="lock  block w-full rounded  border-gray-200 bg-gray-200 py-2.5 px-4 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:outline-none"
               onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                 setFormData({
                   ...formData,
                   task_level: parseInt(e.target.value),
                 });
-                e.preventDefault();
               }}
               value={formData.task_level}
             >
@@ -155,17 +177,17 @@ const UploadForm: NextPage = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap mb-6">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-6 md:mb-0">
+        <div className="mb-6 flex flex-wrap">
+          <label className="mb-6 block text-xs font-bold uppercase tracking-wide text-gray-700 md:mb-0">
             Task Tags
           </label>
         </div>
 
-        <div className="flex flex-wrap mb-6">
+        <div className="mb-6 flex flex-wrap">
           {availableTags.map((tag) => (
             <button
               className={`
-              relative mx-1 inline-flex items-center justify-center w-full px-3 py-0.5 mb-2 text-sm font-bold leading-6 text-white  border border-transparent rounded-full md:w-auto  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 
+              relative mx-1 mb-2 inline-flex w-full items-center justify-center rounded-full border border-transparent px-3 py-0.5 text-sm  font-bold leading-6 text-white focus:outline-none  focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 md:w-auto 
               ${
                 formData.task_tags.includes(tag)
                   ? 'bg-indigo-600'
@@ -180,33 +202,31 @@ const UploadForm: NextPage = () => {
           ))}
         </div>
 
-        <div className="flex flex-wrap mb-6">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-6 md:mb-0">
+        <div className="mb-6 flex flex-wrap">
+          <label className="mb-6 block text-xs font-bold uppercase tracking-wide text-gray-700 md:mb-0">
             Task Hint
           </label>
           <textarea
-            className="block w-full text-sm py-3 px-4 pr-8 md:mb-0 text-gray-900 rounded-lg bg-gray-200 border border-gray-200 focus:text-black focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full rounded-lg border border-gray-200 bg-gray-200 py-3 px-4 pr-8 text-sm text-gray-900 focus:border-blue-500 focus:text-black focus:ring-blue-500 dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 md:mb-0"
             placeholder="Task Hint"
             value={formData.task_hint}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-              e.preventDefault();
               setFormData({ ...formData, task_hint: e.target.value });
             }}
           />
         </div>
 
-        <div className="flex flex-wrap mb-6">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-6 md:mb-0">
+        <div className="mb-6 flex flex-wrap">
+          <label className="mb-6 block text-xs font-bold uppercase tracking-wide text-gray-700 md:mb-0">
             Task Descprtion
           </label>
           <textarea
             key="task_desc"
             rows={10}
-            className="block w-full text-sm py-3 px-4 pr-8 md:mb-0 text-gray-900 rounded-lg bg-gray-200 border border-gray-200 focus:text-black focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full rounded-lg border border-gray-200 bg-gray-200 py-3 px-4 pr-8 text-sm text-gray-900 focus:border-blue-500 focus:text-black focus:ring-blue-500 dark:placeholder-gray-400 dark:focus:border-blue-500  dark:focus:ring-blue-500 md:mb-0"
             placeholder="Task Description"
             value={formData.task_desc}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-              e.preventDefault();
               setFormData({ ...formData, task_desc: e.target.value });
             }}
           ></textarea>
@@ -227,12 +247,12 @@ const UploadForm: NextPage = () => {
           className="mb-6"
         />
         {formData.files.map((file: any, index: any) => (
-          <div className="flex flex-wrap mb-6" key={index}>
+          <div className="mb-6 flex flex-wrap" key={index}>
             <p>{file.name}</p>
             <br />
             <button
               type="button"
-              className="ml-4 inline-block px-5 py-1.5 bg-red-600 text-white font-sm text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+              className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
               onClick={() => handleRemoveFile(index)}
             >
               remove
@@ -243,14 +263,14 @@ const UploadForm: NextPage = () => {
         <ul className="list-none">
           {formData.taskIO.map((value, index) => {
             return (
-              <li className="flex flex-wrap mb-2" key={index}>
-                <div className="w-full md:w-1/2 pr-4">
-                  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              <li className="mb-2 flex flex-wrap" key={index}>
+                <div className="w-full pr-4 md:w-1/2">
+                  <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                     Test Case {index + 1} Input
                   </label>
                   <textarea
                     rows={5}
-                    className="block w-full text-sm text-gray-900 rounded-lg bg-gray-200 border border-gray-200 py-3 px-4 pr-8  focus:text-black focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="block w-full rounded-lg border border-gray-200 bg-gray-200 py-3 px-4 pr-8 text-sm text-gray-900  focus:border-blue-500 focus:text-black focus:ring-blue-500 dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
                       setFormData({
                         ...formData,
@@ -261,14 +281,14 @@ const UploadForm: NextPage = () => {
                           return item;
                         }),
                       });
-                      e.preventDefault();
                     }}
                     placeholder=""
+                    id={`testCaseInput${index}`}
                   ></textarea>
                 </div>
 
-                <div className="w-full md:w-1/2 pl-4">
-                  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                <div className="w-full pl-4 md:w-1/2">
+                  <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                     Test Case {index + 1} output
                   </label>
                   <textarea
@@ -283,16 +303,16 @@ const UploadForm: NextPage = () => {
                           return item;
                         }),
                       });
-                      e.preventDefault();
                     }}
-                    className="block w-full text-sm text-gray-900 rounded-lg bg-gray-200 border border-gray-200 py-3 px-4 pr-8 focus:text-black focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="block w-full rounded-lg border border-gray-200 bg-gray-200 py-3 px-4 pr-8 text-sm text-gray-900 focus:border-blue-500 focus:text-black focus:ring-blue-500 dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                     placeholder=""
+                    id={`testCaseOutput${index}`}
                   ></textarea>
                 </div>
                 {index != 0 ? (
                   <button
                     onClick={(e: any) => removeTestCase(e, value.id)}
-                    className="ml-auto mt-3 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+                    className="ml-auto mt-3 rounded-full bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
                   >
                     Remove Test Case
                   </button>
@@ -303,27 +323,27 @@ const UploadForm: NextPage = () => {
             );
           })}
         </ul>
-        <div className="flex flex-wrap mb-6">
+        <div className="mb-6 flex flex-wrap">
           <button
             onClick={addTestCase}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            className="rounded-full bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
           >
             Add Test Case
           </button>
         </div>
 
         {(formData.task_name && formData.taskIO[0].output) !== '' ? (
-          <div className="flex flex-col mb-6 tems-center">
+          <div className="tems-center mb-6 flex flex-col">
             <button
               type="button"
               onClick={submitTask}
-              className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2"
+              className="mr-2 mb-2 rounded-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 px-5 py-2.5 text-center text-xl font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800"
             >
               Submit Task
             </button>
           </div>
         ) : (
-          <div className="text-red-500 text-xl bold py-5">
+          <div className="bold py-5 text-xl text-red-500">
             กรอกชื่อโจทย์กับเทสเคสเอ้าพุทด้วยจ้า
           </div>
         )}

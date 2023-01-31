@@ -3,19 +3,21 @@ import { TaskForm } from '@/interface/task';
 import { TaskTable } from '@/components/TaskTable';
 import { NextPage } from 'next';
 import Navbar from '@/components/Navbar';
+import { Fragment } from 'react';
+
 const TasksPage: NextPage = () => {
   return (
-    <>
+    <Fragment>
       <Navbar />
       <div className="flex justify-center items-center gradient-radial-bg grow min-h-screen">
         <div className="stars"></div>
         <div className="stars2"></div>
         <div className="stars3"></div>
         <div className="container py-12 px-6">
-          <div className="block bg-white shadow-lg rounded-lg">
+          <div className="block rounded-lg bg-white shadow-lg">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+                <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
                   <tr className="text-center">
                     <th scope="col" className="px-6 py-3">
                       Task ID
@@ -59,7 +61,7 @@ const TasksPage: NextPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 
