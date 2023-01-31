@@ -9,7 +9,10 @@ const TasksPage: NextPage = () => {
   return (
     <Fragment>
       <Navbar />
-      <div className="background flex min-h-screen grow items-center justify-center">
+      <div className="flex justify-center items-center gradient-radial-bg grow min-h-screen">
+        <div className="stars"></div>
+        <div className="stars2"></div>
+        <div className="stars3"></div>
         <div className="container py-12 px-6">
           <div className="block rounded-lg bg-white shadow-lg">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
