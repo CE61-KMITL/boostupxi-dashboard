@@ -11,6 +11,9 @@ module.exports = {
         'fouth-color': '#58287F',
         'navbar-color': '#1A0000',
       },
+      backgroundImage: {
+        'gradient-radial' : 'backgroung: radial-gradient(ellipse at bottom , main-color 0%, third-color 100%)'
+      },
     },
   },
   plugins: [require('daisyui')],

@@ -1,7 +1,7 @@
-import Navbar from "@/components/Navbar";
-import UploadForm from "../components/UploadForm";
-import { Fragment } from "react";
-import { NextPage } from "next";
+import Navbar from '@/components/Navbar';
+import UploadForm from '../components/UploadForm';
+import { Fragment } from 'react';
+import { NextPage } from 'next';
 
 const UploadTaskPage: NextPage = () => {
   return (

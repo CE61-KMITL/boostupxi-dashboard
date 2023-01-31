@@ -3,12 +3,14 @@ import { TaskForm } from '@/interface/task';
 import { TaskTable } from '@/components/TaskTable';
 import { NextPage } from 'next';
 import Navbar from '@/components/Navbar';
-
 const TasksPage: NextPage = () => {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center items-center bg-main-color grow min-h-screen">
+      <div className="flex justify-center items-center gradient-radial-bg grow min-h-screen">
+        <div className="stars"></div>
+        <div className="stars2"></div>
+        <div className="stars3"></div>
         <div className="container py-12 px-6">
           <div className="block bg-white shadow-lg rounded-lg">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

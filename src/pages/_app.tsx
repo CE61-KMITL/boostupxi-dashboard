@@ -1,5 +1,6 @@
 import { Kanit } from '@next/font/google';
 import '../styles/globals.css';
+import '../styles/star.css';
 import type { AppProps } from 'next/app';
 
 const kanit = Kanit({

@@ -1,35 +1,35 @@
-import { ChangeEvent, useState, useRef, Fragment } from "react";
-import { NextPage } from "next";
-import { FormType } from "@/interface/task";
+import { ChangeEvent, useState, useRef, Fragment } from 'react';
+import { NextPage } from 'next';
+import { FormType } from '@/interface/task';
 
 const UploadForm: NextPage = () => {
   // Constants
   let formInitial: FormType = {
-    task_name: "",
+    task_name: '',
     task_level: 1,
     task_tags: [],
-    task_hint: "",
-    task_desc: "",
+    task_hint: '',
+    task_desc: '',
     files: [],
-    taskIO: [{ id: "1", input: "", output: "" }],
-    author: "",
+    taskIO: [{ id: '1', input: '', output: '' }],
+    author: '',
   };
 
   const availableTags: string[] = [
-    "Algorithm",
-    "AI",
-    "ci",
-    "Computer Engineering",
-    "Reverse Engineer",
-    "Fun",
-    "CTF",
-    "crypto",
-    "Forensics",
-    "Web",
-    "Pwn",
-    "Misc",
-    "OSINT",
-    "Stego",
+    'Algorithm',
+    'AI',
+    'ci',
+    'Computer Engineering',
+    'Reverse Engineer',
+    'Fun',
+    'CTF',
+    'crypto',
+    'Forensics',
+    'Web',
+    'Pwn',
+    'Misc',
+    'OSINT',
+    'Stego',
   ];
 
   const [formData, setFormData] = useState<FormType>(formInitial);
@@ -44,7 +44,7 @@ const UploadForm: NextPage = () => {
         ...formData,
         taskIO: [
           ...formData.taskIO,
-          { id: String(formData.taskIO.length + 1), input: "", output: "" },
+          { id: String(formData.taskIO.length + 1), input: '', output: '' },
         ],
       });
     } catch (err: Error | any) {
@@ -82,7 +82,7 @@ const UploadForm: NextPage = () => {
       newFiles.splice(index, 1);
       setFormData({ ...formData, files: newFiles });
       if (formData.files.length === 1) {
-        (document.getElementById("fileInput") as HTMLInputElement).value = "";
+        (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
       console.log(formData.files);
     } catch (err: Error | any) {
@@ -167,12 +167,13 @@ const UploadForm: NextPage = () => {
               className={`
               relative mx-1 inline-flex items-center justify-center w-full px-3 py-0.5 mb-2 text-sm font-bold leading-6 text-white  border border-transparent rounded-full md:w-auto  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 
               ${
-                formData.task_tags.includes(tag) ? "bg-indigo-600" : "bg-gray-600"
+                formData.task_tags.includes(tag)
+                  ? 'bg-indigo-600'
+                  : 'bg-gray-600'
               }`}
-
               key={tag}
               onClick={(event: any) => handleTagClick(tag, event)}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
             >
               {tag}
             </button>
@@ -216,7 +217,7 @@ const UploadForm: NextPage = () => {
           multiple
           onChange={(event: any) => {
             let newFiles = [...formData.files].concat(
-              Array.from(event.target.files)
+              Array.from(event.target.files),
             );
             setFormData({ ...formData, files: newFiles as [any] });
             event.preventDefault();
@@ -296,7 +297,7 @@ const UploadForm: NextPage = () => {
                     Remove Test Case
                   </button>
                 ) : (
-                  ""
+                  ''
                 )}
               </li>
             );
@@ -311,7 +312,7 @@ const UploadForm: NextPage = () => {
           </button>
         </div>
 
-        {(formData.task_name && formData.taskIO[0].output) !== "" ? (
+        {(formData.task_name && formData.taskIO[0].output) !== '' ? (
           <div className="flex flex-col mb-6 tems-center">
             <button
               type="button"
