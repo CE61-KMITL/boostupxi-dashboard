@@ -17,7 +17,7 @@ const TaskTable = ({
   };
   return (
     <tr
-      className="bg-white text-center dark:border-gray-700 dark:bg-gray-900"
+      className="bg-white text-center border-t dark:border-gray-700 dark:bg-gray-900"
       key={id}
     >
       <td
