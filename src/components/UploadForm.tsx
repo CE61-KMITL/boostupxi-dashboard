@@ -1,40 +1,38 @@
-import { ChangeEvent, useState, useRef, Fragment } from "react";
-import { NextPage } from "next";
-import { FormType } from "@/interface/task";
+import { ChangeEvent, useState, useRef, Fragment } from 'react';
+import { NextPage } from 'next';
+import { FormType } from '@/interface/task';
 
 const UploadForm: NextPage = () => {
   // Constants
   let formInitial: FormType = {
-    task_name: "",
+    task_name: '',
     task_level: 1,
     task_tags: [],
-    task_hint: "",
-    task_desc: "",
+    task_hint: '',
+    task_desc: '',
     files: [],
-    taskIO: [{ id: "1", input: "", output: "" }],
-    author: "",
+    taskIO: [{ id: '1', input: '', output: '' }],
+    author: '',
   };
 
   const availableTags: string[] = [
-    "Algorithm",
-    "AI",
-    "ci",
-    "Computer Engineering",
-    "Reverse Engineer",
-    "Fun",
-    "CTF",
-    "crypto",
-    "Forensics",
-    "Web",
-    "Pwn",
-    "Misc",
-    "OSINT",
-    "Stego",
+    'Algorithm',
+    'AI',
+    'ci',
+    'Computer Engineering',
+    'Reverse Engineer',
+    'Fun',
+    'CTF',
+    'crypto',
+    'Forensics',
+    'Web',
+    'Pwn',
+    'Misc',
+    'OSINT',
+    'Stego',
   ];
 
   const [formData, setFormData] = useState<FormType>(formInitial);
-  const [selectedFiles, setSelectedFiles] = useState<any>([]);
-
   const inputRef = useRef<any>(null);
 
   const addTestCase = (e: any) => {
@@ -44,11 +42,30 @@ const UploadForm: NextPage = () => {
         ...formData,
         taskIO: [
           ...formData.taskIO,
-          { id: String(formData.taskIO.length + 1), input: "", output: "" },
+          { id: String(formData.taskIO.length + 1), input: '', output: '' },
         ],
       });
     } catch (err: Error | any) {
-      console.log(err);
+      return (
+        <div className="alert alert-success shadow-lg">
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current flex-shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>Your purchase has been confirmed!</span>
+          </div>
+        </div>
+      );
     }
   };
 
@@ -60,21 +77,21 @@ const UploadForm: NextPage = () => {
         taskIO: formData.taskIO.filter((item: any) => item.id !== id),
       });
     } catch (err: Error | any) {
-      console.log(err);
+      return err;
     }
   };
 
-  const handleFileChange = (e: any) => {
-    try {
-      const newFiles = [...selectedFiles].concat(Array.from(e.target.files));
-      setSelectedFiles(newFiles);
-      console.log(newFiles);
-      setFormData({ ...formData, files: newFiles });
-      console.log(formData);
-    } catch (err: Error | any) {
-      console.log(err);
-    }
-  };
+  // const handleFileChange = (e: any) => {
+  //   try {
+  //     const newFiles = [...selectedFiles].concat(Array.from(e.target.files));
+  //     setSelectedFiles(newFiles);
+  //     console.log(newFiles);
+  //     setFormData({ ...formData, files: newFiles });
+  //     console.log(formData);
+  //   } catch (err: Error | any) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleRemoveFile = (index: number) => {
     try {
@@ -82,11 +99,10 @@ const UploadForm: NextPage = () => {
       newFiles.splice(index, 1);
       setFormData({ ...formData, files: newFiles });
       if (formData.files.length === 1) {
-        (document.getElementById("fileInput") as HTMLInputElement).value = "";
+        (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
-      console.log(formData.files);
     } catch (err: Error | any) {
-      console.log(err);
+      return err;
     }
   };
 
@@ -102,11 +118,35 @@ const UploadForm: NextPage = () => {
     }
   };
 
-  const submitTask = () => {
+  const submitTask = (e: any) => {
     try {
-      console.log(formData);
+      e.preventDefault();
+      setFormData({
+        ...formData,
+        task_name: '',
+        task_level: 1,
+        task_tags: [],
+        task_hint: '',
+        task_desc: '',
+        files: [],
+        taskIO: [{ id: '1', input: '', output: '' }],
+        author: '',
+      });
+      let fileInput = document.getElementById('fileInput') as HTMLInputElement;
+      let testCaseInput = document.getElementById(
+        'testCaseInput0',
+      ) as HTMLInputElement;
+
+      let testCaseOutput = document.getElementById(
+        'testCaseOutput0',
+      ) as HTMLInputElement;
+
+      fileInput.value = '';
+      testCaseInput.value = '';
+      testCaseOutput.value = '';
+      return formData;
     } catch (err: Error | any) {
-      console.log(err);
+      return err;
     }
   };
 
@@ -144,7 +184,6 @@ const UploadForm: NextPage = () => {
                   ...formData,
                   task_level: parseInt(e.target.value),
                 });
-                e.preventDefault();
               }}
               value={formData.task_level}
             >
@@ -167,12 +206,13 @@ const UploadForm: NextPage = () => {
               className={`
               relative mx-1 inline-flex items-center justify-center w-full px-3 py-0.5 mb-2 text-sm font-bold leading-6 text-white  border border-transparent rounded-full md:w-auto  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 
               ${
-                formData.task_tags.includes(tag) ? "bg-indigo-600" : "bg-gray-600"
+                formData.task_tags.includes(tag)
+                  ? 'bg-indigo-600'
+                  : 'bg-gray-600'
               }`}
-
               key={tag}
               onClick={(event: any) => handleTagClick(tag, event)}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
             >
               {tag}
             </button>
@@ -188,7 +228,6 @@ const UploadForm: NextPage = () => {
             placeholder="Task Hint"
             value={formData.task_hint}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-              e.preventDefault();
               setFormData({ ...formData, task_hint: e.target.value });
             }}
           />
@@ -205,7 +244,6 @@ const UploadForm: NextPage = () => {
             placeholder="Task Description"
             value={formData.task_desc}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-              e.preventDefault();
               setFormData({ ...formData, task_desc: e.target.value });
             }}
           ></textarea>
@@ -216,7 +254,7 @@ const UploadForm: NextPage = () => {
           multiple
           onChange={(event: any) => {
             let newFiles = [...formData.files].concat(
-              Array.from(event.target.files)
+              Array.from(event.target.files),
             );
             setFormData({ ...formData, files: newFiles as [any] });
             event.preventDefault();
@@ -260,9 +298,9 @@ const UploadForm: NextPage = () => {
                           return item;
                         }),
                       });
-                      e.preventDefault();
                     }}
                     placeholder=""
+                    id={`testCaseInput${index}`}
                   ></textarea>
                 </div>
 
@@ -282,10 +320,10 @@ const UploadForm: NextPage = () => {
                           return item;
                         }),
                       });
-                      e.preventDefault();
                     }}
                     className="block w-full text-sm text-gray-900 rounded-lg bg-gray-200 border border-gray-200 py-3 px-4 pr-8 focus:text-black focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder=""
+                    id={`testCaseOutput${index}`}
                   ></textarea>
                 </div>
                 {index != 0 ? (
@@ -296,7 +334,7 @@ const UploadForm: NextPage = () => {
                     Remove Test Case
                   </button>
                 ) : (
-                  ""
+                  ''
                 )}
               </li>
             );
@@ -311,7 +349,7 @@ const UploadForm: NextPage = () => {
           </button>
         </div>
 
-        {(formData.task_name && formData.taskIO[0].output) !== "" ? (
+        {(formData.task_name && formData.taskIO[0].output) !== '' ? (
           <div className="flex flex-col mb-6 tems-center">
             <button
               type="button"

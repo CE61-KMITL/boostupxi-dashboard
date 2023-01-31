@@ -3,10 +3,11 @@ import { TaskForm } from '@/interface/task';
 import { TaskTable } from '@/components/TaskTable';
 import { NextPage } from 'next';
 import Navbar from '@/components/Navbar';
+import { Fragment } from 'react';
 
 const TasksPage: NextPage = () => {
   return (
-    <>
+    <Fragment>
       <Navbar />
       <div className="flex justify-center items-center bg-main-color grow min-h-screen">
         <div className="container py-12 px-6">
@@ -57,7 +58,7 @@ const TasksPage: NextPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 

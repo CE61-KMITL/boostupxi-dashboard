@@ -10,11 +10,11 @@ export const TaskTable = ({
   status,
 }: TaskForm) => {
   const handleEdit = () => {
-    console.log(id);
+    return id;
   };
 
   const handleDelete = () => {
-    console.log('Handle Delete');
+    return 'handle delete';
   };
 
   return (

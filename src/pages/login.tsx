@@ -13,7 +13,7 @@ const LoginPage: NextPage = () => {
   const [loginData, setloginData] = useState(LoginInitial);
 
   const submitLogin = () => {
-    console.log(loginData);
+    return loginData;
   };
   return (
     <Fragment>
