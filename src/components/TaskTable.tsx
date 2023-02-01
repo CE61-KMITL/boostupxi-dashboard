@@ -1,13 +1,6 @@
 import { TaskForm } from '@/interface/task';
 
-const TaskTable = ({
-  id,
-  title,
-  author,
-  level,
-  tags,
-  status,
-}: TaskForm) => {
+const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
   const handleEdit = () => {
     return id;
   };
@@ -17,12 +10,10 @@ const TaskTable = ({
   };
   return (
     <tr
-      className="bg-white text-center border-t dark:border-gray-700 dark:bg-gray-900"
+      className="border-t bg-white text-center dark:border-gray-700 dark:bg-gray-900"
       key={id}
     >
-      <td
-        className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
-      >
+      <td className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
         {id}
       </td>
       <td>{title}</td>
@@ -91,28 +82,28 @@ const TaskTable = ({
           status === 'approve'
             ? 'font-bold uppercase text-green-700'
             : status === 'queue'
-              ? 'font-bold uppercase text-yellow-700'
-              : 'font-bold uppercase text-red-700'
+            ? 'font-bold uppercase text-yellow-700'
+            : 'font-bold uppercase text-red-700'
         }
       >
         {status}
       </td>
-      <td className="flex flex-wrap justify-center py-4 space-x-1">
+      <td className="flex flex-wrap justify-center space-x-1 py-4">
         <button
-          className="rounded-lg my-1 bg-blue-500 px-6 w-18 py-1 text-white hover:bg-blue-900"
+          className="w-18 my-1 rounded-lg bg-blue-500 px-6 py-1 text-white hover:bg-blue-900"
           onClick={handleEdit}
         >
           Edit
         </button>
         <button
-          className="rounded-lg my-1 bg-red-500 px-4 py-1 text-white hover:bg-red-900"
+          className="my-1 rounded-lg bg-green-500 bg-opacity-100 px-4 py-1 text-white hover:bg-opacity-70"
           onClick={handleDelete}
         >
-          Delete
+          Preview
         </button>
       </td>
     </tr>
   );
 };
 
-export default TaskTable
+export default TaskTable;

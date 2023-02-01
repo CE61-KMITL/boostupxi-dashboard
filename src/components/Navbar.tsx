@@ -5,10 +5,13 @@ const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
   return (
     <Fragment>
-      <nav className="sticky top-0 z-30 w-full bg-black shadow" style={{
-        backdropFilter: 'saturate(180%) blur(20px)',
-        backgroundColor: 'rgba(29,29,31,.72)'
-      }}>
+      <nav
+        className="sticky top-0 z-30 w-full bg-black shadow"
+        style={{
+          backdropFilter: 'saturate(180%) blur(20px)',
+          backgroundColor: 'rgba(29,29,31,.72)',
+        }}
+      >
         <div className="mx-auto justify-between px-4 md:flex md:items-center md:px-8 lg:max-w-7xl">
           <div>
             <div className="flex items-center justify-between py-3 md:block md:py-5">
@@ -57,8 +60,9 @@ const Navbar = () => {
           </div>
           <div>
             <div
-              className={`mt-8 flex-1 justify-self-center pb-3 md:mt-0 md:block md:pb-0 ${navbar ? 'block' : 'hidden'
-                }`}
+              className={`mt-8 flex-1 justify-self-center pb-3 md:mt-0 md:block md:pb-0 ${
+                navbar ? 'block' : 'hidden'
+              }`}
             >
               <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                 <li className="text-white hover:text-second-color">
@@ -78,9 +82,23 @@ const Navbar = () => {
                 </li>
                 <li className="text-white hover:text-second-color">
                   <Link href="/login" onClick={() => setNavbar(false)}>
-                    <button>
-                      Logout
-                    </button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="h-6 w-6"
+                      style={{
+                        transform: 'scaleX(-1)',
+                      }}
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                      />
+                    </svg>
                   </Link>
                 </li>
               </ul>
