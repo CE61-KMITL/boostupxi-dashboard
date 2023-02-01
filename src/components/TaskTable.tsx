@@ -1,7 +1,6 @@
 import { TaskForm } from '@/interface/task';
 
-export const TaskTable = ({
-  index,
+const TaskTable = ({
   id,
   title,
   author,
@@ -16,32 +15,30 @@ export const TaskTable = ({
   const handleDelete = () => {
     return 'handle delete';
   };
-
   return (
     <tr
-      className="border-b bg-white text-center dark:border-gray-700 dark:bg-gray-900"
-      key={index}
+      className="bg-white text-center border-t dark:border-gray-700 dark:bg-gray-900"
+      key={id}
     >
-      <th
-        scope="row"
-        className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+      <td
+        className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
       >
         {id}
-      </th>
-      <td className="px-6 py-4">{title}</td>
-      <td className="px-6 py-4">{author}</td>
-      <td className="px-6 py-4">
+      </td>
+      <td>{title}</td>
+      <td>{author}</td>
+      <td>
         {level === 1 ? (
-          <div className="rating">
+          <span className="rating">
             <input
               type="radio"
               name="rating-4"
               className="mask mask-star-2 bg-green-500"
               disabled
             />
-          </div>
+          </span>
         ) : level === 2 ? (
-          <div className="rating">
+          <span className="rating">
             <input
               type="radio"
               name="rating-4"
@@ -54,9 +51,9 @@ export const TaskTable = ({
               className="mask mask-star-2 bg-yellow-500"
               disabled
             />
-          </div>
+          </span>
         ) : (
-          <div className="rating">
+          <span className="rating">
             <input
               type="radio"
               name="rating-4"
@@ -75,38 +72,40 @@ export const TaskTable = ({
               className="mask mask-star-2 bg-red-500"
               disabled
             />
-          </div>
+          </span>
         )}
       </td>
-      {tags.map((tags: string) => (
-        <td
-          className="badge mx-1 my-1 border-l-indigo-600 bg-indigo-600 px-5 py-4"
-          key={index}
-        >
-          {tags}
-        </td>
-      ))}
+      <td>
+        {tags.map((tags: string, index) => (
+          <span
+            className="badge bg-indigo-800 px-4 py-3 text-gray-200 "
+            key={index}
+          >
+            {tags}
+          </span>
+        ))}
+      </td>
 
       <td
         className={
           status === 'approve'
-            ? 'px-6 py-4 font-bold uppercase text-green-700'
+            ? 'font-bold uppercase text-green-700'
             : status === 'queue'
-            ? 'px-6 py-4 font-bold uppercase text-yellow-700'
-            : 'px-6 py-4 font-bold uppercase text-red-700'
+              ? 'font-bold uppercase text-yellow-700'
+              : 'font-bold uppercase text-red-700'
         }
       >
         {status}
       </td>
-      <td className="flex flex-wrap justify-center px-6 ">
+      <td className="flex flex-wrap justify-center py-4 space-x-1">
         <button
-          className="mt-3 mr-1 rounded-lg bg-blue-500 px-6 py-1 text-white hover:bg-blue-900"
+          className="rounded-lg my-1 bg-blue-500 px-6 w-18 py-1 text-white hover:bg-blue-900"
           onClick={handleEdit}
         >
           Edit
         </button>
         <button
-          className="mt-3 rounded-lg bg-red-500 px-4 py-1 text-white hover:bg-red-900"
+          className="rounded-lg my-1 bg-red-500 px-4 py-1 text-white hover:bg-red-900"
           onClick={handleDelete}
         >
           Delete
@@ -115,3 +114,5 @@ export const TaskTable = ({
     </tr>
   );
 };
+
+export default TaskTable

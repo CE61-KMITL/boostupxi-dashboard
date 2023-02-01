@@ -3,7 +3,7 @@ import '../styles/globals.css';
 import '../styles/star.css';
 import type { AppProps } from 'next/app';
 import { Toaster } from 'react-hot-toast';
-
+import { Fragment } from 'react';
 const kanit = Kanit({
   subsets: ['latin'],
   weight: '400',
@@ -12,7 +12,7 @@ const kanit = Kanit({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={kanit.className}>
-      <div>
+      <Fragment>
         <Toaster
           toastOptions={{
             className: '',
@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
             },
           }}
         />
-      </div>
+      </Fragment>
       <Component {...pageProps} />
     </main>
   );
