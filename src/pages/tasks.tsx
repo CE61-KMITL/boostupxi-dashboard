@@ -1,7 +1,7 @@
 import TaskList from '@/constants/task';
 import { TaskForm } from '@/interface/task';
-import { TaskTable } from '@/components/TaskTable';
 import { NextPage } from 'next';
+import TaskTable from '@/components/TaskTable';
 import Navbar from '@/components/Navbar';
 import { Fragment } from 'react';
 
@@ -9,7 +9,7 @@ const TasksPage: NextPage = () => {
   return (
     <Fragment>
       <Navbar />
-      <div className="gradient-radial-bg flex min-h-screen grow items-center justify-center background">
+      <div className="gradient-radial-bg background flex min-h-screen grow items-center justify-center">
         <div className="stars"></div>
         <div className="stars2"></div>
         <div className="stars3"></div>
