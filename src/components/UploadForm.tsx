@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, useRef, Fragment } from 'react';
 import { NextPage } from 'next';
-import { FormType } from '@/interface/task';
+import { FormType } from '@/interface/upload';
 import { toast } from 'react-hot-toast';
 
 const UploadForm: NextPage = () => {
