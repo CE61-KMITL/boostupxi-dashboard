@@ -9,7 +9,7 @@ const TasksPage: NextPage = () => {
   return (
     <Fragment>
       <Navbar />
-      <div className="flex justify-center items-center gradient-radial-bg grow min-h-screen">
+      <div className="gradient-radial-bg background flex min-h-screen grow items-center justify-center">
         <div className="stars"></div>
         <div className="stars2"></div>
         <div className="stars3"></div>
