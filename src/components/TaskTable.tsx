@@ -5,9 +5,6 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
     return id;
   };
 
-  const handleDelete = () => {
-    return 'handle delete';
-  };
   return (
     <tr
       className="border-t bg-white text-center dark:border-gray-700 dark:bg-gray-900"
@@ -95,11 +92,8 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
         >
           Edit
         </button>
-        <button
-          className="my-1 rounded-lg bg-red-500 px-4 py-1 text-white hover:bg-red-900"
-          onClick={handleDelete}
-        >
-          Delete
+        <button className="my-1 rounded-lg bg-green-500 bg-opacity-100 px-4 py-1 text-white hover:bg-opacity-70">
+          Preview
         </button>
       </td>
     </tr>
