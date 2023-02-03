@@ -12,32 +12,32 @@ const TasksPage: NextPage = () => {
   return (
     <Fragment>
       <Navbar />
-      <div className="gradient-radial-bg container mx-auto mt-8 flex min-h-screen grow items-baseline justify-center">
-        <div className="stars"></div>
-        <div className="stars2"></div>
-        <div className="stars3"></div>
-        <table className="z-20 w-full overflow-hidden rounded-lg text-left text-sm text-gray-500 dark:text-gray-400">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-            <tr className="text-center">
-              <th scope="col" className="py-3 px-2">
+      <div className="stars"></div>
+      <div className="stars2"></div>
+      <div className="stars3"></div>
+      <div className="container mx-auto py-12 px-6 overflow-x-auto w-full">
+        <table className="table table-zebra shadow-lg	z-20 w-full overflow-hidden rounded-lg text-sm text-gray-500 dark:text-gray-400">
+          <thead className="table-header-group bg-gray-50 text-center text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th>
                 Task ID
               </th>
-              <th scope="col" className="py-3 px-2">
+              <th>
                 Task Name
               </th>
-              <th scope="col" className="py-3 px-2">
+              <th>
                 Author
               </th>
-              <th scope="col" className="py-3 px-2">
+              <th>
                 Levels
               </th>
-              <th scope="col" className="py-3 px-2">
+              <th>
                 Tags
               </th>
-              <th scope="col" className="py-3 px-2">
+              <th>
                 Status
               </th>
-              <th scope="col" className="py-3 px-2">
+              <th>
                 Action
               </th>
             </tr>

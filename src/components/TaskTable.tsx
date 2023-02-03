@@ -7,7 +7,7 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
 
   return (
     <tr
-      className="border-t bg-white text-center dark:border-gray-700 dark:bg-gray-900"
+      className="hover border-t bg-white text-center dark:border-gray-700 dark:bg-gray-900"
       key={id}
     >
       <td className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
@@ -63,10 +63,10 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
           </span>
         )}
       </td>
-      <td>
+      <td className='space-x-1'>
         {tags.map((tags: string, index) => (
           <span
-            className="badge bg-indigo-800 px-4 py-3 text-gray-200 "
+            className="badge border-0 bg-indigo-800 px-4 py-3 text-gray-200 "
             key={index}
           >
             {tags}
@@ -85,9 +85,9 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
       >
         {status}
       </td>
-      <td className="flex flex-wrap justify-center space-x-1 py-4">
+      <td className="flex justify-center items-center space-x-1">
         <button
-          className="w-18 my-1 rounded-lg bg-blue-500 px-6 py-1 text-white hover:bg-blue-900"
+          className="my-1 rounded-lg bg-blue-500 px-6 py-1 text-white hover:bg-blue-900"
           onClick={handleEdit}
         >
           Edit
