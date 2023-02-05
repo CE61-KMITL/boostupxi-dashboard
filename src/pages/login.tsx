@@ -2,21 +2,37 @@ import { Fragment } from 'react';
 import { NextPage } from 'next';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { setCookie,getCookie  } from 'cookies-next';
+import axios from "axios";
+
 
 const LoginPage: NextPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const handleLogin = (e: any): void => {
-    try {
-      e.preventDefault();
-      setEmail('');
-      setPassword('');
-      toast.success('Login Success');
-    } catch (err: Error | any) {
-      toast.error('login Failed. Please Try again');
+  async function handleLogin(e: any) {
+  e.preventDefault();
+  try {
+    const response = await axios.post('http://localhost:5000/auth/login', 
+    { email : email, 
+      password : password 
     }
-  };
+    );
+    const { token } = response.data;
+    setCookie("token", token);
+    console.log(token);
+    setEmail('');
+    setPassword('');
+    toast.success('Login Success');
+    return true;
+
+  } catch (error) {
+    console.error(error);
+    toast.error('login Failed. Please Try again');
+    return false;
+  }
+}
+
   return (
     <Fragment>
       <div className="flex min-h-screen flex-col items-center justify-center space-y-8 bg-main-color px-4">
@@ -241,7 +257,7 @@ const LoginPage: NextPage = () => {
                       <i className="mdi mdi-email-outline text-lg text-gray-400"></i>
                     </div>
                     <input
-                      type="email"
+                      type="text"
                       className="-ml-10 w-full rounded-lg border-2 border-gray-200 py-2 pl-10 pr-3 outline-none focus:border-indigo-500"
                       placeholder="johnsmith@example.com"
                       value={email}
