@@ -63,7 +63,7 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
           </span>
         )}
       </td>
-      <td className='space-x-1'>
+      <td className="space-x-1">
         {tags.map((tags: string, index) => (
           <span
             className="badge border-0 bg-indigo-800 px-4 py-3 text-gray-200 "
@@ -85,7 +85,7 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
       >
         {status}
       </td>
-      <td className="flex justify-center items-center space-x-1">
+      <td className="flex items-center justify-center space-x-1">
         <button
           className="my-1 rounded-lg bg-blue-500 px-6 py-1 text-white hover:bg-blue-900"
           onClick={handleEdit}
