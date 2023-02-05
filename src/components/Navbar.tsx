@@ -12,7 +12,7 @@ const Navbar = () => {
           backgroundColor: 'rgba(29,29,31,.72)',
         }}
       >
-        <div className="container mx-auto justify-between py-2 md:py-0 px-4 md:flex md:items-center md:px-8">
+        <div className="container mx-auto justify-between py-2 px-4 md:flex md:items-center md:py-0 md:px-8">
           <div>
             <div className="flex items-center justify-between md:block md:py-5">
               <Link href="/">
@@ -60,10 +60,11 @@ const Navbar = () => {
           </div>
           <div>
             <div
-              className={`z-50 flex-1 justify-center mt-8 md:mt-0 md:block md:pb-0 ${navbar ? 'block' : 'hidden'
-                }`}
+              className={`z-50 mt-8 flex-1 justify-center md:mt-0 md:block md:pb-0 ${
+                navbar ? 'block' : 'hidden'
+              }`}
             >
-              <ul className="text-center items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+              <ul className="items-center justify-center space-y-8 text-center md:flex md:space-x-6 md:space-y-0">
                 <li className="text-white hover:text-second-color">
                   <Link href="/upload-task" onClick={() => setNavbar(false)}>
                     <button className="w-full rounded-xl bg-green-600 py-1 px-3 hover:bg-green-800">
@@ -79,13 +80,13 @@ const Navbar = () => {
                 <li className="text-white hover:text-second-color">
                   User: 1tpp
                 </li>
-                <li className="text-white hover:text-second-color flex justify-center">
+                <li className="flex justify-center text-white hover:text-second-color">
                   <Link href="/login" onClick={() => setNavbar(false)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="1.5"
+                      strokeWidth="1.5"
                       stroke="currentColor"
                       className="h-6 w-6"
                       style={{
@@ -93,8 +94,8 @@ const Navbar = () => {
                       }}
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
                       />
                     </svg>
