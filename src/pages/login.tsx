@@ -1,37 +1,20 @@
-import { Fragment } from 'react';
 import { NextPage } from 'next';
-import { ChangeEvent, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { setCookie,getCookie  } from 'cookies-next';
-import axios from "axios";
-
+import { useState, ChangeEvent, Fragment } from 'react';
+import { useAuth } from '../contexts/auth';
 
 const LoginPage: NextPage = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [loginForm, setLoginForm] = useState({
+    email: '',
+    password: '',
+  });
 
-  async function handleLogin(e: any) {
-  e.preventDefault();
-  try {
-    const response = await axios.post('http://localhost:5000/auth/login', 
-    { email : email, 
-      password : password 
-    }
-    );
-    const { token } = response.data;
-    setCookie("token", token);
-    console.log(token);
-    setEmail('');
-    setPassword('');
-    toast.success('Login Success');
-    return true;
+  const { login }: any = useAuth();
 
-  } catch (error) {
-    console.error(error);
-    toast.error('login Failed. Please Try again');
-    return false;
-  }
-}
+  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { email, password } = loginForm;
+    await login(email, password);
+  };
 
   return (
     <Fragment>
@@ -44,7 +27,6 @@ const LoginPage: NextPage = () => {
               data-name="Layer 1"
               xmlns="http://www.w3.org/2000/svg"
               width="60%"
-              height="auto"
               viewBox="0 0 744.84799 747.07702"
             >
               <path
@@ -248,21 +230,23 @@ const LoginPage: NextPage = () => {
               <h1 className="text-3xl font-bold text-gray-900">Login</h1>
               <p>Enter your information to login</p>
             </div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="-mx-3 flex">
                 <div className="mb-5 w-full px-3">
                   <label className="px-1 text-xs font-semibold">Email</label>
                   <div className="flex">
                     <div className="pointer-events-none z-10 flex w-10 items-center justify-center pl-1 text-center">
-                      <i className="mdi mdi-email-outline text-lg text-gray-400"></i>
+                      {/* todo icon */}
                     </div>
+
                     <input
-                      type="text"
+                      type="email"
                       className="-ml-10 w-full rounded-lg border-2 border-gray-200 py-2 pl-10 pr-3 outline-none focus:border-indigo-500"
                       placeholder="johnsmith@example.com"
-                      value={email}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setEmail(e.target.value);
+                      value={loginForm.email}
+                      required
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setLoginForm({ ...loginForm, email: e.target.value });
                       }}
                     />
                   </div>
@@ -273,15 +257,19 @@ const LoginPage: NextPage = () => {
                   <label className="px-1 text-xs font-semibold">Password</label>
                   <div className="flex">
                     <div className="pointer-events-none z-10 flex w-10 items-center justify-center pl-1 text-center">
-                      <i className="mdi mdi-lock-outline text-lg text-gray-400"></i>
+                      {/* todo icon */}
                     </div>
                     <input
                       type="password"
                       className="-ml-10 w-full rounded-lg border-2 border-gray-200 py-2 pl-10 pr-3 outline-none focus:border-indigo-500"
                       placeholder="************"
-                      value={password}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setPassword(e.target.value);
+                      value={loginForm.password}
+                      required
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setLoginForm({
+                          ...loginForm,
+                          password: e.target.value,
+                        });
                       }}
                     />
                   </div>
@@ -290,8 +278,8 @@ const LoginPage: NextPage = () => {
               <div className="-mx-3 flex">
                 <div className="mb-5 w-full px-3">
                   <button
+                    type="submit"
                     className="mx-auto block w-full rounded-lg bg-indigo-500 px-3 py-3 font-semibold text-white hover:bg-indigo-700 focus:bg-indigo-700"
-                    onClick={handleLogin}
                   >
                     LOGIN NOW
                   </button>

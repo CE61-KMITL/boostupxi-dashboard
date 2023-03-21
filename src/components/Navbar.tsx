@@ -1,8 +1,12 @@
 import Link from 'next/link';
 import { useState, Fragment } from 'react';
 
+import { useAuth } from '../contexts/auth';
+
 const Navbar = () => {
   const [navbar, setNavbar] = useState<boolean>(false);
+  const { logout }: any = useAuth();
+
   return (
     <Fragment>
       <nav
@@ -73,7 +77,7 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li className="text-white hover:text-second-color">
-                  <Link href="/all-tasks" onClick={() => setNavbar(false)}>
+                  <Link href="/dashboard" onClick={() => setNavbar(false)}>
                     All Tasks
                   </Link>
                 </li>
@@ -81,7 +85,12 @@ const Navbar = () => {
                   User: 1tpp
                 </li>
                 <li className="flex justify-center text-white hover:text-second-color">
-                  <Link href="/login" onClick={() => setNavbar(false)}>
+                  <button
+                    onClick={() => {
+                      setNavbar(false);
+                      logout();
+                    }}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -99,7 +108,7 @@ const Navbar = () => {
                         d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
                       />
                     </svg>
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </div>

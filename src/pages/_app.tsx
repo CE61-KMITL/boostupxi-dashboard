@@ -4,6 +4,8 @@ import '../styles/star.css';
 import type { AppProps } from 'next/app';
 import { Toaster } from 'react-hot-toast';
 import { Fragment } from 'react';
+import { AuthProvider, ProtectRoute } from '../contexts/auth';
+
 const kanit = Kanit({
   subsets: ['latin'],
   weight: '400',
@@ -14,10 +16,6 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Fragment>
       <Head>
-        <style>
-          @import
-          url(&apos;https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css&apos;)
-        </style>
         <title>CE Boostup Task</title>
       </Head>
       <main className={kanit.className}>
@@ -32,7 +30,11 @@ export default function App({ Component, pageProps }: AppProps) {
             }}
           />
         </Fragment>
-        <Component {...pageProps} />
+        <AuthProvider>
+          <ProtectRoute>
+            <Component {...pageProps} />
+          </ProtectRoute>
+        </AuthProvider>
       </main>
     </Fragment>
   );

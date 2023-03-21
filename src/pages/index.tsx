@@ -1,11 +1,9 @@
-import { Fragment } from 'react';
-import Login from './login';
 import { NextPage } from 'next';
 const HomePage: NextPage = () => {
   return (
-    <Fragment>
-      <Login />
-    </Fragment>
+    <main className='container mx-auto min-h-screen flex justify-center items-center'>
+      <h1>Hello, World!</h1>
+    </main>
   );
 };
 

@@ -4,7 +4,6 @@ import { FormType } from '@/interface/upload';
 import { toast } from 'react-hot-toast';
 
 const UploadForm: NextPage = () => {
-  // Constants
   let formInitial: FormType = {
     task_name: '',
     task_level: 1,
