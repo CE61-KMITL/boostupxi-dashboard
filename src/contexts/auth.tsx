@@ -1,6 +1,8 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
+import Errors from '@/components/Errors';
+import Loading from '@/components/Loading';
 
 import { toast } from 'react-hot-toast';
 import api from '../services/api';
@@ -18,7 +20,7 @@ export const AuthProvider = ({ children }: any) => {
       .then(async (res) => {
         const { token } = res.data;
         if (token) {
-          await setCookie('token', token, {
+          setCookie('token', token, {
             maxAge: 86400,
             path: '*',
           });
@@ -86,17 +88,28 @@ export const useAuth = () => useContext(AuthContext);
 export const ProtectRoute = ({ children }: any) => {
   const { isAuthenticated, loading }: any = useAuth();
   const router = useRouter();
-  if (
-    loading ||
-    (!isAuthenticated &&
-      router.pathname !== '/' &&
-      router.pathname !== '/login')
+  if (loading) {
+    return <Loading />;
+  } else if (
+    !isAuthenticated &&
+    router.pathname !== '/' &&
+    router.pathname !== '/login'
   ) {
     return (
-      <div>
-        <h1>Not authorized</h1>
-      </div>
+      <Errors
+        status={401}
+        title="No Authorized"
+        description="Sorry You need to login First."
+      />
     );
+  } else if (
+    router.pathname !== '/dashboard' &&
+    router.pathname !== '/login' &&
+    router.pathname !== '/upload-task'
+  ) {
+    if (typeof window !== 'undefined') {
+      router.push('/404');
+    }
   }
   return children;
 };
