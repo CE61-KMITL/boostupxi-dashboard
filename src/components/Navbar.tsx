@@ -72,13 +72,13 @@ const Navbar = () => {
                 <li className="text-white hover:text-second-color">
                   <Link href="/upload-task" onClick={() => setNavbar(false)}>
                     <button className="w-full rounded-xl bg-green-600 py-1 px-3 hover:bg-green-800">
-                      Create Task
+                      Create
                     </button>
                   </Link>
                 </li>
                 <li className="text-white hover:text-second-color">
                   <Link href="/dashboard" onClick={() => setNavbar(false)}>
-                    All Tasks
+                    Dashboard
                   </Link>
                 </li>
                 <li className="text-white hover:text-second-color">
