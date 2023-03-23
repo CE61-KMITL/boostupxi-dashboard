@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import { Fragment } from 'react';
 
-// Fake Data
 import TaskList from '@/constants/task';
 
 import { TaskForm } from '@/interface/task';
@@ -15,9 +14,9 @@ const TasksPage: NextPage = () => {
       <div className="stars"></div>
       <div className="stars2"></div>
       <div className="stars3"></div>
-      <div className="container mx-auto w-full overflow-x-auto py-12 px-6">
-        <table className="table-zebra z-20 table	w-full overflow-hidden rounded-lg text-sm text-gray-500 shadow-lg dark:text-gray-400">
-          <thead className="table-header-group bg-gray-50 text-center text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+      <div className="container mx-auto mt-20 overflow-auto py-12 px-6">
+        <table className="z-20 table w-full overflow-hidden rounded-lg  text-sm text-gray-500 shadow-lg dark:text-gray-400">
+          <thead className="table-header-group h-10 bg-gray-50 text-center text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th>Task ID</th>
               <th>Task Name</th>
