@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <Fragment>
       <nav
-        className="sticky top-0 z-30 w-full bg-black shadow"
+        className="fixed top-0 z-30 w-full bg-black shadow"
         style={{
           backdropFilter: 'saturate(180%) blur(20px)',
           backgroundColor: 'rgba(29,29,31,.72)',

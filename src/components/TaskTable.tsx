@@ -20,8 +20,8 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
           <span className="rating">
             <input
               type="radio"
-              name="rating-4"
-              className="mask mask-star-2 bg-green-500"
+              name="rating-1"
+              className=" bg-green-500"
               disabled
             />
           </span>
@@ -29,14 +29,14 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
           <span className="rating">
             <input
               type="radio"
-              name="rating-4"
-              className="mask mask-star-2 bg-yellow-500"
+              name="rating-2"
+              className="bg-yellow-500"
               disabled
             />
             <input
               type="radio"
-              name="rating-4"
-              className="mask mask-star-2 bg-yellow-500"
+              name="rating-3"
+              className="bg-yellow-500"
               disabled
             />
           </span>
@@ -45,19 +45,19 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
             <input
               type="radio"
               name="rating-4"
-              className="mask mask-star-2 bg-red-500"
+              className="bg-red-500"
               disabled
             />
             <input
               type="radio"
               name="rating-4"
-              className="mask mask-star-2 bg-red-500"
+              className="bg-red-500"
               disabled
             />
             <input
               type="radio"
               name="rating-4"
-              className="mask mask-star-2 bg-red-500"
+              className="bg-red-500"
               disabled
             />
           </span>
@@ -66,7 +66,7 @@ const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
       <td className="space-x-1">
         {tags.map((tags: string, index) => (
           <span
-            className="badge border-0 bg-indigo-800 px-4 py-3 text-gray-200 "
+            className="rounded-full border-0 bg-indigo-800 px-3 py-[0.1rem] capitalize text-gray-200"
             key={index}
           >
             {tags}

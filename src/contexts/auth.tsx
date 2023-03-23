@@ -1,30 +1,30 @@
+import React from 'react';
 import { createContext, useState, useContext, useEffect } from 'react';
-import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
+
 import Errors from '@/components/Errors';
 import Loading from '@/components/Loading';
 
 import { toast } from 'react-hot-toast';
-import api from '../services/api';
+
+import axios from 'axios';
 
 const AuthContext = createContext({});
 
-export const AuthProvider = ({ children }: any) => {
-  const [user, setUser] = useState(null);
+export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({});
+
+  const router = useRouter();
 
   const login = async (email: string, password: string) => {
-    await api
-      .post('auth/login', { email, password })
-      .then(async (res) => {
+    await axios
+      .post('/api/auth/login', { email, password })
+      .then((res) => {
         const { token } = res.data;
         if (token) {
-          setCookie('token', token, {
-            maxAge: 86400,
-            path: '*',
-          });
+          localStorage.setItem('token', token);
           window.location.href = '/dashboard';
-          toast.success('Logged in successfully');
         }
       })
       .catch((err) => {
@@ -32,33 +32,10 @@ export const AuthProvider = ({ children }: any) => {
       });
   };
 
-  useEffect(() => {
-    async function loadUserFromCookies() {
-      const token = await getCookie('token');
-      if (token) {
-        await api
-          .get('user/profile', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            setUser(res.data);
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-      setLoading(false);
-    }
-    loadUserFromCookies();
-  }, []);
-
   const logout = () => {
-    deleteCookie('token');
-    window.location.href = '/';
-    toast.custom((t) => (
+    localStorage.removeItem('token');
+    router.push('/');
+    toast.custom(() => (
       <div
         className="rounded-lg bg-white p-4 shadow-lg"
         style={{
@@ -72,6 +49,16 @@ export const AuthProvider = ({ children }: any) => {
       </div>
     ));
   };
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.get('/api/user/profile').then((res) => {
+        setUser(res.data);
+      });
+    }
+    setLoading(false);
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -87,6 +74,7 @@ export const useAuth = () => useContext(AuthContext);
 export const ProtectRoute = ({ children }: any) => {
   const { isAuthenticated, loading }: any = useAuth();
   const router = useRouter();
+
   if (loading) {
     return <Loading />;
   } else if (
@@ -102,14 +90,7 @@ export const ProtectRoute = ({ children }: any) => {
         description="Sorry You need to login First."
       />
     );
-  } else if (
-    router.pathname !== '/dashboard' &&
-    router.pathname !== '/login' &&
-    router.pathname !== '/upload-task'
-  ) {
-    if (typeof window !== 'undefined') {
-      router.push('/404');
-    }
   }
+
   return children;
 };
