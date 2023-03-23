@@ -6,10 +6,12 @@ module.exports = () => {
       {
         source: '/:path*',
         destination: 'http://localhost:5000/:path*',
+        
       },
     ];
   };
   return {
+    output: 'standalone',
     rewrites,
     reactStrictMode: true,
   };
