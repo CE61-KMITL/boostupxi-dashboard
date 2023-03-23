@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: any) => {
             maxAge: 86400,
             path: '*',
           });
-          window.location.href = '/dashboard'
+          window.location.href = '/dashboard';
           toast.success('Logged in successfully');
         }
       })
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: any) => {
 
   const logout = () => {
     deleteCookie('token');
-    window.location.href = '/'
+    window.location.href = '/';
     toast.custom((t) => (
       <div
         className="rounded-lg bg-white p-4 shadow-lg"
