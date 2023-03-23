@@ -10,7 +10,6 @@ import api from '../services/api';
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: any) => {
-  const router = useRouter();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -24,7 +23,7 @@ export const AuthProvider = ({ children }: any) => {
             maxAge: 86400,
             path: '*',
           });
-          router.push('/dashboard');
+          window.location.href = '/dashboard'
           toast.success('Logged in successfully');
         }
       })
@@ -58,7 +57,7 @@ export const AuthProvider = ({ children }: any) => {
 
   const logout = () => {
     deleteCookie('token');
-    router.push('/');
+    window.location.href = '/'
     toast.custom((t) => (
       <div
         className="rounded-lg bg-white p-4 shadow-lg"
@@ -93,7 +92,8 @@ export const ProtectRoute = ({ children }: any) => {
   } else if (
     !isAuthenticated &&
     router.pathname !== '/' &&
-    router.pathname !== '/login'
+    router.pathname !== '/login' &&
+    router.pathname !== '/404'
   ) {
     return (
       <Errors
