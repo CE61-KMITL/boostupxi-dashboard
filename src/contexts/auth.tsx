@@ -2,8 +2,7 @@ import React from 'react';
 import { createContext, useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import Errors from '@/components/Errors';
-import Loading from '@/components/Loading';
+import { Errors, Loading } from '@/components';
 
 import { toast } from 'react-hot-toast';
 
@@ -27,7 +26,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
           window.location.href = '/dashboard';
         }
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error('Invalid credentials');
       });
   };

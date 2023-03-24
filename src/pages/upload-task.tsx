@@ -1,18 +1,12 @@
-import Navbar from '@/components/Navbar';
-import UploadForm from '../components/UploadForm';
-import { Fragment } from 'react';
+import { UploadForm } from '@/components';
 import { NextPage } from 'next';
+import Layouts from '@/layouts/Layouts';
 
 const UploadTaskPage: NextPage = () => {
   return (
-    <Fragment>
-      <Navbar />
-      <section className="min-h-screen bg-main-color">
-        <div className="mx-auto max-w-6xl bg-white px-6 pt-20">
-          <UploadForm />
-        </div>
-      </section>
-    </Fragment>
+    <Layouts>
+      <UploadForm />
+    </Layouts>
   );
 };
 
