@@ -1,38 +1,78 @@
 import { NextPage } from 'next';
-import TaskList from '@/constants/task';
-import { TaskForm } from '@/interface/task';
-import TaskTable from '@/components/TaskTable';
+import { ITask } from '@/interface/task';
+import { TaskTable } from '@/components';
 import Layouts from '@/layouts/Layouts';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const TasksPage: NextPage = () => {
+  const [taskData, setTaskData] = useState([]);
+
+  const getTaskData = async () => {
+    const token: string | null = localStorage.getItem('token');
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      await axios.get('http://localhost:5000/tasks').then((res) => {
+        setTaskData(res.data);
+      });
+    }
+  };
+
+  useEffect(() => {
+    getTaskData();
+  }, []);
+
   return (
     <Layouts>
       <div className="stars"></div>
       <div className="stars2"></div>
       <div className="stars3"></div>
-      <div className="container mx-auto mt-20 overflow-auto py-12 px-6">
-        <table className="z-20 table w-full overflow-hidden rounded-lg  text-sm text-gray-500 shadow-lg dark:text-gray-400">
-          <thead className="table-header-group h-10 bg-gray-50 text-center text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+      <div className="container mx-auto mt-20 overflow-auto rounded-lg py-12 px-6">
+        <table className="mx-auto my-auto w-full text-center text-sm text-gray-500 shadow-md dark:text-gray-400">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th>Task ID</th>
-              <th>Task Name</th>
-              <th>Author</th>
-              <th>Levels</th>
-              <th>Tags</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th scope="col" className="px-6 py-3">
+                Task Name
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Task Description
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Author
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Level
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Task Tags
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Task Hint
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Task Files
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
-            {TaskList &&
-              TaskList.map((val: TaskForm, index: number) => (
+            {taskData &&
+              taskData.map((val: ITask) => (
                 <TaskTable
-                  key={index}
-                  id={val.id}
+                  key={val._id}
                   title={val.title}
+                  description={val.description}
                   author={val.author}
                   level={val.level}
                   tags={val.tags}
+                  hint={val.hint}
+                  files={val.files}
+                  testcases={val.testcases}
                   status={val.status}
                 />
               ))}

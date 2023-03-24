@@ -1,102 +1,81 @@
-import { TaskForm } from '@/interface/task';
+import { IFiles, ITask } from '@/interface/task';
+import Link from 'next/link';
+import { Fragment } from 'react';
 
-const TaskTable = ({ id, title, author, level, tags, status }: TaskForm) => {
-  const handleEdit = () => {
-    return id;
-  };
-
+const TaskTable = ({
+  title,
+  description,
+  author,
+  level,
+  tags,
+  hint,
+  files,
+  status,
+}: ITask) => {
   return (
-    <tr
-      className="hover border-t bg-white text-center dark:border-gray-700 dark:bg-gray-900"
-      key={id}
-    >
-      <td className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-        {id}
-      </td>
-      <td>{title}</td>
-      <td>{author}</td>
-      <td>
-        {level === 1 ? (
-          <span className="rating">
-            <input
-              type="radio"
-              name="rating-1"
-              className=" bg-green-500"
-              disabled
-            />
-          </span>
-        ) : level === 2 ? (
-          <span className="rating">
-            <input
-              type="radio"
-              name="rating-2"
-              className="bg-yellow-500"
-              disabled
-            />
-            <input
-              type="radio"
-              name="rating-3"
-              className="bg-yellow-500"
-              disabled
-            />
-          </span>
-        ) : (
-          <span className="rating">
-            <input
-              type="radio"
-              name="rating-4"
-              className="bg-red-500"
-              disabled
-            />
-            <input
-              type="radio"
-              name="rating-4"
-              className="bg-red-500"
-              disabled
-            />
-            <input
-              type="radio"
-              name="rating-4"
-              className="bg-red-500"
-              disabled
-            />
-          </span>
-        )}
-      </td>
-      <td className="space-x-1">
-        {tags.map((tags: string, index) => (
-          <span
-            className="rounded-full border-0 bg-indigo-800 px-3 py-[0.1rem] capitalize text-gray-200"
-            key={index}
-          >
-            {tags}
-          </span>
-        ))}
-      </td>
-
-      <td
-        className={
-          status === 'approve'
-            ? 'font-bold uppercase text-green-700'
-            : status === 'queue'
-            ? 'font-bold uppercase text-yellow-700'
-            : 'font-bold uppercase text-red-700'
-        }
-      >
-        {status}
-      </td>
-      <td className="flex items-center justify-center space-x-1">
-        <button
-          className="my-1 rounded-lg bg-blue-500 px-6 py-1 text-white hover:bg-blue-900"
-          onClick={handleEdit}
+    <Fragment>
+      <tr className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
+        <th
+          scope="row"
+          className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
         >
-          Edit
-        </button>
-        <button className="my-1 rounded-lg bg-green-500 bg-opacity-100 px-4 py-1 text-white hover:bg-opacity-70">
-          Preview
-        </button>
-      </td>
-    </tr>
+          {title}
+        </th>
+        <td className="px-6 py-4 sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
+          {description}
+        </td>
+        <td className="px-6 py-4 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+          {author}
+        </td>
+        <td className="px-6 py-4 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+          {level}
+        </td>
+        <td className="px-6 py-4">
+          {tags ? (
+            tags.map((tag: string, index: number) => (
+              <span
+                className="mr-3 mb-3 inline-block rounded-lg bg-third-color px-2 py-1 text-xs font-bold text-gray-600"
+                key={index}
+              >
+                {tag}
+              </span>
+            ))
+          ) : (
+            <span className="text-sm leading-none text-gray-600">No tags</span>
+          )}
+        </td>
+        <td className="px-6 py-4 sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
+          {hint}
+        </td>
+        <td className="px-6 py-4">
+          {files ? (
+            files.map((file: IFiles, index: number) => (
+              <div className="flex items-center" key={index}>
+                <Link
+                  className="ml-4 text-sm leading-none text-gray-600"
+                  href={file.url}
+                >
+                  {file.url}
+                </Link>
+              </div>
+            ))
+          ) : (
+            <span className="text-sm leading-none text-gray-600">No Files</span>
+          )}
+        </td>
+        <td className="px-6 py-4 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+          {status}
+        </td>
+        <td className="px-6 py-4">
+          <button className="font-medium text-blue-600 hover:underline dark:text-blue-500">
+            Edit
+          </button>
+          <button className="font-medium text-blue-600 hover:underline dark:text-blue-500">
+            Preview
+          </button>
+        </td>
+      </tr>
+    </Fragment>
   );
 };
 
