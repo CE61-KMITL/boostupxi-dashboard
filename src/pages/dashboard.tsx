@@ -1,16 +1,12 @@
 import { NextPage } from 'next';
-import { Fragment } from 'react';
-
 import TaskList from '@/constants/task';
-
 import { TaskForm } from '@/interface/task';
-import Navbar from '@/components/Navbar';
 import TaskTable from '@/components/TaskTable';
+import Layouts from '@/layouts/Layouts';
 
 const TasksPage: NextPage = () => {
   return (
-    <Fragment>
-      <Navbar />
+    <Layouts>
       <div className="stars"></div>
       <div className="stars2"></div>
       <div className="stars3"></div>
@@ -43,7 +39,7 @@ const TasksPage: NextPage = () => {
           </tbody>
         </table>
       </div>
-    </Fragment>
+    </Layouts>
   );
 };
 
