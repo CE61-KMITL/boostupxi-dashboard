@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useState, Fragment } from 'react';
-
 import { useAuth } from '../contexts/auth';
 
 const Navbar = () => {
@@ -81,7 +80,7 @@ const Navbar = () => {
                     Dashboard
                   </Link>
                 </li>
-                <li className="text-white hover:text-second-color">
+                <li className="cursor-pointer text-white hover:text-second-color">
                   User: 1tpp
                 </li>
                 <li className="flex justify-center text-white hover:text-second-color">

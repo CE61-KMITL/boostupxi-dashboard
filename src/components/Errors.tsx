@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import { NextPage } from 'next';
+import { Fragment } from 'react';
 import Link from 'next/link';
 
 interface ErrorsProps {
@@ -8,7 +7,7 @@ interface ErrorsProps {
   description: string;
 }
 
-const Errors: NextPage<ErrorsProps> = ({ status, title, description }) => {
+const Errors = ({ status, title, description }: ErrorsProps) => {
   return (
     <Fragment>
       <div className="error-bg 22 flex min-h-screen items-center justify-center bg-indigo-500 bg-cover bg-fixed bg-bottom">
