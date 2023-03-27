@@ -3,23 +3,17 @@ import { ITask } from '@/interface/task';
 import { TaskTable } from '@/components';
 import Layouts from '@/layouts/Layouts';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { getTasksData } from '@/services/task.services';
 
 const TasksPage: NextPage = () => {
   const [taskData, setTaskData] = useState([]);
 
-  const getTaskData = async () => {
-    const token: string | null = localStorage.getItem('token');
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      await axios.get(`/api/tasks`).then((res) => {
-        setTaskData(res.data);
-      });
-    }
-  };
-
   useEffect(() => {
-    getTaskData();
+    const fetchData = async () => {
+      const response = await getTasksData();
+      setTaskData(response);
+    };
+    fetchData();
   }, []);
 
   return (

@@ -49,7 +49,7 @@ const TaskTable = ({
           {status}
         </td>
         <td className="px-6 py-4">
-          <button className="font-medium text-blue-600 hover:underline dark:text-blue-500">
+          <button className="px-2 font-medium text-blue-600 hover:underline dark:text-blue-500">
             Edit
           </button>
           <button className="font-medium text-blue-600 hover:underline dark:text-blue-500">
