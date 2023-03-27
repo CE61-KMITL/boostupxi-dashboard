@@ -9,23 +9,22 @@ function Task() {
   const router = useRouter();
   const { id } = router.query;
 
-  const getTaskById = async () => {
-    if (id) {
-      const token: string | null = localStorage.getItem('token');
-      if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        try {
-          const res = await axios.get(`/api/tasks/${id}`);
-          setTaskDataById(res.data);
-          setIsLoading(false);
-        } catch (error: Error | any) {
-          setIsLoading(false);
+  useEffect(() => {
+    const getTaskById = async () => {
+      if (id) {
+        const token: string | null = localStorage.getItem('token');
+        if (token) {
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          try {
+            const res = await axios.get(`/api/tasks/${id}`);
+            setTaskDataById(res.data);
+            setIsLoading(false);
+          } catch (error: Error | any) {
+            setIsLoading(false);
+          }
         }
       }
-    }
-  };
-
-  useEffect(() => {
+    };
     getTaskById();
   }, [id]);
 

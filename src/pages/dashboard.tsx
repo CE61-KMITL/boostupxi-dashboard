@@ -47,12 +47,6 @@ const TasksPage: NextPage = () => {
                 Task Tags
               </th>
               <th scope="col" className="px-6 py-3">
-                Task Hint
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Task Files
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Status
               </th>
               <th scope="col" className="px-6 py-3">

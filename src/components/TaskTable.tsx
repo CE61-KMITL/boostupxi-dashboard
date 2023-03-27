@@ -1,4 +1,4 @@
-import { IFiles, ITask } from '@/interface/task';
+import { ITask } from '@/interface/task';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
@@ -9,8 +9,6 @@ const TaskTable = ({
   author,
   level,
   tags,
-  hint,
-  files,
   status,
 }: ITask) => {
   return (
@@ -22,49 +20,32 @@ const TaskTable = ({
         >
           {title}
         </th>
-        <td className="px-6 py-4 sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
+        <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
           {description}
         </td>
-        <td className="px-6 py-4 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+        <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {author}
         </td>
-        <td className="px-6 py-4 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+        <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {level}
         </td>
         <td className="px-6 py-4">
           {tags ? (
             tags.map((tag: string, index: number) => (
               <span
-                className="mr-3 mb-3 inline-block rounded-lg bg-third-color px-2 py-1 text-xs font-bold text-gray-600"
+                className="mr-3 mb-3 inline-block rounded-lg bg-third-color px-2 py-1 text-xs font-medium text-gray-600"
                 key={index}
               >
                 {tag}
               </span>
             ))
           ) : (
-            <span className="text-sm leading-none text-gray-600">No tags</span>
+            <span className="text-sm leading-none text-gray-600 dark:text-white">
+              No tags
+            </span>
           )}
         </td>
-        <td className="px-6 py-4 sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
-          {hint}
-        </td>
-        <td className="px-6 py-4">
-          {files ? (
-            files.map((file: IFiles, index: number) => (
-              <div className="flex items-center" key={index}>
-                <Link
-                  className="ml-4 text-sm leading-none text-gray-600"
-                  href={file.url}
-                >
-                  {file.url}
-                </Link>
-              </div>
-            ))
-          ) : (
-            <span className="text-sm leading-none text-gray-600">No Files</span>
-          )}
-        </td>
-        <td className="px-6 py-4 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+        <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {status}
         </td>
         <td className="px-6 py-4">
