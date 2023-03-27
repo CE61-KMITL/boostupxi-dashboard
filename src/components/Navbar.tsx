@@ -81,7 +81,9 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li className="cursor-pointer text-white hover:text-second-color">
-                  User: 1tpp
+                  <Link href="/profile" onClick={() => setNavbar(false)}>
+                    User: 1tpp
+                  </Link>
                 </li>
                 <li className="flex justify-center text-white hover:text-second-color">
                   <button
