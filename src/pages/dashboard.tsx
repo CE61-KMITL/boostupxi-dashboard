@@ -3,23 +3,17 @@ import { ITask } from '@/interface/task';
 import { TaskTable } from '@/components';
 import Layouts from '@/layouts/Layouts';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { getTasksData } from '@/services/task.services';
 
 const TasksPage: NextPage = () => {
   const [taskData, setTaskData] = useState([]);
 
-  const getTaskData = async () => {
-    const token: string | null = localStorage.getItem('token');
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      await axios.get('http://localhost:5000/tasks').then((res) => {
-        setTaskData(res.data);
-      });
-    }
-  };
-
   useEffect(() => {
-    getTaskData();
+    const fetchData = async () => {
+      const response = await getTasksData();
+      setTaskData(response);
+    };
+    fetchData();
   }, []);
 
   return (
@@ -47,12 +41,6 @@ const TasksPage: NextPage = () => {
                 Task Tags
               </th>
               <th scope="col" className="px-6 py-3">
-                Task Hint
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Task Files
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Status
               </th>
               <th scope="col" className="px-6 py-3">
@@ -65,6 +53,7 @@ const TasksPage: NextPage = () => {
               taskData.map((val: ITask) => (
                 <TaskTable
                   key={val._id}
+                  _id={val._id}
                   title={val.title}
                   description={val.description}
                   author={val.author}

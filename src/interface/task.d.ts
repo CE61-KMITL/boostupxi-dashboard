@@ -1,5 +1,5 @@
 export interface ITask {
-  _id?: string;
+  _id: Key | null | undefined;
   title: string;
   description: string;
   author: string;
