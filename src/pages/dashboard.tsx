@@ -12,7 +12,7 @@ const TasksPage: NextPage = () => {
     const token: string | null = localStorage.getItem('token');
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      await axios.get('http://localhost:5000/tasks').then((res) => {
+      await axios.get(`/api/tasks`).then((res) => {
         setTaskData(res.data);
       });
     }
@@ -65,6 +65,7 @@ const TasksPage: NextPage = () => {
               taskData.map((val: ITask) => (
                 <TaskTable
                   key={val._id}
+                  _id={val._id}
                   title={val.title}
                   description={val.description}
                   author={val.author}

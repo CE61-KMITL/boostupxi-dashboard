@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Fragment } from 'react';
 
 const TaskTable = ({
+  _id,
   title,
   description,
   author,
@@ -71,7 +72,7 @@ const TaskTable = ({
             Edit
           </button>
           <button className="font-medium text-blue-600 hover:underline dark:text-blue-500">
-            Preview
+            <Link href={`/task/${_id}`}>Preview</Link>
           </button>
         </td>
       </tr>
