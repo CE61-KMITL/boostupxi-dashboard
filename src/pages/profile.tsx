@@ -26,6 +26,7 @@ const ProfilePage: NextPage = (id) => {
     username: 'Teetouch Jaknamon',
     email: 'teawkrub.ghs@gmail.com',
     role: 'Admin',
+    tasks: taskData,
   };
 
   return (
