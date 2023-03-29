@@ -1,6 +1,6 @@
 interface TaskForm {
   index?: number;
-  id: string;
+  _id: string;
   title: string;
   author: string;
   level: number;
@@ -10,7 +10,7 @@ interface TaskForm {
 
 const TaskList: TaskForm[] = [
   {
-    id: '1',
+    _id: '1',
     title: 'Direct Proof',
     author: 'Thanunchai Threepak',
     level: 1,
@@ -18,7 +18,7 @@ const TaskList: TaskForm[] = [
     status: 'queue',
   },
   {
-    id: '2',
+    _id: '2',
     title: 'Finite State Machine',
     author: 'Thana Hongsuwan',
     level: 2,
@@ -26,7 +26,7 @@ const TaskList: TaskForm[] = [
     status: 'approve',
   },
   {
-    id: '3',
+    _id: '3',
     title: 'Try hack me',
     author: '1tpp',
     level: 3,
@@ -34,7 +34,7 @@ const TaskList: TaskForm[] = [
     status: 'approve',
   },
   {
-    id: '4',
+    _id: '4',
     title: 'Clone Facebook',
     author: 'khris-xp',
     level: 2,
@@ -42,7 +42,7 @@ const TaskList: TaskForm[] = [
     status: 'reject',
   },
   {
-    id: '5',
+    _id: '5',
     title: 'Happy Hacking',
     author: 'kittonn',
     level: 3,
