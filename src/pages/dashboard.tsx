@@ -63,6 +63,7 @@ const TasksPage: NextPage = () => {
                   files={val.files}
                   testcases={val.testcases}
                   status={val.status}
+                  solution_code={val.solution_code}
                 />
               ))}
           </tbody>

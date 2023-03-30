@@ -24,7 +24,7 @@ const TaskTable = ({
           {description}
         </td>
         <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-          {author}
+          {author.username}
         </td>
         <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {level}
