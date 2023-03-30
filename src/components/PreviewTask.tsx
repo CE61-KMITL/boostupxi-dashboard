@@ -12,6 +12,7 @@ const PreviewTask = ({
   hint,
   status,
   testcases,
+  solution_code,
 }: ITask) => {
   return (
     <Layouts>
@@ -27,7 +28,7 @@ const PreviewTask = ({
             <div className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none">
               <label className="text-sm text-gray-600">Author</label>
               <p className="text-navy-700 text-base font-medium dark:text-black">
-                {author}
+                {author.username}
               </p>
             </div>
 

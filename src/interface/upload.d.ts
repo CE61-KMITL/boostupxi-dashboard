@@ -1,15 +1,20 @@
 export interface FormType {
-  task_name: string;
-  task_level: number;
+  title: string;
+  level: number;
   files: any[];
-  task_tags: string[];
-  task_hint: string;
-  task_desc: string;
-  taskIO: { id: string; input: string; output: string }[];
-  author: string;
+  tags: string[];
+  hint: string;
+  description: string;
+  testcases: testcase[];
+  solution_code: string;
 }
 
 export interface fileUpload {
   file: File;
   name: string;
+}
+export interface testcase {
+  input: string;
+  output: string;
+  published: boolean;
 }

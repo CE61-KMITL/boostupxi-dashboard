@@ -28,7 +28,7 @@ const ProfilePage: NextPage = (id) => {
     role: 'Admin',
     tasks: taskData,
   };
-
+  console.log(taskData);
   return (
     <Layouts>
       <div className="min-h-screen flex-col items-center justify-center bg-black px-6 pt-20">
@@ -75,6 +75,7 @@ const ProfilePage: NextPage = (id) => {
                     files={val.files}
                     testcases={val.testcases}
                     status={val.status}
+                    solution_code={val.solution_code}
                   />
                 ))}
             </tbody>

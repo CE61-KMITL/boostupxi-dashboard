@@ -43,6 +43,7 @@ function Task() {
           hint={taskDataById.hint}
           status={taskDataById.status}
           testcases={taskDataById.testcases}
+          solution_code={taskDataById.solution_code}
         />
       )}
     </>
