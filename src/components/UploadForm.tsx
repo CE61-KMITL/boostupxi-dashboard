@@ -44,7 +44,6 @@ const UploadForm = () => {
           { id: String(formData.taskIO.length + 1), input: '', output: '' },
         ],
       });
-      toast.success('Add Test Case');
     } catch (err: Error | any) {
       return err;
     }
@@ -241,7 +240,7 @@ const UploadForm = () => {
                     ref={inputRef}
                   />
                   {formData.files.map((file: any, index: any) => (
-                    <div className="mb-6 flex flex-wrap" key={index}>
+                    <div className="my-6 flex flex-wrap" key={index}>
                       <p>{file.name}</p>
                       <br />
                       <button

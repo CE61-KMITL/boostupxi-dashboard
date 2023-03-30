@@ -1,38 +1,30 @@
-import React from 'react';
-import { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Errors, Loading } from '@/components';
-import axios from 'axios';
-import { login, logout } from '@/services/user.services';
+import { login, logout, getUser } from '@/services/user.services';
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const getUser = async () => {
-      const token = localStorage.getItem('token');
+    const fetchUser = async () => {
       try {
-        if (token) {
-          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          const response = await axios.get('/api/user/profile');
-          setUser(response.data);
-        }
-      } catch (error) {
-        logout();
-      } finally {
-        setLoading(false);
+        const response = await getUser();
+        setUser(response);
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
       }
     };
-
-    getUser();
+    fetchUser();
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: !!user, user, loading, login, logout }}
+      value={{ isAuthenticated: !!user, user, isLoading, login, logout }}
     >
       {children}
     </AuthContext.Provider>
@@ -42,10 +34,10 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
 export const useAuth = () => useContext(AuthContext);
 
 export const ProtectRoute = ({ children }: any) => {
-  const { isAuthenticated, loading }: any = useAuth();
+  const { isAuthenticated, isLoading }: any = useAuth();
   const router = useRouter();
 
-  if (loading) {
+  if (isLoading) {
     return <Loading />;
   }
 

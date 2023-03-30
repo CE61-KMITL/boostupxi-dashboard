@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/auth';
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState<boolean>(false);
-  const { logout }: any = useAuth();
+  const { logout, user }: any = useAuth();
 
   return (
     <Fragment>
@@ -82,7 +82,7 @@ const Navbar = () => {
                 </li>
                 <li className="cursor-pointer text-white hover:text-second-color">
                   <Link href="/profile" onClick={() => setNavbar(false)}>
-                    User: 1tpp
+                    User : {user.username}
                   </Link>
                 </li>
                 <li className="flex justify-center text-white hover:text-second-color">
