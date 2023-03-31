@@ -7,6 +7,7 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuditor, setIsAuditor] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -15,6 +16,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
         const response = await getProfile();
         setUser(response);
         setIsLoading(false);
+        response.role === 'auditor' ? setIsAuditor(true) : setIsAuditor(false);
       } catch (err) {
         setIsLoading(false);
       }
@@ -24,7 +26,14 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: !!user, user, isLoading, login, logout }}
+      value={{
+        isAuthenticated: !!user,
+        user,
+        isLoading,
+        login,
+        logout,
+        isAuditor,
+      }}
     >
       {children}
     </AuthContext.Provider>

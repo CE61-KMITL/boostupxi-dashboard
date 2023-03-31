@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-import TaskList from '../constants/task';
 import { UserProfile } from '@/interface/user';
 import ProfileCard from '../components/ProfileCard';
 import Layouts from '@/layouts/Layouts';
@@ -20,14 +19,12 @@ const ProfilePage: NextPage = () => {
     fetchData();
   }, []);
 
-  console.log(taskData);
-
   return (
     <Layouts>
       <div className="min-h-screen flex-col items-center justify-center bg-black px-6 pt-20">
         <div className="container mx-auto max-w-screen-xl">
           <ProfileCard {...taskData} />
-          <table className="mx-auto my-auto w-full text-center text-sm text-gray-500 shadow-md dark:text-gray-400">
+          <table className="mx-auto my-auto w-full text-sm text-gray-500 shadow-md dark:text-gray-400">
             <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
