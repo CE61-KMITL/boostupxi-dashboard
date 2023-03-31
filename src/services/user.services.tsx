@@ -5,7 +5,7 @@ import router from 'next/router';
 export const login = async (email: string, password: string) => {
   try {
     const res = await axios.post('/api/auth/login', { email, password });
-    const token = res.headers.authorization;
+    const token: string | null = res.headers.authorization;
     if (token) {
       localStorage.setItem('token', token);
       window.location.href = '/profile';

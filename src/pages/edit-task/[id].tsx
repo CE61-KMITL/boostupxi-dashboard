@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { Loading, PreviewTask } from '@/components';
+import { Loading } from '@/components';
 import { getTaskById, UpdateTaskById } from '@/services/task.services';
 import { ParsedUrlQuery } from 'querystring';
 import { FormType, testcase } from '@/interface/upload';

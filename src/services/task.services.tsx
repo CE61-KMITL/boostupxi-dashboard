@@ -19,8 +19,8 @@ export const getTaskById = async ({ id }: TaskPageQuery) => {
   const token: string | null = localStorage.getItem('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const res = await axios.get(`/api/tasks/${id}`);
-    return res.data;
+    const response = await axios.get(`/api/tasks/${id}`);
+    return response.data;
   }
 };
 
