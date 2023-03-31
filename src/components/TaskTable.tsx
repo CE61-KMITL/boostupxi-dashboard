@@ -50,7 +50,7 @@ const TaskTable = ({
         </td>
         <td className="px-6 py-4">
           <button className="px-2 font-medium text-blue-600 hover:underline dark:text-blue-500">
-            Edit
+            <Link href={`/edit-task/${_id}`}>Edit</Link>
           </button>
           <button className="font-medium text-blue-600 hover:underline dark:text-blue-500">
             <Link href={`/task/${_id}`}>Preview</Link>

@@ -11,6 +11,12 @@ export interface ITask {
   draft?: boolean;
   status: string;
   solution_code: string;
+
+  status: 'queue';
+  created_at: string | null;
+  updated_at: string | null;
+  draft: boolean | null;
+  __v: number;
 }
 export interface IFiles {
   url: string;

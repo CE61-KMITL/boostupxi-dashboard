@@ -29,3 +29,12 @@ export const logout = () => {
     </div>
   ));
 };
+
+export const getProfile = async () => {
+  const token: string | null = localStorage.getItem('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const res = await axios.get(`/api/user/profile`);
+    return res.data;
+  }
+};

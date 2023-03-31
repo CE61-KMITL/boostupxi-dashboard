@@ -64,6 +64,9 @@ const TasksPage: NextPage = () => {
                   testcases={val.testcases}
                   status={val.status}
                   solution_code={val.solution_code}
+                  created_at={val.created_at}
+                  updated_at={val.updated_at}
+                  __v={val.__v}
                 />
               ))}
           </tbody>
