@@ -1,14 +1,12 @@
 import { UserProfile } from '@/interface/user';
+import Image from 'next/image';
+import Avatar from '/public/avatar-image.jpg';
 
 const ProfileCard = ({ _id, username, email, role }: UserProfile) => {
   return (
     <div className="my-4 flex rounded-lg bg-white shadow-lg">
       <div className="w-1/10">
-        <img
-          src="https://th.bing.com/th/id/OIP.3IsXMskZyheEWqtE3Dr7JwHaGe?pid=ImgDet&rs=1"
-          alt="Profile Image"
-          width={150}
-        />
+        <Image src={Avatar} alt={'Avatar Image'} width={150} />
       </div>
 
       <div className="w-9/10 px-6 py-4">
