@@ -1,11 +1,12 @@
 import { IFiles, ITask, ITestCases } from '@/interface/task';
 import Link from 'next/link';
 import { Fragment, useState, useEffect } from 'react';
-import { getTaskById } from '@/services/task.services';
+import { getTaskById, handleApproveReject } from '@/services/task.services';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import c from 'react-syntax-highlighter/dist/cjs/languages/prism/c';
 import { vs2015 } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { useAuth } from '@/contexts/auth';
+import { toast } from 'react-hot-toast';
 
 const TaskTable = ({
   _id,
@@ -32,6 +33,30 @@ const TaskTable = ({
     };
     fetchDataById();
   }, [id]);
+
+  const handleApprove = (id: string) => {
+    try {
+      handleApproveReject({
+        id: id,
+        data: { status: 'approve', draft: false },
+      });
+      toast.success('Already Approve');
+    } catch (err) {
+      return err;
+    }
+  };
+
+  const handleReject = (id: string) => {
+    try {
+      handleApproveReject({
+        id: id,
+        data: { status: 'reject', draft: false },
+      });
+      toast.error('Already Reject');
+    } catch (err) {
+      return err;
+    }
+  };
 
   return (
     <Fragment>
@@ -222,10 +247,16 @@ const TaskTable = ({
                     </button>
                     {isAuditor ? (
                       <div>
-                        <button className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300 ">
+                        <button
+                          className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300"
+                          onClick={() => handleApprove(id)}
+                        >
                           Approve
                         </button>
-                        <button className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300 ">
+                        <button
+                          className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
+                          onClick={() => handleReject(id)}
+                        >
                           Reject
                         </button>
                       </div>
