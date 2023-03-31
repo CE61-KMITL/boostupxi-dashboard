@@ -2,12 +2,7 @@ export interface ITask {
   _id: Key | null | undefined;
   title: string;
   description: string;
-  author:
-    | {
-        id: string;
-        username: string;
-      }
-    | any;
+  author: author | any;
   level: number;
   tags: string[] | null;
   hint: string;
@@ -15,6 +10,7 @@ export interface ITask {
   testcases?: ITestCases[] | null;
   draft?: boolean;
   status: string;
+  solution_code: string;
 }
 
 export interface IFiles {
@@ -25,4 +21,9 @@ export interface ITestCases {
   input: string;
   output: string;
   published: boolean;
+}
+
+export interface author {
+  username: string;
+  id: string;
 }

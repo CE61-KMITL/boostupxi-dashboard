@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Loading, PreviewTask } from '@/components';
+import { Loading } from '@/components';
 import { getTaskById } from '@/services/task.services';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -27,26 +27,7 @@ function Task() {
     fetchDataById();
   }, [id]);
 
-  return (
-    <>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <PreviewTask
-          _id={taskDataById._id}
-          title={taskDataById.title}
-          description={taskDataById.description}
-          author={taskDataById.author.username}
-          level={taskDataById.level}
-          tags={taskDataById.tags}
-          files={taskDataById.files}
-          hint={taskDataById.hint}
-          status={taskDataById.status}
-          testcases={taskDataById.testcases}
-        />
-      )}
-    </>
-  );
+  return <>{isLoading ? <Loading /> : <></>}</>;
 }
 
 export default Task;
