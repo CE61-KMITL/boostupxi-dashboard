@@ -36,7 +36,7 @@ function Task() {
           _id={taskDataById._id}
           title={taskDataById.title}
           description={taskDataById.description}
-          author={taskDataById.author}
+          author={taskDataById.author.username}
           level={taskDataById.level}
           tags={taskDataById.tags}
           files={taskDataById.files}

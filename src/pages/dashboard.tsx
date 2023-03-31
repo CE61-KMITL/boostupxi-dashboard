@@ -56,13 +56,11 @@ const TasksPage: NextPage = () => {
                   _id={val._id}
                   title={val.title}
                   description={val.description}
-                  author={val.author}
+                  author={val.author.username}
                   level={val.level}
+                  status={val.status}
                   tags={val.tags}
                   hint={val.hint}
-                  files={val.files}
-                  testcases={val.testcases}
-                  status={val.status}
                 />
               ))}
           </tbody>
