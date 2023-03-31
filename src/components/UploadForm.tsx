@@ -48,7 +48,6 @@ const UploadForm = () => {
           { input: '', output: '', published: false },
         ],
       });
-      toast.success('Add Test Case');
     } catch (err: Error | any) {
       return err;
     }

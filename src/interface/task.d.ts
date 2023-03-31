@@ -2,7 +2,7 @@ export interface ITask {
   _id: Key | null | undefined;
   title: string;
   description: string;
-  author: author;
+  author: author | any;
   level: number;
   tags: string[] | null;
   hint: string;
@@ -12,6 +12,7 @@ export interface ITask {
   status: string;
   solution_code: string;
 }
+
 export interface IFiles {
   url: string;
   key: string;
