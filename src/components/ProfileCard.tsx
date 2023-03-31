@@ -1,6 +1,4 @@
 import { UserProfile } from '@/interface/user';
-import { TaskTable } from '@/components';
-import { ITask } from '@/interface/task';
 
 const ProfileCard = ({ _id, username, email, role }: UserProfile) => {
   return (

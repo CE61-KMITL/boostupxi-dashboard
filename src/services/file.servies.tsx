@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { IFiles } from '@/interface/task';
-import { ParsedUrlQuery } from 'querystring';
 
 export const uploadFiles = async (files: File[]) => {
   const token: string | null = localStorage.getItem('token');

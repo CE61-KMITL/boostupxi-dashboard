@@ -5,6 +5,7 @@ import { getTaskById } from '@/services/task.services';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import c from 'react-syntax-highlighter/dist/cjs/languages/prism/c';
 import { vs2015 } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { useAuth } from '@/contexts/auth';
 
 const TaskTable = ({
   _id,
@@ -18,9 +19,7 @@ const TaskTable = ({
   const [taskDataById, setTaskDataById] = useState<any>({});
   const [showModal, setShowModal] = useState(false);
   const [id, setId] = useState('');
-  const customStyle = {
-    borderRadius: '10px',
-  };
+  const { isAuditor }: any = useAuth();
 
   useEffect(() => {
     const fetchDataById = async () => {
@@ -214,14 +213,23 @@ const TaskTable = ({
                         )}
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6 dark:border-gray-600">
+                  <div className="flex justify-between">
                     <button
-                      type="button"
-                      className="rounded-lg border border-gray-200 bg-red-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-600 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                      className="m-5 rounded-xl border border-gray-200 bg-sky-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-sky-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-sky-300 "
                       onClick={() => setShowModal(false)}
                     >
                       Close
                     </button>
+                    {isAuditor ? (
+                      <div>
+                        <button className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300 ">
+                          Approve
+                        </button>
+                        <button className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300 ">
+                          Reject
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </div>
