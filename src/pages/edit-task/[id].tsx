@@ -88,6 +88,7 @@ function Task() {
       if (taskDataById.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
+      return data;
     } catch (err: Error | any) {
       return err;
     }
@@ -144,7 +145,7 @@ function Task() {
         <Loading />
       ) : (
         <Layouts>
-          <div className="flex min-h-screen items-center justify-center bg-main-color px-6 pt-20">
+          <div className="flex min-h-screen items-center justify-center overflow-y-auto bg-main-color px-6 pt-20">
             <div className="container mx-auto max-w-screen-lg">
               <div className="mb-6 rounded bg-white p-4 px-4 shadow-lg md:p-8">
                 <form className="w-full">

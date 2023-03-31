@@ -56,7 +56,7 @@ const TasksPage: NextPage = () => {
                   _id={val._id}
                   title={val.title}
                   description={val.description}
-                  author={val.author.username}
+                  author={val.author}
                   level={val.level}
                   status={val.status}
                   tags={val.tags}
