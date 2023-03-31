@@ -1,6 +1,7 @@
 import { ITask } from '@/interface/task';
 import Link from 'next/link';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
+import PreviewTask from './PreviewTask';
 
 const TaskTable = ({
   _id,
@@ -11,9 +12,20 @@ const TaskTable = ({
   tags,
   status,
 }: ITask) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [id, setId] = useState('');
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return (
     <Fragment>
-      <tr className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
+      <tr className="border-b bg-white text-center hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
         <th
           scope="row"
           className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
@@ -24,7 +36,7 @@ const TaskTable = ({
           {description}
         </td>
         <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-          {author}
+          {author.username}
         </td>
         <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {level}
@@ -50,13 +62,21 @@ const TaskTable = ({
         </td>
         <td className="px-6 py-4">
           <button className="px-2 font-medium text-blue-600 hover:underline dark:text-blue-500">
-            Edit
+            <Link href={`/edit-task/${_id}`}>Edit</Link>
           </button>
-          <button className="font-medium text-blue-600 hover:underline dark:text-blue-500">
-            <Link href={`/task/${_id}`}>Preview</Link>
+          <button
+            className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+            onClick={() => (handleOpenModal(), setId(`${_id}`))}
+          >
+            Preview
           </button>
         </td>
       </tr>
+      <div>
+        {openModal && (
+          <PreviewTask id={id} isOpen={openModal} onClose={handleCloseModal} />
+        )}
+      </div>
     </Fragment>
   );
 };

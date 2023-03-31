@@ -22,7 +22,7 @@ const TasksPage: NextPage = () => {
       <div className="stars2"></div>
       <div className="stars3"></div>
       <div className="container mx-auto mt-20 overflow-auto rounded-lg py-12 px-6">
-        <table className="mx-auto my-auto w-full text-center text-sm text-gray-500 shadow-md dark:text-gray-400">
+        <table className="mx-auto my-auto w-full text-sm text-gray-500 shadow-md dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -58,11 +58,15 @@ const TasksPage: NextPage = () => {
                   description={val.description}
                   author={val.author}
                   level={val.level}
+                  status={val.status}
                   tags={val.tags}
                   hint={val.hint}
                   files={val.files}
                   testcases={val.testcases}
-                  status={val.status}
+                  solution_code={val.solution_code}
+                  created_at={val.created_at}
+                  updated_at={val.updated_at}
+                  __v={val.__v}
                 />
               ))}
           </tbody>

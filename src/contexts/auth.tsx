@@ -1,67 +1,39 @@
-import React from 'react';
-import { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-
 import { Errors, Loading } from '@/components';
-
-import { toast } from 'react-hot-toast';
-
-import axios from 'axios';
+import { login, logout, getProfile } from '@/services/user.services';
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuditor, setIsAuditor] = useState(false);
+  const [user, setUser] = useState(null);
 
-  const router = useRouter();
-
-  const login = async (email: string, password: string) => {
-    await axios
-      .post('/api/auth/login', { email, password })
-      .then((res) => {
-        const { token } = res.data;
-        if (token) {
-          localStorage.setItem('token', token);
-          window.location.href = '/dashboard';
-        }
-      })
-      .catch(() => {
-        toast.error('Invalid credentials');
-      });
-  };
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    router.push('/');
-    toast.custom(() => (
-      <div
-        className="rounded-lg bg-white p-4 shadow-lg"
-        style={{
-          color: '#713200',
-          border: '1px solid #713200',
-        }}
-      >
-        <div className="flex">
-          <p className="text-sm font-medium">Good bye! 🖐️</p>
-        </div>
-      </div>
-    ));
-  };
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      axios.get('/api/user/profile').then((res) => {
-        setUser(res.data);
-      });
-    }
-    setLoading(false);
+    const fetchUser = async () => {
+      try {
+        const response = await getProfile();
+        setUser(response);
+        setIsLoading(false);
+        response.role === 'auditor' ? setIsAuditor(true) : setIsAuditor(false);
+      } catch (err) {
+        setIsLoading(false);
+      }
+    };
+    fetchUser();
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: user, user, loading, login, logout }}
+      value={{
+        isAuthenticated: !!user,
+        user,
+        isLoading,
+        login,
+        logout,
+        isAuditor,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -71,22 +43,23 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
 export const useAuth = () => useContext(AuthContext);
 
 export const ProtectRoute = ({ children }: any) => {
-  const { isAuthenticated, loading }: any = useAuth();
+  const { isAuthenticated, isLoading }: any = useAuth();
   const router = useRouter();
 
-  if (loading) {
+  if (isLoading) {
     return <Loading />;
-  } else if (
+  }
+
+  if (
     !isAuthenticated &&
     router.pathname !== '/' &&
-    router.pathname !== '/login' &&
-    router.pathname !== '/404'
+    router.pathname !== '/login'
   ) {
     return (
       <Errors
         status={401}
-        title="No Authorized"
-        description="Sorry You need to login First."
+        title="Unauthorized Access"
+        description={`Sorry, you don't have permission to access this page. Please log in to view this content.`}
       />
     );
   }

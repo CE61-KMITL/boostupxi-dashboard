@@ -1,19 +1,33 @@
 import { NextPage } from 'next';
-import { useState, ChangeEvent, Fragment } from 'react';
+import { Fragment } from 'react';
 import { useAuth } from '../contexts/auth';
+import { z } from 'zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const formSchema = z.object({
+  email: z.string().email('Invalid email').min(1, 'Email is required'),
+  password: z
+    .string()
+    .min(1, 'Password is required')
+    .min(8, 'Password must have more than 8 characters'),
+});
+
+type FormSchemaType = z.infer<typeof formSchema>;
 
 const LoginPage: NextPage = () => {
-  const [loginForm, setLoginForm] = useState({
-    email: '',
-    password: '',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormSchemaType>({
+    resolver: zodResolver(formSchema),
   });
 
   const { login }: any = useAuth();
 
-  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { email, password } = loginForm;
-    await login(email, password);
+  const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
+    await login(data.email, data.password);
   };
 
   return (
@@ -21,7 +35,7 @@ const LoginPage: NextPage = () => {
       <div className="flex min-h-screen flex-col items-center justify-center space-y-8 bg-main-color px-4">
         <div className="flex w-full max-w-5xl flex-row overflow-hidden rounded-2xl shadow">
           <div className="hidden flex-auto flex-col items-center space-y-10 bg-indigo-200 md:flex">
-            <div className="flex flex-row items-center self-start"></div>
+            <div className="mt-16 flex flex-row items-center self-start"></div>
             <svg
               id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641"
               data-name="Layer 1"
@@ -230,7 +244,7 @@ const LoginPage: NextPage = () => {
               <h1 className="text-3xl font-bold text-gray-900">Login</h1>
               <p>Enter your information to login</p>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="-mx-3 flex">
                 <div className="mb-5 w-full px-3">
                   <label className="px-1 text-xs font-semibold">Email</label>
@@ -238,18 +252,20 @@ const LoginPage: NextPage = () => {
                     <div className="pointer-events-none z-10 flex w-10 items-center justify-center pl-1 text-center">
                       {/* todo icon */}
                     </div>
-
                     <input
                       type="email"
                       className="-ml-10 w-full rounded-lg border-2 border-gray-200 py-2 pl-10 pr-3 outline-none focus:border-indigo-500"
                       placeholder="johnsmith@example.com"
-                      value={loginForm.email}
+                      id="email"
+                      {...register('email')}
                       required
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setLoginForm({ ...loginForm, email: e.target.value });
-                      }}
                     />
                   </div>
+                  {errors.email && (
+                    <span className="mt-2 block text-red-800">
+                      {errors.email?.message}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="-mx-3 flex">
@@ -263,16 +279,16 @@ const LoginPage: NextPage = () => {
                       type="password"
                       className="-ml-10 w-full rounded-lg border-2 border-gray-200 py-2 pl-10 pr-3 outline-none focus:border-indigo-500"
                       placeholder="************"
-                      value={loginForm.password}
+                      id="password"
+                      {...register('password')}
                       required
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setLoginForm({
-                          ...loginForm,
-                          password: e.target.value,
-                        });
-                      }}
                     />
                   </div>
+                  {errors.password && (
+                    <span className="mt-2 block text-red-800">
+                      {errors.password?.message}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="-mx-3 flex">
@@ -280,6 +296,7 @@ const LoginPage: NextPage = () => {
                   <button
                     type="submit"
                     className="mx-auto block w-full rounded-lg bg-indigo-500 px-3 py-3 font-semibold text-white hover:bg-indigo-700 focus:bg-indigo-700"
+                    disabled={isSubmitting}
                   >
                     LOGIN NOW
                   </button>

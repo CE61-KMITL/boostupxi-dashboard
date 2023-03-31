@@ -1,50 +1,80 @@
 import { NextPage } from 'next';
-import TaskList from '../constants/task';
 import { UserProfile } from '@/interface/user';
 import ProfileCard from '../components/ProfileCard';
 import Layouts from '@/layouts/Layouts';
+import { TaskTable } from '@/components';
+import { ITask } from '@/interface/task';
+import { useState, useEffect } from 'react';
+import { getProfile } from '@/services/user.services';
 
 const ProfilePage: NextPage = () => {
-  //const [profileData, setProfileData] = {};
+  const [taskData, setTaskData] = useState<UserProfile>({} as UserProfile);
 
-  //   const getProfile = async () => {};
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getProfile();
 
-  //=====================MOCK DATA MUST BE CHANGE=======================
-  //     const token: string | null = localStorage.getItem('token');
-  //     if (token) {
-  //         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  //         await axios.get('http://localhost:5000/profile').then((res) => {
-  //             setProfileData(res.data);
-  //         });
-  //     }
-  // };
-  //=====================MOCK DATA MUST BE CHANGE=======================
-
-  // setProfileData({
-  //     _id: "string",
-  //     username: "string",
-  //     email: "string",
-  //     role: "string",
-  //     tasks: [
-  //         TaskForm
-  //     ],
-  // });
-  // };
-  // useEffect(() => {
-  //     getProfile();
-  //   }, []);
-
-  const profileData: UserProfile = {
-    _id: 'This is my identity',
-    username: 'My Username',
-    email: 'Email',
-    role: 'My role',
-    tasks: [TaskList[1]],
-  };
+      setTaskData(response);
+    };
+    fetchData();
+  }, []);
 
   return (
     <Layouts>
-      <ProfileCard {...profileData} />
+      <div className="min-h-screen flex-col items-center justify-center bg-black px-6 pt-20">
+        <div className="container mx-auto max-w-screen-xl">
+          <ProfileCard {...taskData} />
+          <table className="mx-auto my-auto w-full text-sm text-gray-500 shadow-md dark:text-gray-400">
+            <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Task Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Task Description
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Author
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Level
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Task Tags
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Status
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {taskData.tasks &&
+                taskData.tasks.map((val: ITask) => (
+                  <TaskTable
+                    key={val._id}
+                    _id={val._id}
+                    title={val.title}
+                    description={val.description}
+                    author={val.author}
+                    level={val.level}
+                    tags={val.tags}
+                    hint={val.hint}
+                    files={val.files}
+                    testcases={val.testcases}
+                    status={val.status}
+                    solution_code={val.solution_code}
+                    created_at={val.created_at}
+                    updated_at={val.updated_at}
+                    __v={val.__v}
+                  />
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </Layouts>
   );
 };

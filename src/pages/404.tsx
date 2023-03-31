@@ -7,7 +7,7 @@ export default function Custom404() {
       <Errors
         status={404}
         title="Page Not Found"
-        description={`We're sorry, the page you requested could not found.Please go back to the homepage or contact us.`}
+        description={`Oops! The page you're looking for cannot be found. Please check the URL or go back to the homepage.`}
       />
     </Fragment>
   );

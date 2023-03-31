@@ -30,7 +30,7 @@ const Errors = ({ status, title, description }: ErrorsProps) => {
                 className="rounded-full  bg-green-400 px-5 py-3 text-sm font-medium tracking-wider text-gray-50 shadow-sm hover:shadow-lg"
                 href="/"
               >
-                Go back to home
+                Go back to login page
               </Link>
             </div>
           </div>

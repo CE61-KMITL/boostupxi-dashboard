@@ -1,17 +1,20 @@
 import { ChangeEvent, useState, useRef, Fragment } from 'react';
-import { FormType } from '@/interface/upload';
+import { FormType, testcase } from '@/interface/upload';
 import { toast } from 'react-hot-toast';
+import { uploadFiles, deleteFiles } from '@/services/file.servies';
+import { IFiles } from '@/interface/task';
+import { createTask } from '@/services/task.services';
 
 const UploadForm = () => {
   let formInitial: FormType = {
-    task_name: '',
-    task_level: 1,
-    task_tags: [],
-    task_hint: '',
-    task_desc: '',
+    title: '',
+    level: 1,
+    tags: [],
+    hint: '',
+    description: '',
     files: [],
-    taskIO: [{ id: '1', input: '', output: '' }],
-    author: '',
+    testcases: [{ input: '', output: '', published: false }],
+    solution_code: '',
   };
 
   const availableTags: string[] = [
@@ -32,6 +35,7 @@ const UploadForm = () => {
   ];
 
   const [formData, setFormData] = useState<FormType>(formInitial);
+
   const inputRef = useRef<any>(null);
 
   const addTestCase = (e: any) => {
@@ -39,37 +43,40 @@ const UploadForm = () => {
       e.preventDefault();
       setFormData({
         ...formData,
-        taskIO: [
-          ...formData.taskIO,
-          { id: String(formData.taskIO.length + 1), input: '', output: '' },
+        testcases: [
+          ...formData.testcases,
+          { input: '', output: '', published: false },
         ],
       });
-      toast.success('Add Test Case');
     } catch (err: Error | any) {
       return err;
     }
   };
-
-  const removeTestCase = (e: any, id: string) => {
+  const removeTestCase = (e: any, index: number) => {
     try {
       e.preventDefault();
-      setFormData({
-        ...formData,
-        taskIO: formData.taskIO.filter((item: any) => item.id !== id),
-      });
+      const newTestCases = [...formData.testcases];
+      newTestCases.splice(index, 1);
+      setFormData({ ...formData, testcases: newTestCases as testcase[] });
     } catch (err: Error | any) {
       return err;
     }
   };
 
-  const handleRemoveFile = (index: number) => {
+  const handleRemoveFile = (file: IFiles) => {
     try {
       const newFiles = [...formData.files];
+      const index = newFiles.findIndex((file: IFiles) => file.key === file.key);
+
       newFiles.splice(index, 1);
       setFormData({ ...formData, files: newFiles });
+      const data = deleteFiles(file);
+
       if (formData.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
+
+      return data;
     } catch (err: Error | any) {
       return err;
     }
@@ -77,29 +84,31 @@ const UploadForm = () => {
 
   const handleTagClick = (tag: string, event: any) => {
     event.preventDefault();
-    if (formData.task_tags.includes(tag)) {
+    if (formData.tags.includes(tag)) {
       setFormData({
         ...formData,
-        task_tags: formData.task_tags.filter((item: string) => item !== tag),
+        tags: formData.tags.filter((item: string) => item !== tag),
       });
     } else {
-      setFormData({ ...formData, task_tags: [...formData.task_tags, tag] });
+      setFormData({ ...formData, tags: [...formData.tags, tag] });
     }
   };
 
   const submitTask = (e: any) => {
     try {
       e.preventDefault();
+      const get = createTask(formData);
+      toast.success('Create Task Success');
       setFormData({
         ...formData,
-        task_name: '',
-        task_level: 1,
-        task_tags: [],
-        task_hint: '',
-        task_desc: '',
+        title: '',
+        level: 1,
+        tags: [],
+        hint: '',
+        description: '',
         files: [],
-        taskIO: [{ id: '1', input: '', output: '' }],
-        author: '',
+        testcases: [{ input: '', output: '', published: false }],
+        solution_code: '',
       });
       let fileInput = document.getElementById('fileInput') as HTMLInputElement;
       let testCaseInput = document.getElementById(
@@ -113,7 +122,8 @@ const UploadForm = () => {
       fileInput.value = '';
       testCaseInput.value = '';
       testCaseOutput.value = '';
-      toast.success('Create Task Success');
+
+      return get;
     } catch (err: Error | any) {
       return err;
     }
@@ -132,12 +142,12 @@ const UploadForm = () => {
                   </label>
                   <input
                     type="text"
-                    name="task_name"
+                    name="title"
                     className="mt-1 h-10 w-full rounded border bg-gray-50 px-4"
                     placeholder="Task Name"
-                    value={formData.task_name}
+                    value={formData.title}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      setFormData({ ...formData, task_name: e.target.value });
+                      setFormData({ ...formData, title: e.target.value });
                     }}
                     required
                   />
@@ -152,10 +162,10 @@ const UploadForm = () => {
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                       setFormData({
                         ...formData,
-                        task_level: parseInt(e.target.value),
+                        level: parseInt(e.target.value),
                       });
                     }}
-                    value={formData.task_level}
+                    value={formData.level}
                     required
                   >
                     <option defaultValue={1}>Level 1</option>
@@ -174,7 +184,7 @@ const UploadForm = () => {
                       className={`
                        relative mx-1 mb-2 inline-flex w-auto items-center justify-center rounded-full border border-transparent px-3 py-0.5 text-sm font-bold leading-6 text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2
                        ${
-                         formData.task_tags.includes(tag)
+                         formData.tags.includes(tag)
                            ? 'bg-indigo-600'
                            : 'bg-gray-600'
                        }`}
@@ -196,9 +206,9 @@ const UploadForm = () => {
                   <textarea
                     className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 pb-10 text-sm text-gray-900"
                     placeholder="Task Hint"
-                    value={formData.task_hint}
+                    value={formData.hint}
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                      setFormData({ ...formData, task_hint: e.target.value });
+                      setFormData({ ...formData, hint: e.target.value });
                     }}
                   ></textarea>
                 </div>
@@ -212,9 +222,9 @@ const UploadForm = () => {
                   <textarea
                     className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 pb-24 text-sm text-gray-900"
                     placeholder="Task Description"
-                    value={formData.task_desc}
+                    value={formData.description}
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                      setFormData({ ...formData, task_desc: e.target.value });
+                      setFormData({ ...formData, description: e.target.value });
                     }}
                   ></textarea>
                 </div>
@@ -231,23 +241,31 @@ const UploadForm = () => {
                     id="fileInput"
                     className="block w-full rounded border border-gray-200 text-sm shadow-sm file:mr-4 file:border-0 file:bg-slate-600 file:py-3 file:px-4 file:text-white"
                     multiple
-                    onChange={(event: any) => {
-                      let newFiles = [...formData.files].concat(
-                        Array.from(event.target.files),
-                      );
-                      setFormData({ ...formData, files: newFiles as [any] });
-                      event.preventDefault();
+                    onChange={async (event: any) => {
+                      const fileData = new FormData();
+
+                      for (let i = 0; i < event.target.files.length; i++) {
+                        fileData.append('files', event.target.files[i]);
+                      }
+
+                      try {
+                        const data = await uploadFiles(fileData as any);
+                        const newFiles = [...formData.files, ...data];
+                        setFormData({ ...formData, files: newFiles as any[] });
+                      } catch (error) {
+                        return error;
+                      }
                     }}
                     ref={inputRef}
                   />
                   {formData.files.map((file: any, index: any) => (
                     <div className="mb-6 flex flex-wrap" key={index}>
-                      <p>{file.name}</p>
+                      <p>{file.key}</p>
                       <br />
                       <button
                         type="button"
                         className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
-                        onClick={() => handleRemoveFile(index)}
+                        onClick={() => handleRemoveFile(file)}
                       >
                         remove
                       </button>
@@ -256,8 +274,27 @@ const UploadForm = () => {
                 </div>
               </div>
 
+              <div className="-mx-3 mb-2 flex flex-wrap">
+                <div className="w-full px-3">
+                  <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
+                    Solution Code
+                  </label>
+                  <textarea
+                    className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 pb-24 text-sm text-gray-900"
+                    placeholder="Solution Code"
+                    value={formData.solution_code}
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                      setFormData({
+                        ...formData,
+                        solution_code: e.target.value,
+                      });
+                    }}
+                  ></textarea>
+                </div>
+              </div>
+
               <ul>
-                {formData.taskIO.map((value, index) => {
+                {formData.testcases.map((value, index) => {
                   return (
                     <li className="-mx-3 mb-2 flex flex-wrap" key={index}>
                       <div className="mb-6 w-full px-3 md:w-1/2">
@@ -270,8 +307,8 @@ const UploadForm = () => {
                           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
                             setFormData({
                               ...formData,
-                              taskIO: formData.taskIO.map((item) => {
-                                if (item.id === value.id) {
+                              testcases: formData.testcases.map((item, i) => {
+                                if (i === index) {
                                   return { ...item, input: e.target.value };
                                 }
                                 return item;
@@ -279,21 +316,48 @@ const UploadForm = () => {
                             });
                           }}
                           id={`testCaseInput${index}`}
+                          value={value.input}
                         ></textarea>
                       </div>
 
                       <div className="mb-6 w-full px-3 md:w-1/2">
                         <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                           Test Case {index + 1} Output
+                          <label className="float-right mx-3 inline-block">
+                            Publish
+                            <input
+                              className="float-right mt-1 inline-block"
+                              type="checkbox"
+                              id={`testCaseOutput${index}`}
+                              checked={value.published}
+                              onChange={() =>
+                                setFormData({
+                                  ...formData,
+                                  testcases: formData.testcases.map(
+                                    (item, i) => {
+                                      if (i === index) {
+                                        return {
+                                          ...item,
+                                          published: !item.published,
+                                        };
+                                      }
+                                      return item;
+                                    },
+                                  ),
+                                })
+                              }
+                            />
+                          </label>
                         </label>
+
                         <textarea
                           className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 pb-10 text-sm text-gray-900"
                           placeholder={`Test Case ${index + 1} Output`}
                           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
                             setFormData({
                               ...formData,
-                              taskIO: formData.taskIO.map((item) => {
-                                if (item.id === value.id) {
+                              testcases: formData.testcases.map((item, i) => {
+                                if (i === index) {
                                   return { ...item, output: e.target.value };
                                 }
                                 return item;
@@ -301,12 +365,13 @@ const UploadForm = () => {
                             });
                           }}
                           id={`testCaseOutput${index}`}
+                          value={value.output}
                         ></textarea>
                       </div>
 
                       {index != 0 ? (
                         <button
-                          onClick={(e: any) => removeTestCase(e, value.id)}
+                          onClick={(e: any) => removeTestCase(e, index)}
                           className="ml-auto mt-3 rounded-full bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
                         >
                           Remove Test Case
