@@ -30,11 +30,11 @@ export const logout = () => {
   ));
 };
 
-export const getUser = async () => {
+export const getProfile = async () => {
   const token: string | null = localStorage.getItem('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response = await axios.get('/api/user/profile');
-    return response.data;
+    const res = await axios.get(`/api/user/profile`);
+    return res.data;
   }
 };

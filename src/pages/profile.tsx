@@ -6,34 +6,27 @@ import Layouts from '@/layouts/Layouts';
 import { TaskTable } from '@/components';
 import { ITask } from '@/interface/task';
 import { useState, useEffect } from 'react';
-import { getTaskbyUserId } from '@/services/task.services';
+import { getProfile } from '@/services/user.services';
 
-const ProfilePage: NextPage = (id) => {
-  //TODO FETCH DATA USER TABLE , DATA HERE
-
-  const [taskData, setTaskData] = useState([]);
+const ProfilePage: NextPage = () => {
+  const [taskData, setTaskData] = useState<UserProfile>({} as UserProfile);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getTaskbyUserId(id as string);
+      const response = await getProfile();
+
       setTaskData(response);
     };
     fetchData();
   }, []);
 
-  const profileData: UserProfile = {
-    _id: '596840596804574596',
-    username: 'Teetouch Jaknamon',
-    email: 'teawkrub.ghs@gmail.com',
-    role: 'Admin',
-    tasks: taskData,
-  };
   console.log(taskData);
+
   return (
     <Layouts>
       <div className="min-h-screen flex-col items-center justify-center bg-black px-6 pt-20">
         <div className="container mx-auto max-w-screen-xl">
-          <ProfileCard {...profileData} />
+          <ProfileCard {...taskData} />
           <table className="mx-auto my-auto w-full text-center text-sm text-gray-500 shadow-md dark:text-gray-400">
             <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -61,8 +54,8 @@ const ProfilePage: NextPage = (id) => {
               </tr>
             </thead>
             <tbody>
-              {taskData &&
-                taskData.map((val: ITask) => (
+              {taskData.tasks &&
+                taskData.tasks.map((val: ITask) => (
                   <TaskTable
                     key={val._id}
                     _id={val._id}
@@ -76,6 +69,9 @@ const ProfilePage: NextPage = (id) => {
                     testcases={val.testcases}
                     status={val.status}
                     solution_code={val.solution_code}
+                    created_at={val.created_at}
+                    updated_at={val.updated_at}
+                    __v={val.__v}
                   />
                 ))}
             </tbody>

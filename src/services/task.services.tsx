@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ParsedUrlQuery } from 'querystring';
 import { FormType } from '@/interface/upload';
-interface TaskPageQuery extends ParsedUrlQuery {
+export interface TaskPageQuery extends ParsedUrlQuery {
   id: string;
 }
 
@@ -33,12 +33,12 @@ export const createTask = async (data: FormType) => {
   }
 };
 
-//TODO MOCK UP MUST CHANGE THIS CODE================================================================
-// TODO MOCK UP MUST CHANGE THIS CODE================================================================
-import TaskList from '../constants/task';
-
-export const getTaskbyUserId = async (id: string) => {
-  id = id;
-  return TaskList as [];
+export const UpdateTaskById = async (data: FormType, id: string) => {
+  const token: string | null = localStorage.getItem('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    console.log(id);
+    const res = await axios.patch(`/api/tasks/${id}`, data);
+    return res.data;
+  }
 };
-//=========================================

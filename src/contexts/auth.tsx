@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Errors, Loading } from '@/components';
-import { login, logout, getUser } from '@/services/user.services';
+import { login, logout, getProfile } from '@/services/user.services';
 
 const AuthContext = createContext({});
 
@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await getUser();
+        const response = await getProfile();
         setUser(response);
         setIsLoading(false);
       } catch (err) {
