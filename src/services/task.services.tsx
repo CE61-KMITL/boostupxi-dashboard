@@ -53,6 +53,15 @@ export const UpdateTaskById = async (data: FormType, id: string) => {
   }
 };
 
+export const deleteTaskById = async (id: string) => {
+  const token: string | undefined = Cookies.get('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const response = await axios.delete(`/api/tasks/${id}`);
+    return response.data;
+  }
+};
+
 export const handleApproveReject = async ({
   id,
   data,
