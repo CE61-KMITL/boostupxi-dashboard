@@ -7,22 +7,12 @@ export interface TaskPageQuery extends ParsedUrlQuery {
   id: string;
 }
 
-export const getTasksData = async () => {
-  try {
-    const token: string | undefined = Cookies.get('token');
-    if (token) {
-      const response = await fetch('/api/tasks', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      return data;
-    } else {
-      return [];
-    }
-  } catch (error) {
-    return [];
+export const getTasksData = async (page: number) => {
+  const token: string | undefined = Cookies.get('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const response = await axios.get(`/api/tasks?page=${page}&limit=10`);
+    return response.data;
   }
 };
 
