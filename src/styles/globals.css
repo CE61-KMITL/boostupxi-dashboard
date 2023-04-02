@@ -6,7 +6,7 @@
   -webkit-text-stroke: 0.1px white;
 }
 
-.border-ani::before{
+.border-ani::before {
   content: '';
   position: absolute;
   height: 150%;
@@ -15,21 +15,21 @@
   animation: rotating 6s linear infinite;
 }
 
-.border-ani::after{
+.border-ani::after {
   content: '';
   inset: 4px;
   background-color: rgb(55 65 81);
   position: absolute;
-  border-radius: 12px
+  border-radius: 12px;
 }
 
 @keyframes rotating {
-  0%{
+  0% {
     transform: rotate(0deg);
   }
-  100%{
+  100% {
     transform: rotate(360deg);
-    }
+  }
 }
 
 .background {

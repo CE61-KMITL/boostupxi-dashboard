@@ -4,17 +4,19 @@ import Avatar from '/public/avatar-image.png';
 
 const ProfileCard = ({ _id, username, email, role }: UserProfile) => {
   return (
-    <div className="my-4 py-2 flex relative overflow-hidden items-center justify-center bg-gray-700 rounded-xl border-ani">
-      <div className="flex flex-row mx-8 w-full justify-start items-center">
-      <div className="w-1/10 relative z-10">
-        <Image src={Avatar} alt={'Avatar Image'} width={150} />
-      </div>
-      <div className="w-9/10 px-6 py-4 relative z-10">
-        <div className="mb-2 text-7xl text-transparent font-bold font-outline-01">{username}</div>
-        <p className="text-base text-white">{_id}</p>
-        <p className="text-base text-white">{email}</p>
-        <p className="text-base text-white">{role}</p>
-      </div>
+    <div className="border-ani relative my-4 flex items-center justify-center overflow-hidden rounded-xl bg-gray-700 py-2">
+      <div className="mx-8 flex w-full flex-row items-center justify-start">
+        <div className="w-1/10 relative z-10">
+          <Image src={Avatar} alt={'Avatar Image'} width={150} />
+        </div>
+        <div className="w-9/10 relative z-10 px-6 py-4">
+          <div className="font-outline-01 mb-2 text-7xl font-bold text-transparent">
+            {username}
+          </div>
+          <p className="text-base text-white">{_id}</p>
+          <p className="text-base text-white">{email}</p>
+          <p className="text-base text-white">{role}</p>
+        </div>
       </div>
     </div>
   );
