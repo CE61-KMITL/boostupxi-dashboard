@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-import TaskList from '../constants/task';
 import { UserProfile } from '@/interface/user';
 import ProfileCard from '../components/ProfileCard';
 import Layouts from '@/layouts/Layouts';
@@ -19,8 +18,6 @@ const ProfilePage: NextPage = () => {
     };
     fetchData();
   }, []);
-
-  console.log(taskData);
 
   return (
     <Layouts>

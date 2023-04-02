@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useRef, Fragment, useEffect } from 'react';
+import { ChangeEvent, useState, useRef, Fragment } from 'react';
 import { FormType, testcase } from '@/interface/upload';
 import { toast } from 'react-hot-toast';
 import { uploadFiles, deleteFiles } from '@/services/file.servies';
@@ -56,18 +56,14 @@ const UploadForm = () => {
     try {
       e.preventDefault();
       const newTestCases = [...formData.testcases];
-
       newTestCases.splice(index, 1);
-      console.log(newTestCases);
       setFormData({ ...formData, testcases: newTestCases as testcase[] });
-      console.log(formData.testcases);
     } catch (err: Error | any) {
       return err;
     }
   };
 
   const handleRemoveFile = (file: IFiles) => {
-    console.log(file);
     try {
       const newFiles = [...formData.files];
       const index = newFiles.findIndex((file: IFiles) => file.key === file.key);
@@ -79,6 +75,8 @@ const UploadForm = () => {
       if (formData.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
+
+      return data;
     } catch (err: Error | any) {
       return err;
     }
@@ -112,11 +110,8 @@ const UploadForm = () => {
   const submitTask = (e: any) => {
     try {
       e.preventDefault();
-      console.log(formData);
       const get = createTask(formData);
       toast.success('Create Task Success');
-      console.log(get);
-
       setFormData({
         ...formData,
         title: '',
@@ -140,6 +135,8 @@ const UploadForm = () => {
       fileInput.value = '';
       testCaseInput.value = '';
       testCaseOutput.value = '';
+
+      return get;
     } catch (err: Error | any) {
       return err;
     }
@@ -266,7 +263,15 @@ const UploadForm = () => {
                         console.log(event.target.files[i]);
                         fileData.append('files', event.target.files[i]);
                       }
-                      uploadFilesHandle(fileData);
+
+                      try {
+                        const data = await uploadFiles(fileData as any);
+                        const newFiles = [...formData.files, ...data];
+                        setFormData({ ...formData, files: newFiles as any[] });
+                        //console.log(formData);
+                      } catch (error) {
+                        console.error(error);
+                      }
                     }}
                     ref={inputRef}
                   />

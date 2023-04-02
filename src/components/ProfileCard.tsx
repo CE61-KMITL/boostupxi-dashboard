@@ -3,13 +3,11 @@ import { UserProfile } from '@/interface/user';
 import { ITask } from '@/interface/task';
 
 const ProfileCard = ({ _id, username, email, role, tasks }: UserProfile) => {
-  const taskList: ITask[] = tasks;
-
-  //console.log(tasks.length);
   let taskCount = 0;
   let rejectCount = 0;
   let approveCount = 0;
-
+  console.log('Task in profile');
+  console.log(tasks);
   // for (let i = 0; i < tasks.length; i++) {
   //   taskCount++;
 
@@ -35,7 +33,6 @@ const ProfileCard = ({ _id, username, email, role, tasks }: UserProfile) => {
             <p className="text-3xl text-green-500 dark:text-green-400">
               {role}
             </p>
-            <p className="text-3xl text-green-500 dark:text-green-400">{_id}</p>
           </div>
         </div>
       </div>

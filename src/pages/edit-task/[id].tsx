@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Loading } from '@/components';
 import { getTaskById, UpdateTaskById } from '@/services/task.services';
 import { ParsedUrlQuery } from 'querystring';
-import { FormType, testcase } from '@/interface/upload';
+import { testcase } from '@/interface/upload';
 import { toast } from 'react-hot-toast';
 import { IFiles } from '@/interface/task';
 import { uploadFiles, deleteFiles } from '@/services/file.servies';
@@ -31,7 +31,6 @@ function Task() {
     };
     fetchDataById();
   }, [id]);
-  console.log(taskDataById);
   const availableTags: string[] = [
     'Algorithm',
     'AI',
@@ -67,21 +66,17 @@ function Task() {
     try {
       e.preventDefault();
       const newTestCases = [...taskDataById.testcases];
-
       newTestCases.splice(index, 1);
-      console.log(newTestCases);
       setTaskDataById({
         ...taskDataById,
         testcases: newTestCases as testcase[],
       });
-      console.log(taskDataById.testcases);
     } catch (err: Error | any) {
       return err;
     }
   };
 
   const handleRemoveFile = (file: IFiles) => {
-    console.log(file);
     try {
       const newFiles = [...taskDataById.files];
       const index = newFiles.findIndex((file: IFiles) => file.key === file.key);
@@ -93,6 +88,7 @@ function Task() {
       if (taskDataById.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
+      return data;
     } catch (err: Error | any) {
       return err;
     }
@@ -113,7 +109,6 @@ function Task() {
   const submitTask = (e: any) => {
     try {
       e.preventDefault();
-      console.log(taskDataById);
       UpdateTaskById(taskDataById, id);
       toast.success('Update Task Success');
 
@@ -150,7 +145,7 @@ function Task() {
         <Loading />
       ) : (
         <Layouts>
-          <div className="flex min-h-screen items-center justify-center bg-main-color px-6 pt-20">
+          <div className="flex min-h-screen items-center justify-center overflow-y-auto bg-main-color px-6 pt-20">
             <div className="container mx-auto max-w-screen-lg">
               <div className="mb-6 rounded bg-white p-4 px-4 shadow-lg md:p-8">
                 <form className="w-full">
@@ -283,9 +278,8 @@ function Task() {
                               ...taskDataById,
                               files: newFiles as any[],
                             });
-                            //console.log(taskDataById);
                           } catch (error) {
-                            console.error(error);
+                            return error;
                           }
                         }}
                         ref={inputRef}
