@@ -5,7 +5,7 @@ module.exports = () => {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.API_URL}:path*`,
+        destination: 'http://localhost:5000/:path*',
       },
     ];
   };

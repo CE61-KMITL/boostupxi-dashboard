@@ -21,6 +21,9 @@ const ProfilePage: NextPage = () => {
 
   return (
     <Layouts>
+      <div className="stars"></div>
+      <div className="stars2"></div>
+      <div className="stars3"></div>
       <div className="min-h-screen flex-col items-center justify-center bg-black px-6 pt-20">
         <div className="container mx-auto max-w-screen-xl">
           <ProfileCard {...taskData} />
