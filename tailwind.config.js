@@ -8,21 +8,21 @@ module.exports = {
         shake: {
           '10%': {
             width: '120%',
-            transform: 'rotate(10deg)'
+            transform: 'rotate(10deg)',
           },
           '20%': {
             width: '120%',
-            transform: 'rotate(-10deg)'
+            transform: 'rotate(-10deg)',
           },
           '30%': {
             width: '120%',
-            transform: 'rotate(10deg)'
+            transform: 'rotate(10deg)',
           },
           '40%': {
             width: '120%',
-            transform: 'rotate(-10deg)'
-          }
-        }
+            transform: 'rotate(-10deg)',
+          },
+        },
       },
       colors: {
         'main-color': '#8D72E1',
