@@ -32,7 +32,7 @@ const LoginPage: NextPage = () => {
 
   return (
     <Fragment>
-      <div className="flex min-h-screen flex-col items-center justify-center space-y-8 bg-main-color px-4">
+      <div className="flex min-h-screen flex-col items-center justify-center space-y-8 px-4 bg-main-color">
         <div className="flex w-full max-w-5xl flex-row overflow-hidden rounded-2xl shadow">
           <div className="hidden flex-auto flex-col items-center space-y-10 bg-indigo-200 md:flex">
             <div className="mt-16 flex flex-row items-center self-start"></div>

@@ -6,7 +6,6 @@ module.exports = () => {
       {
         source: '/api/:path*',
         destination: 'http://localhost:5000/:path*',
-        
       },
     ];
   };
