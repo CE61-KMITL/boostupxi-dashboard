@@ -211,15 +211,15 @@ const PreviewTask = ({ id, isOpen, onClose }: any) => {
                   >
                     Reject
                   </button>
-                  {audit === taskDataById.author?.username ? (
-                    <button
-                      className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
-                      onClick={() => handleDelete(id)}
-                    >
-                      Delete
-                    </button>
-                  ) : null}
                 </div>
+              ) : null}
+              {audit === taskDataById.author?.username ? (
+                <button
+                  className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
+                  onClick={() => handleDelete(id)}
+                >
+                  Delete
+                </button>
               ) : null}
             </div>
           </div>
