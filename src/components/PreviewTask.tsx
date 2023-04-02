@@ -1,6 +1,10 @@
 import { useState, useEffect, Fragment } from 'react';
 import { useAuth } from '@/contexts/auth';
-import { getTaskById, handleApproveReject } from '@/services/task.services';
+import {
+  getTaskById,
+  handleApproveReject,
+  deleteTaskById,
+} from '@/services/task.services';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vs2015 } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import Link from 'next/link';
@@ -10,8 +14,9 @@ import { NextRouter, useRouter } from 'next/router';
 
 const PreviewTask = ({ id, isOpen, onClose }: any) => {
   const [taskDataById, setTaskDataById] = useState<any>({});
-  const { isAuditor }: any = useAuth();
+  const { user, isAuditor }: any = useAuth();
   const router: NextRouter = useRouter();
+  const audit = user.username;
 
   useEffect(() => {
     const fetchDataById = async () => {
@@ -46,9 +51,18 @@ const PreviewTask = ({ id, isOpen, onClose }: any) => {
       });
       toast.error('Aready Reject');
       router.push('/profile');
-      router;
     } catch (err) {
       return err;
+    }
+  };
+
+  const handleDelete = (id: string) => {
+    try {
+      deleteTaskById(id);
+      toast.success('Delete Task Successfully');
+      router.push('/profile');
+    } catch (err: Error | any) {
+      toast.error(err.message);
     }
   };
 
@@ -192,12 +206,20 @@ const PreviewTask = ({ id, isOpen, onClose }: any) => {
                     Approve
                   </button>
                   <button
-                    className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
+                    className="m-5 rounded-xl border border-gray-200 bg-yellow-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-yellow-300"
                     onClick={() => handleReject(id)}
                   >
                     Reject
                   </button>
                 </div>
+              ) : null}
+              {audit === taskDataById.author?.username ? (
+                <button
+                  className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
+                  onClick={() => handleDelete(id)}
+                >
+                  Delete
+                </button>
               ) : null}
             </div>
           </div>
