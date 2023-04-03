@@ -24,7 +24,7 @@ const ProfilePage: NextPage = () => {
       <div className="stars"></div>
       <div className="stars2"></div>
       <div className="stars3"></div>
-      <div className="container mx-auto mt-10  rounded-lg py-12 px-6">
+      <div className="container mx-auto my-auto  mt-10 w-full overflow-auto rounded-lg py-12  px-6">
         <ProfileCard {...taskData} />
         <table className="mx-auto my-auto w-full text-center text-sm text-gray-500 shadow-md dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
