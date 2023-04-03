@@ -1,4 +1,6 @@
 export interface ITask {
+  index_number: number;
+
   _id: Key | null | undefined;
   title: string;
   description: string;
