@@ -41,7 +41,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
     try {
       handleApproveReject({
         id: id,
-        data: { status: 'approve', draft: false },
+        data: { status: 'approved', draft: false },
       });
       toast.success('Already Approve');
       router.push('/profile');
@@ -54,7 +54,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
     try {
       handleApproveReject({
         id: id,
-        data: { status: 'reject', draft: false },
+        data: { status: 'rejected', draft: false },
       });
       toast.error('Aready Reject');
       router.push('/profile');
