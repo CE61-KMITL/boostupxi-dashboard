@@ -13,6 +13,8 @@ const UploadForm = () => {
   const router: NextRouter = useRouter();
 
   const addTestCase = (e: any) => {
+    // TODO: change any to event
+
     try {
       e.preventDefault();
       setFormData({
@@ -27,6 +29,7 @@ const UploadForm = () => {
     }
   };
   const removeTestCase = (e: any, index: number) => {
+    // TODO: change any to event
     try {
       e.preventDefault();
       const newTestCases = [...formData.testcases];
@@ -55,6 +58,7 @@ const UploadForm = () => {
   };
 
   const handleTagClick = (tag: string, event: any) => {
+    // TODO: change any to event
     event.preventDefault();
     if (formData.tags.includes(tag)) {
       setFormData({
@@ -70,9 +74,9 @@ const UploadForm = () => {
   const uploadFilesHandle = async (fileData: FormData) => {
     setIsUploading(true);
     try {
-      const data = await uploadFiles(fileData as any);
+      const data = await uploadFiles(fileData as any); // TODO: change any to file type
       const newFiles = [...formData.files, ...data];
-      setFormData({ ...formData, files: newFiles as any[] });
+      setFormData({ ...formData, files: newFiles as any[] }); // TODO: change any to file type
     } catch (error) {
       return error;
     } finally {
@@ -80,6 +84,7 @@ const UploadForm = () => {
     }
   };
   const submitTask = (e: any) => {
+    // TODO: change any to event
     try {
       e.preventDefault();
       createTask(formData);
@@ -110,6 +115,8 @@ const UploadForm = () => {
       testCaseOutput.value = '';
       router.push('/dashboard');
     } catch (err: Error | any) {
+      // TODO: err type is any why ?
+      // if err is any type why you use Error type ?
       return err;
     }
   };
@@ -176,7 +183,7 @@ const UploadForm = () => {
                            : 'bg-gray-600'
                        }`}
                       key={tag}
-                      onClick={(event: any) => handleTagClick(tag, event)}
+                      onClick={(event: any) => handleTagClick(tag, event)} // Todo: change any to event
                       style={{ cursor: 'pointer' }}
                     >
                       {tag}
@@ -228,7 +235,7 @@ const UploadForm = () => {
                     id="fileInput"
                     className="block w-full rounded border border-gray-200 text-sm shadow-sm file:mr-4 file:border-0 file:bg-slate-600 file:py-3 file:px-4 file:text-white"
                     multiple
-                    onChange={async (event: any) => {
+                    onChange={async (event: any) => { // Todo: change any to event
                       const fileData = new FormData();
 
                       for (let i = 0; i < event.target.files.length; i++) {
@@ -249,7 +256,7 @@ const UploadForm = () => {
                     </div>
                   )}
 
-                  {formData.files.map((file: any, index: number) => (
+                  {formData.files.map((file: any, index: number) => ( // Todo: change any to file
                     <div className="my-5 flex flex-wrap" key={index}>
                       <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
                       <br />
@@ -364,7 +371,7 @@ const UploadForm = () => {
 
                       {index != 0 ? (
                         <button
-                          onClick={(e: any) => removeTestCase(e, index)}
+                          onClick={(e: any) => removeTestCase(e, index)} // Todo: change any to event
                           className="ml-auto mt-3 rounded-full bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
                         >
                           Remove Test Case

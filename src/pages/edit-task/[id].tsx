@@ -15,11 +15,11 @@ interface TaskPageQuery extends ParsedUrlQuery {
 }
 
 function Task() {
-  const [taskDataById, setTaskDataById] = useState<any>();
+  const [taskDataById, setTaskDataById] = useState<any>(); // TODO: do not use any
   const [isLoading, setIsLoading] = useState(true);
   const router: NextRouter = useRouter();
   const { id } = router.query as TaskPageQuery;
-  const inputRef = useRef<any>(null);
+  const inputRef = useRef<any>(null); // TODO: do not use any
   useEffect(() => {
     const fetchDataById = async () => {
       try {
@@ -44,11 +44,11 @@ function Task() {
         ],
       });
       toast.success('Add Test Case');
-    } catch (err: Error | any) {
+    } catch (err: Error | any) { // TODO: do not use any
       return err;
     }
   };
-  const removeTestCase = (e: any, index: number) => {
+  const removeTestCase = (e: any, index: number) => { // TODO: do not use any
     try {
       e.preventDefault();
       const newTestCases = [...taskDataById.testcases];
@@ -57,7 +57,7 @@ function Task() {
         ...taskDataById,
         testcases: newTestCases as ITestCases[],
       });
-    } catch (err: Error | any) {
+    } catch (err: Error | any) { // TODO: do not use any
       return err;
     }
   };
@@ -75,12 +75,12 @@ function Task() {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
       return data;
-    } catch (err: Error | any) {
+    } catch (err: Error | any) { // TODO: do not use any
       return err;
     }
   };
 
-  const handleTagClick = (tag: string, event: any) => {
+  const handleTagClick = (tag: string, event: any) => { // TODO: do not use any
     event.preventDefault();
     if (taskDataById.tags.includes(tag)) {
       setTaskDataById({
@@ -121,7 +121,7 @@ function Task() {
       testCaseInput.value = '';
       testCaseOutput.value = '';
       router.push('/dashboard');
-    } catch (err: Error | any) {
+    } catch (err: Error | any) { // TODO: do not use any
       return err;
     }
   };
@@ -275,7 +275,7 @@ function Task() {
                             const newFiles = [...taskDataById.files, ...data];
                             setTaskDataById({
                               ...taskDataById,
-                              files: newFiles as any[],
+                              files: newFiles as any[], // TODO: do not use any
                             });
                           } catch (error) {
                             return error;
@@ -283,7 +283,7 @@ function Task() {
                         }}
                         ref={inputRef}
                       />
-                      {taskDataById.files.map((file: any, index: any) => (
+                      {taskDataById.files.map((file: any, index: any) => ( // TODO: do not use any
                         <div className="mb-6 flex flex-wrap" key={index}>
                           <p>{file.key}</p>
                           <br />
@@ -319,7 +319,7 @@ function Task() {
                   </div>
 
                   <ul>
-                    {taskDataById.testcases.map((value: any, index: any) => {
+                    {taskDataById.testcases.map((value: any, index: any) => { // TODO: do not use any
                       return (
                         <li className="-mx-3 mb-2 flex flex-wrap" key={index}>
                           <div className="mb-6 w-full px-3 md:w-1/2">
@@ -366,7 +366,7 @@ function Task() {
                                     setTaskDataById({
                                       ...taskDataById,
                                       testcases: taskDataById.testcases.map(
-                                        (item: any, i: number) => {
+                                        (item: any, i: number) => { // TODO: do not use any
                                           if (i === index) {
                                             return {
                                               ...item,
@@ -391,7 +391,7 @@ function Task() {
                                 setTaskDataById({
                                   ...taskDataById,
                                   testcases: taskDataById.testcases.map(
-                                    (item: any, i: number) => {
+                                    (item: any, i: number) => { // TODO: do not use any
                                       if (i === index) {
                                         return {
                                           ...item,
