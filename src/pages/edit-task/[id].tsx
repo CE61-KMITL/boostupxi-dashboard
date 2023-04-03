@@ -1,13 +1,14 @@
 import { useState, useEffect, ChangeEvent, useRef } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter, NextRouter } from 'next/router';
 import { Loading } from '@/components';
 import { getTaskById, UpdateTaskById } from '@/services/task.services';
 import { ParsedUrlQuery } from 'querystring';
-import { testcase } from '@/interface/upload';
+import { ITestCases } from '@/interface/upload';
 import { toast } from 'react-hot-toast';
 import { IFiles } from '@/interface/task';
 import { uploadFiles, deleteFiles } from '@/services/file.servies';
 import Layouts from '@/layouts/Layouts';
+import { AvariablesTags } from '@/constants/task';
 
 interface TaskPageQuery extends ParsedUrlQuery {
   id: string;
@@ -16,7 +17,7 @@ interface TaskPageQuery extends ParsedUrlQuery {
 function Task() {
   const [taskDataById, setTaskDataById] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const { id } = router.query as TaskPageQuery;
   const inputRef = useRef<any>(null);
   useEffect(() => {
@@ -31,22 +32,7 @@ function Task() {
     };
     fetchDataById();
   }, [id]);
-  const availableTags: string[] = [
-    'Algorithm',
-    'AI',
-    'ci',
-    'Computer Engineering',
-    'Reverse Engineer',
-    'Fun',
-    'CTF',
-    'crypto',
-    'Forensics',
-    'Web',
-    'Pwn',
-    'Misc',
-    'OSINT',
-    'Stego',
-  ];
+
   const addTestCase = (e: any) => {
     try {
       e.preventDefault();
@@ -69,7 +55,7 @@ function Task() {
       newTestCases.splice(index, 1);
       setTaskDataById({
         ...taskDataById,
-        testcases: newTestCases as testcase[],
+        testcases: newTestCases as ITestCases[],
       });
     } catch (err: Error | any) {
       return err;
@@ -111,7 +97,6 @@ function Task() {
       e.preventDefault();
       UpdateTaskById(taskDataById, id);
       toast.success('Update Task Success');
-
       setTaskDataById({
         ...taskDataById,
         title: '',
@@ -135,6 +120,7 @@ function Task() {
       fileInput.value = '';
       testCaseInput.value = '';
       testCaseOutput.value = '';
+      router.push('/dashboard');
     } catch (err: Error | any) {
       return err;
     }
@@ -145,10 +131,23 @@ function Task() {
         <Loading />
       ) : (
         <Layouts>
-          <div className="flex min-h-screen items-center justify-center overflow-y-auto bg-main-color px-6 pt-20">
+          <div className="stars"></div>
+          <div className="stars2"></div>
+          <div className="stars3"></div>
+
+          <div className="flex min-h-screen items-center justify-center overflow-y-auto px-6 pt-20">
             <div className="container mx-auto max-w-screen-lg">
               <div className="mb-6 rounded bg-white p-4 px-4 shadow-lg md:p-8">
                 <form className="w-full">
+                  <div className="-mx-3 mb-5 flex justify-between border-b-2 border-gray-800 pb-2">
+                    <p className="flex items-start justify-start">
+                      Author : {taskDataById.author.username}
+                    </p>
+                    <p className="flex items-end justify-end">
+                      Last updated : {taskDataById.createdAt}
+                    </p>
+                  </div>
+
                   <div className="-mx-3 mb-6 flex flex-wrap">
                     <div className="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                       <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
@@ -196,7 +195,7 @@ function Task() {
                       <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                         Task Tags
                       </label>
-                      {availableTags.map((tag) => (
+                      {AvariablesTags.map((tag: string) => (
                         <button
                           className={`
                        relative mx-1 mb-2 inline-flex w-auto items-center justify-center rounded-full border border-transparent px-3 py-0.5 text-sm font-bold leading-6 text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2
@@ -359,7 +358,7 @@ function Task() {
                               <label className="float-right mx-3 inline-block">
                                 Publish
                                 <input
-                                  className="float-right mt-1 inline-block"
+                                  className="float-left mx-1 inline-block px-2"
                                   type="checkbox"
                                   id={`testCaseOutput${index}`}
                                   checked={value.published}

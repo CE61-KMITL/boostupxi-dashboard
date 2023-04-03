@@ -1,22 +1,24 @@
 import axios from 'axios';
 import { ParsedUrlQuery } from 'querystring';
-import { FormType } from '@/interface/upload';
+import { IForm } from '@/interface/upload';
+import { IData } from '@/interface/task';
+import Cookies from 'js-cookie';
 
 export interface TaskPageQuery extends ParsedUrlQuery {
   id: string;
 }
 
-export const getTasksData = async () => {
-  const token: string | null = localStorage.getItem('token');
+export const getTasksData = async (page: number) => {
+  const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response = await axios.get(`/api/tasks`);
+    const response = await axios.get(`/api/tasks?page=${page}&limit=10`);
     return response.data;
   }
 };
 
 export const getTaskById = async ({ id }: TaskPageQuery) => {
-  const token: string | null = localStorage.getItem('token');
+  const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const response = await axios.get(`/api/tasks/${id}`);
@@ -24,8 +26,8 @@ export const getTaskById = async ({ id }: TaskPageQuery) => {
   }
 };
 
-export const createTask = async (data: FormType) => {
-  const token: string | null = localStorage.getItem('token');
+export const createTask = async (data: IForm) => {
+  const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const res = await axios.post(`/api/tasks/`, data);
@@ -33,12 +35,21 @@ export const createTask = async (data: FormType) => {
   }
 };
 
-export const UpdateTaskById = async (data: FormType, id: string) => {
-  const token: string | null = localStorage.getItem('token');
+export const UpdateTaskById = async (data: IForm, id: string) => {
+  const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const res = await axios.patch(`/api/tasks/${id}`, data);
     return res.data;
+  }
+};
+
+export const deleteTaskById = async (id: string) => {
+  const token: string | undefined = Cookies.get('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const response = await axios.delete(`/api/tasks/${id}`);
+    return response.data;
   }
 };
 
@@ -47,9 +58,9 @@ export const handleApproveReject = async ({
   data,
 }: {
   id: string;
-  data: any;
+  data: IData;
 }) => {
-  const token: string | null = localStorage.getItem('token');
+  const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const response = await axios.patch(`/api/tasks/audit/${id}`, data);

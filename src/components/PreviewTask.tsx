@@ -1,17 +1,30 @@
 import { useState, useEffect, Fragment } from 'react';
 import { useAuth } from '@/contexts/auth';
-import { getTaskById, handleApproveReject } from '@/services/task.services';
+import {
+  getTaskById,
+  handleApproveReject,
+  deleteTaskById,
+} from '@/services/task.services';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vs2015 } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import Link from 'next/link';
-import { IFiles, ITestCases } from '@/interface/task';
+import { IFiles, ITaskByID, ITestCases } from '@/interface/task';
 import { toast } from 'react-hot-toast';
 import { NextRouter, useRouter } from 'next/router';
+import { InitialTaskBtyId } from '@/constants/task';
+import { Comment } from '@/components';
 
-const PreviewTask = ({ id, isOpen, onClose }: any) => {
-  const [taskDataById, setTaskDataById] = useState<any>({});
-  const { isAuditor }: any = useAuth();
+interface Props {
+  id: string;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const PreviewTask = ({ id, isOpen, onClose }: Props) => {
+  const [taskDataById, setTaskDataById] = useState<ITaskByID>(InitialTaskBtyId);
+  const { user, isAuditor } = useAuth();
   const router: NextRouter = useRouter();
+  const audit: string = user.username;
 
   useEffect(() => {
     const fetchDataById = async () => {
@@ -29,10 +42,14 @@ const PreviewTask = ({ id, isOpen, onClose }: any) => {
     try {
       handleApproveReject({
         id: id,
-        data: { status: 'approve', draft: false },
+        data: { status: 'approved', draft: false },
       });
       toast.success('Already Approve');
-      router.push('/profile');
+      if (router.pathname == '/profile') {
+        window.location.href = '/profile';
+      } else {
+        window.location.href = '/dashboard';
+      }
     } catch (err) {
       return err;
     }
@@ -42,11 +59,28 @@ const PreviewTask = ({ id, isOpen, onClose }: any) => {
     try {
       handleApproveReject({
         id: id,
-        data: { status: 'reject', draft: false },
+        data: { status: 'rejected', draft: false },
       });
-      toast.error('Aready Reject');
-      router.push('/profile');
-      router;
+      toast.error('Already Reject');
+      if (router.pathname == '/profile') {
+        window.location.href = '/profile';
+      } else {
+        window.location.href = '/dashboard';
+      }
+    } catch (err) {
+      return err;
+    }
+  };
+
+  const handleDelete = (id: string) => {
+    try {
+      deleteTaskById(id);
+      toast.success('Delete Task Successfully');
+      if (router.pathname == '/profile') {
+        window.location.href = '/profile';
+      } else {
+        window.location.href = '/dashboard';
+      }
     } catch (err) {
       return err;
     }
@@ -158,9 +192,12 @@ const PreviewTask = ({ id, isOpen, onClose }: any) => {
                           <p className="text-sm text-gray-600">
                             Task Output {length + 1}
                           </p>
-                          <p className="text-navy-700 text-base font-medium dark:text-black">
+                          <textarea
+                            className="text-navy-700 pb-10 text-base font-medium focus:outline-none dark:text-black"
+                            readOnly
+                          >
                             {val.output}
-                          </p>
+                          </textarea>
                         </div>
                         <div
                           className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none"
@@ -176,6 +213,7 @@ const PreviewTask = ({ id, isOpen, onClose }: any) => {
                   )}
               </div>
             </div>
+            <Comment />
             <div className="flex justify-between">
               <button
                 className="m-5 rounded-xl border border-gray-200 bg-sky-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-sky-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-sky-300 "
@@ -192,12 +230,20 @@ const PreviewTask = ({ id, isOpen, onClose }: any) => {
                     Approve
                   </button>
                   <button
-                    className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
+                    className="m-5 rounded-xl border border-gray-200 bg-yellow-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-yellow-300"
                     onClick={() => handleReject(id)}
                   >
                     Reject
                   </button>
                 </div>
+              ) : null}
+              {audit === taskDataById.author?.username ? (
+                <button
+                  className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
+                  onClick={() => handleDelete(id)}
+                >
+                  Delete
+                </button>
               ) : null}
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { TaskForm } from './task';
 
-export interface UserProfile {
+export interface IUserProfile {
   _id: string;
   username: string;
   email: string;
