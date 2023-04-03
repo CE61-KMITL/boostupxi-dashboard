@@ -5,10 +5,12 @@ import { IForm, ITestCases } from '@/interface/upload';
 import { createTask } from '@/services/task.services';
 import { uploadFiles, deleteFiles } from '@/services/file.servies';
 import { InitialForm, AvariablesTags } from '@/constants/task';
+import { useRouter, NextRouter } from 'next/router';
 
 const UploadForm = () => {
   const [formData, setFormData] = useState<IForm>(InitialForm);
   const inputRef = useRef<null>(null);
+  const router: NextRouter = useRouter();
 
   const addTestCase = (e: any) => {
     try {
@@ -106,6 +108,7 @@ const UploadForm = () => {
       fileInput.value = '';
       testCaseInput.value = '';
       testCaseOutput.value = '';
+      router.push('/dashboard');
     } catch (err: Error | any) {
       return err;
     }
