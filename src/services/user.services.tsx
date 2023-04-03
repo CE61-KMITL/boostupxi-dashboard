@@ -16,7 +16,7 @@ export const login = async (email: string, password: string) => {
   }
 };
 
-export const logout = () => {
+export const logout = async () => {
   Cookies.remove('token');
   router.push('/');
   toast.custom(() => (

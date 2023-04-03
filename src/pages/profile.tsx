@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { UserProfile } from '@/interface/user';
+import { IUserProfile } from '@/interface/user';
 import ProfileCard from '../components/ProfileCard';
 import Layouts from '@/layouts/Layouts';
 import { TaskTable } from '@/components';
@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { getProfile } from '@/services/user.services';
 
 const ProfilePage: NextPage = () => {
-  const [taskData, setTaskData] = useState<UserProfile>({} as UserProfile);
+  const [taskData, setTaskData] = useState<IUserProfile>({} as IUserProfile);
 
   useEffect(() => {
     const fetchData = async () => {

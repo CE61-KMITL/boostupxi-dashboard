@@ -3,11 +3,12 @@ import { useRouter } from 'next/router';
 import { Loading } from '@/components';
 import { getTaskById, UpdateTaskById } from '@/services/task.services';
 import { ParsedUrlQuery } from 'querystring';
-import { testcase } from '@/interface/upload';
+import { ITestCases } from '@/interface/upload';
 import { toast } from 'react-hot-toast';
 import { IFiles } from '@/interface/task';
 import { uploadFiles, deleteFiles } from '@/services/file.servies';
 import Layouts from '@/layouts/Layouts';
+import { AvariablesTags } from '@/constants/task';
 
 interface TaskPageQuery extends ParsedUrlQuery {
   id: string;
@@ -31,22 +32,7 @@ function Task() {
     };
     fetchDataById();
   }, [id]);
-  const availableTags: string[] = [
-    'Algorithm',
-    'AI',
-    'ci',
-    'Computer Engineering',
-    'Reverse Engineer',
-    'Fun',
-    'CTF',
-    'crypto',
-    'Forensics',
-    'Web',
-    'Pwn',
-    'Misc',
-    'OSINT',
-    'Stego',
-  ];
+
   const addTestCase = (e: any) => {
     try {
       e.preventDefault();
@@ -69,7 +55,7 @@ function Task() {
       newTestCases.splice(index, 1);
       setTaskDataById({
         ...taskDataById,
-        testcases: newTestCases as testcase[],
+        testcases: newTestCases as ITestCases[],
       });
     } catch (err: Error | any) {
       return err;
@@ -196,7 +182,7 @@ function Task() {
                       <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                         Task Tags
                       </label>
-                      {availableTags.map((tag) => (
+                      {AvariablesTags.map((tag: string) => (
                         <button
                           className={`
                        relative mx-1 mb-2 inline-flex w-auto items-center justify-center rounded-full border border-transparent px-3 py-0.5 text-sm font-bold leading-6 text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2

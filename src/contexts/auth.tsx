@@ -1,14 +1,33 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  ReactNode,
+} from 'react';
+import { NextRouter, useRouter } from 'next/router';
 import { Errors, Loading } from '@/components';
 import { login, logout, getProfile } from '@/services/user.services';
+import { IUserProfile } from '@/interface/user';
+import { IAuthContext } from '@/interface/auth';
 
-const AuthContext = createContext({});
+const AuthContext = createContext<IAuthContext>({
+  isAuthenticated: false,
+  isLoading: false,
+  user: null,
+  login: async () => {},
+  logout: async () => {},
+  isAuditor: false,
+});
+
+interface ChildrenProps {
+  children: ReactNode;
+}
 
 export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isAuditor, setIsAuditor] = useState(false);
-  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isAuditor, setIsAuditor] = useState<boolean>(false);
+  const [user, setUser] = useState<IUserProfile | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -42,9 +61,9 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
 
 export const useAuth = () => useContext(AuthContext);
 
-export const ProtectRoute = ({ children }: any) => {
-  const { isAuthenticated, isLoading }: any = useAuth();
-  const router = useRouter();
+const ProtectRoute = ({ children }: ChildrenProps) => {
+  const { isAuthenticated, isLoading } = useAuth();
+  const router: NextRouter = useRouter();
 
   if (isLoading) {
     return <Loading />;
@@ -64,5 +83,7 @@ export const ProtectRoute = ({ children }: any) => {
     );
   }
 
-  return children;
+  return <>{children}</>;
 };
+
+export default ProtectRoute;
