@@ -12,6 +12,7 @@ import { IFiles, ITaskByID, ITestCases } from '@/interface/task';
 import { toast } from 'react-hot-toast';
 import { NextRouter, useRouter } from 'next/router';
 import { InitialTaskBtyId } from '@/constants/task';
+import { Comment } from '@/components';
 
 interface Props {
   id: string;
@@ -44,7 +45,11 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
         data: { status: 'approved', draft: false },
       });
       toast.success('Already Approve');
-      router.push('/profile');
+      if (router.pathname == '/profile') {
+        window.location.href = '/profile';
+      } else {
+        window.location.href = '/dashboard';
+      }
     } catch (err) {
       return err;
     }
@@ -56,8 +61,12 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
         id: id,
         data: { status: 'rejected', draft: false },
       });
-      toast.error('Aready Reject');
-      router.push('/profile');
+      toast.error('Already Reject');
+      if (router.pathname == '/profile') {
+        window.location.href = '/profile';
+      } else {
+        window.location.href = '/dashboard';
+      }
     } catch (err) {
       return err;
     }
@@ -67,7 +76,11 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
     try {
       deleteTaskById(id);
       toast.success('Delete Task Successfully');
-      router.push('/profile');
+      if (router.pathname == '/profile') {
+        window.location.href = '/profile';
+      } else {
+        window.location.href = '/dashboard';
+      }
     } catch (err) {
       return err;
     }
@@ -197,6 +210,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                   )}
               </div>
             </div>
+            <Comment />
             <div className="flex justify-between">
               <button
                 className="m-5 rounded-xl border border-gray-200 bg-sky-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-sky-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-sky-300 "
