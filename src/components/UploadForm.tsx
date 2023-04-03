@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useRef, Fragment } from 'react';
+import { ChangeEvent, useState, useRef, Fragment, useEffect } from 'react';
 import { FormType, testcase } from '@/interface/upload';
 import { toast } from 'react-hot-toast';
 import { uploadFiles, deleteFiles } from '@/services/file.servies';
@@ -56,14 +56,18 @@ const UploadForm = () => {
     try {
       e.preventDefault();
       const newTestCases = [...formData.testcases];
+
       newTestCases.splice(index, 1);
+      console.log(newTestCases);
       setFormData({ ...formData, testcases: newTestCases as testcase[] });
+      console.log(formData.testcases);
     } catch (err: Error | any) {
       return err;
     }
   };
 
   const handleRemoveFile = (file: IFiles) => {
+    console.log(file);
     try {
       const newFiles = [...formData.files];
       const index = newFiles.findIndex((file: IFiles) => file.key === file.key);
@@ -75,8 +79,6 @@ const UploadForm = () => {
       if (formData.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
-
-      return data;
     } catch (err: Error | any) {
       return err;
     }
@@ -93,12 +95,28 @@ const UploadForm = () => {
       setFormData({ ...formData, tags: [...formData.tags, tag] });
     }
   };
+  const [isUploading, setIsUploading] = useState(false);
 
+  const uploadFilesHandle = async (fileData: FormData) => {
+    setIsUploading(true);
+    try {
+      const data = await uploadFiles(fileData as any);
+      const newFiles = [...formData.files, ...data];
+      setFormData({ ...formData, files: newFiles as any[] });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
   const submitTask = (e: any) => {
     try {
       e.preventDefault();
+      console.log(formData);
       const get = createTask(formData);
       toast.success('Create Task Success');
+      console.log(get);
+
       setFormData({
         ...formData,
         title: '',
@@ -122,8 +140,6 @@ const UploadForm = () => {
       fileInput.value = '';
       testCaseInput.value = '';
       testCaseOutput.value = '';
-
-      return get;
     } catch (err: Error | any) {
       return err;
     }
@@ -131,7 +147,7 @@ const UploadForm = () => {
 
   return (
     <Fragment>
-      <div className="flex min-h-screen items-center justify-center bg-main-color px-6 pt-20">
+      <div className="flex min-h-screen items-center justify-center  px-6 pt-20">
         <div className="container mx-auto max-w-screen-lg">
           <div className="mb-6 rounded bg-white p-4 px-4 shadow-lg md:p-8">
             <form className="w-full">
@@ -171,6 +187,8 @@ const UploadForm = () => {
                     <option defaultValue={1}>Level 1</option>
                     <option value={2}>Level 2</option>
                     <option value={3}>Level 3</option>
+                    <option value={4}>Level 4</option>
+                    <option value={5}>Level 5</option>
                   </select>
                 </div>
               </div>
@@ -245,22 +263,27 @@ const UploadForm = () => {
                       const fileData = new FormData();
 
                       for (let i = 0; i < event.target.files.length; i++) {
+                        console.log(event.target.files[i]);
                         fileData.append('files', event.target.files[i]);
                       }
-
-                      try {
-                        const data = await uploadFiles(fileData as any);
-                        const newFiles = [...formData.files, ...data];
-                        setFormData({ ...formData, files: newFiles as any[] });
-                      } catch (error) {
-                        return error;
-                      }
+                      uploadFilesHandle(fileData);
                     }}
                     ref={inputRef}
                   />
+                  {isUploading && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                      <div className="rounded bg-white p-5 shadow-lg">
+                        <p className="mb-3 text-xl font-bold">
+                          Uploading files...
+                        </p>
+                        <div className="loader"></div>
+                      </div>
+                    </div>
+                  )}
+
                   {formData.files.map((file: any, index: any) => (
-                    <div className="mb-6 flex flex-wrap" key={index}>
-                      <p>{file.key}</p>
+                    <div className="my-5 flex flex-wrap" key={index}>
+                      <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
                       <br />
                       <button
                         type="button"
@@ -323,31 +346,33 @@ const UploadForm = () => {
                       <div className="mb-6 w-full px-3 md:w-1/2">
                         <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                           Test Case {index + 1} Output
-                          <label className="float-right mx-3 inline-block">
-                            Publish
-                            <input
-                              className="float-right mt-1 inline-block"
-                              type="checkbox"
-                              id={`testCaseOutput${index}`}
-                              checked={value.published}
-                              onChange={() =>
-                                setFormData({
-                                  ...formData,
-                                  testcases: formData.testcases.map(
-                                    (item, i) => {
-                                      if (i === index) {
-                                        return {
-                                          ...item,
-                                          published: !item.published,
-                                        };
-                                      }
-                                      return item;
-                                    },
-                                  ),
-                                })
-                              }
-                            />
-                          </label>
+                          <div className="float-right inline-block">
+                            <label className="mx-3 mt-2 inline-block">
+                              Publish
+                              <input
+                                className="float-left mx-1 inline-block px-2"
+                                type="checkbox"
+                                id={`testCaseOutput${index}`}
+                                checked={value.published}
+                                onChange={() =>
+                                  setFormData({
+                                    ...formData,
+                                    testcases: formData.testcases.map(
+                                      (item, i) => {
+                                        if (i === index) {
+                                          return {
+                                            ...item,
+                                            published: !item.published,
+                                          };
+                                        }
+                                        return item;
+                                      },
+                                    ),
+                                  })
+                                }
+                              />
+                            </label>
+                          </div>
                         </label>
 
                         <textarea
