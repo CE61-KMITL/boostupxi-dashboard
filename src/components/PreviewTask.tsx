@@ -192,9 +192,12 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                           <p className="text-sm text-gray-600">
                             Task Output {length + 1}
                           </p>
-                          <p className="text-navy-700 text-base font-medium dark:text-black">
+                          <textarea
+                            className="text-navy-700 pb-10 text-base font-medium focus:outline-none dark:text-black"
+                            readOnly
+                          >
                             {val.output}
-                          </p>
+                          </textarea>
                         </div>
                         <div
                           className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none"

@@ -131,10 +131,23 @@ function Task() {
         <Loading />
       ) : (
         <Layouts>
-          <div className="flex min-h-screen items-center justify-center overflow-y-auto bg-main-color px-6 pt-20">
+          <div className="stars"></div>
+          <div className="stars2"></div>
+          <div className="stars3"></div>
+
+          <div className="flex min-h-screen items-center justify-center overflow-y-auto px-6 pt-20">
             <div className="container mx-auto max-w-screen-lg">
               <div className="mb-6 rounded bg-white p-4 px-4 shadow-lg md:p-8">
                 <form className="w-full">
+                  <div className="-mx-3 mb-5 flex justify-between border-b-2 border-gray-800 pb-2">
+                    <p className="flex items-start justify-start">
+                      Author : {taskDataById.author.username}
+                    </p>
+                    <p className="flex items-end justify-end">
+                      Last updated : {taskDataById.createdAt}
+                    </p>
+                  </div>
+
                   <div className="-mx-3 mb-6 flex flex-wrap">
                     <div className="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                       <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
@@ -345,7 +358,7 @@ function Task() {
                               <label className="float-right mx-3 inline-block">
                                 Publish
                                 <input
-                                  className="float-right mt-1 inline-block"
+                                  className="float-left mx-1 inline-block px-2"
                                   type="checkbox"
                                   id={`testCaseOutput${index}`}
                                   checked={value.published}

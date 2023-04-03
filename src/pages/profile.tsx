@@ -29,6 +29,9 @@ const ProfilePage: NextPage = () => {
         <table className="mx-auto my-auto w-full text-sm text-gray-500 shadow-md dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
+              <th scope="col" className="px-6 py-1">
+                #
+              </th>
               <th scope="col" className="px-6 py-3">
                 Task Name
               </th>
@@ -54,8 +57,9 @@ const ProfilePage: NextPage = () => {
           </thead>
           <tbody>
             {taskData.tasks &&
-              taskData.tasks.map((val: ITask) => (
+              taskData.tasks.map((val: ITask, index: number) => (
                 <TaskTable
+                  index_number={index + 1}
                   key={val._id}
                   _id={val._id}
                   title={val.title}

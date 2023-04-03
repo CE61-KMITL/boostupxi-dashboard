@@ -6,6 +6,12 @@
   -webkit-text-stroke: 0.1px white;
 }
 
+button[disabled] {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
 .border-ani::before {
   content: '';
   position: absolute;
