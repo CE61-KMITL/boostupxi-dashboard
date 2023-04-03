@@ -1,5 +1,5 @@
 import { useState, useEffect, ChangeEvent, useRef } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter, NextRouter } from 'next/router';
 import { Loading } from '@/components';
 import { getTaskById, UpdateTaskById } from '@/services/task.services';
 import { ParsedUrlQuery } from 'querystring';
@@ -17,7 +17,7 @@ interface TaskPageQuery extends ParsedUrlQuery {
 function Task() {
   const [taskDataById, setTaskDataById] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const { id } = router.query as TaskPageQuery;
   const inputRef = useRef<any>(null);
   useEffect(() => {
@@ -97,7 +97,6 @@ function Task() {
       e.preventDefault();
       UpdateTaskById(taskDataById, id);
       toast.success('Update Task Success');
-
       setTaskDataById({
         ...taskDataById,
         title: '',
@@ -121,6 +120,7 @@ function Task() {
       fileInput.value = '';
       testCaseInput.value = '';
       testCaseOutput.value = '';
+      router.push('/dashboard');
     } catch (err: Error | any) {
       return err;
     }
