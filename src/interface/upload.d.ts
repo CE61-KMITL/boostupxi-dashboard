@@ -1,19 +1,19 @@
-export interface FormType {
+export interface IForm {
   title: string;
   level: number;
   files: any[];
   tags: string[];
   hint: string;
   description: string;
-  testcases: testcase[];
+  testcases: ITestCases[];
   solution_code: string;
 }
 
-export interface fileUpload {
+export interface IFileUpload {
   file: File;
   name: string;
 }
-export interface testcase {
+export interface ITestCases {
   input: string;
   output: string;
   published: boolean;

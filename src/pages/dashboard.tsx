@@ -17,7 +17,7 @@ const TasksPage: NextPage = () => {
     const fetchData = async () => {
       const response = await getTasksData(currentPage);
       setTaskData(response);
-      setFilteredTasks(response); // set the initial value of filteredTasks to the fetched data
+      setFilteredTasks(response);
       setFuse(
         new Fuse(response, {
           keys: ['title', 'description', 'author', 'level', 'tags'],

@@ -4,7 +4,8 @@ import '../styles/star.css';
 import type { AppProps } from 'next/app';
 import { Toaster } from 'react-hot-toast';
 import { Fragment } from 'react';
-import { AuthProvider, ProtectRoute } from '../contexts/auth';
+import { AuthProvider } from '../contexts/auth';
+import ProtectRoute from '../contexts/auth';
 
 const kanit = Kanit({
   subsets: ['latin'],

@@ -1,42 +1,14 @@
-import { ChangeEvent, useState, useRef, Fragment, useEffect } from 'react';
-import { FormType, testcase } from '@/interface/upload';
+import { ChangeEvent, useState, useRef, Fragment } from 'react';
 import { toast } from 'react-hot-toast';
-import { uploadFiles, deleteFiles } from '@/services/file.servies';
 import { IFiles } from '@/interface/task';
+import { IForm, ITestCases } from '@/interface/upload';
 import { createTask } from '@/services/task.services';
+import { uploadFiles, deleteFiles } from '@/services/file.servies';
+import { InitialForm, AvariablesTags } from '@/constants/task';
 
 const UploadForm = () => {
-  let formInitial: FormType = {
-    title: '',
-    level: 1,
-    tags: [],
-    hint: '',
-    description: '',
-    files: [],
-    testcases: [{ input: '', output: '', published: false }],
-    solution_code: '',
-  };
-
-  const availableTags: string[] = [
-    'Algorithm',
-    'AI',
-    'ci',
-    'Computer Engineering',
-    'Reverse Engineer',
-    'Fun',
-    'CTF',
-    'crypto',
-    'Forensics',
-    'Web',
-    'Pwn',
-    'Misc',
-    'OSINT',
-    'Stego',
-  ];
-
-  const [formData, setFormData] = useState<FormType>(formInitial);
-
-  const inputRef = useRef<any>(null);
+  const [formData, setFormData] = useState<IForm>(InitialForm);
+  const inputRef = useRef<null>(null);
 
   const addTestCase = (e: any) => {
     try {
@@ -48,7 +20,7 @@ const UploadForm = () => {
           { input: '', output: '', published: false },
         ],
       });
-    } catch (err: Error | any) {
+    } catch (err) {
       return err;
     }
   };
@@ -56,30 +28,26 @@ const UploadForm = () => {
     try {
       e.preventDefault();
       const newTestCases = [...formData.testcases];
-
       newTestCases.splice(index, 1);
-      console.log(newTestCases);
-      setFormData({ ...formData, testcases: newTestCases as testcase[] });
-      console.log(formData.testcases);
+      setFormData({ ...formData, testcases: newTestCases as ITestCases[] });
     } catch (err: Error | any) {
       return err;
     }
   };
 
   const handleRemoveFile = (file: IFiles) => {
-    console.log(file);
     try {
       const newFiles = [...formData.files];
       const index = newFiles.findIndex((file: IFiles) => file.key === file.key);
 
       newFiles.splice(index, 1);
       setFormData({ ...formData, files: newFiles });
-      const data = deleteFiles(file);
+      deleteFiles(file);
 
       if (formData.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
-    } catch (err: Error | any) {
+    } catch (err) {
       return err;
     }
   };
@@ -104,7 +72,7 @@ const UploadForm = () => {
       const newFiles = [...formData.files, ...data];
       setFormData({ ...formData, files: newFiles as any[] });
     } catch (error) {
-      console.error(error);
+      return error;
     } finally {
       setIsUploading(false);
     }
@@ -112,10 +80,8 @@ const UploadForm = () => {
   const submitTask = (e: any) => {
     try {
       e.preventDefault();
-      console.log(formData);
-      const get = createTask(formData);
+      createTask(formData);
       toast.success('Create Task Success');
-      console.log(get);
 
       setFormData({
         ...formData,
@@ -197,7 +163,7 @@ const UploadForm = () => {
                   <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                     Task Tags
                   </label>
-                  {availableTags.map((tag) => (
+                  {AvariablesTags.map((tag) => (
                     <button
                       className={`
                        relative mx-1 mb-2 inline-flex w-auto items-center justify-center rounded-full border border-transparent px-3 py-0.5 text-sm font-bold leading-6 text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2
@@ -263,7 +229,6 @@ const UploadForm = () => {
                       const fileData = new FormData();
 
                       for (let i = 0; i < event.target.files.length; i++) {
-                        console.log(event.target.files[i]);
                         fileData.append('files', event.target.files[i]);
                       }
                       uploadFilesHandle(fileData);
@@ -281,7 +246,7 @@ const UploadForm = () => {
                     </div>
                   )}
 
-                  {formData.files.map((file: any, index: any) => (
+                  {formData.files.map((file: any, index: number) => (
                     <div className="my-5 flex flex-wrap" key={index}>
                       <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
                       <br />

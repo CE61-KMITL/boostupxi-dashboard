@@ -1,22 +1,11 @@
-import { UserProfile } from '@/interface/user';
+import { IUserProfile } from '@/interface/user';
 
-import { ITask } from '@/interface/task';
-
-const ProfileCard = ({ _id, username, email, role, tasks }: UserProfile) => {
+const ProfileCard = ({ _id, username, email, role, tasks }: IUserProfile) => {
   let taskCount = 0;
   let rejectCount = 0;
   let approveCount = 0;
   console.log('Task in profile');
   console.log(tasks);
-  // for (let i = 0; i < tasks.length; i++) {
-  //   taskCount++;
-
-  //   if (tasks[i].status === "reject") {
-  //     rejectCount++;
-  //   } else if (tasks[i].status === "approve") {
-  //     approveCount++;
-  //   }
-  // }
 
   console.log('Total tasks:', taskCount);
   console.log('Rejected tasks:', rejectCount);

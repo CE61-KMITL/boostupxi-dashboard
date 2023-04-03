@@ -24,7 +24,7 @@ const LoginPage: NextPage = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const { login }: any = useAuth();
+  const { login } = useAuth();
 
   const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
     await login(data.email, data.password);

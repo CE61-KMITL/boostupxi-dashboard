@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/auth';
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState<boolean>(false);
-  const { logout, user }: any = useAuth();
+  const { logout, user } = useAuth();
 
   return (
     <Fragment>

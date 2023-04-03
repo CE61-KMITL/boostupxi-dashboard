@@ -8,15 +8,22 @@ import {
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vs2015 } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import Link from 'next/link';
-import { IFiles, ITestCases } from '@/interface/task';
+import { IFiles, ITaskByID, ITestCases } from '@/interface/task';
 import { toast } from 'react-hot-toast';
 import { NextRouter, useRouter } from 'next/router';
+import { InitialTaskBtyId } from '@/constants/task';
 
-const PreviewTask = ({ id, isOpen, onClose }: any) => {
-  const [taskDataById, setTaskDataById] = useState<any>({});
-  const { user, isAuditor }: any = useAuth();
+interface Props {
+  id: string;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const PreviewTask = ({ id, isOpen, onClose }: Props) => {
+  const [taskDataById, setTaskDataById] = useState<ITaskByID>(InitialTaskBtyId);
+  const { user, isAuditor } = useAuth();
   const router: NextRouter = useRouter();
-  const audit = user.username;
+  const audit: string = user.username;
 
   useEffect(() => {
     const fetchDataById = async () => {
@@ -61,8 +68,8 @@ const PreviewTask = ({ id, isOpen, onClose }: any) => {
       deleteTaskById(id);
       toast.success('Delete Task Successfully');
       router.push('/profile');
-    } catch (err: Error | any) {
-      toast.error(err.message);
+    } catch (err) {
+      return err;
     }
   };
 
