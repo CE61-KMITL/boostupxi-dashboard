@@ -1,7 +1,7 @@
 export interface IForm {
   title: string;
   level: number;
-  files: any[];
+  files: any[]; // TODO: files type
   tags: string[];
   hint: string;
   description: string;

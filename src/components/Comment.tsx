@@ -30,6 +30,7 @@ const Comment = () => {
           </form>
           {CommentData &&
             CommentData.map((val: any) => (
+              // TODO: change any to type of CommentData
               <Fragment key={val.id}>
                 <article className="mb-6 rounded-lg bg-white p-6 text-base ">
                   <footer className="mb-2 flex items-center justify-between">
