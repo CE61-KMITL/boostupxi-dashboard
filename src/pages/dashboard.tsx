@@ -57,9 +57,9 @@ const TasksPage: NextPage = () => {
       <div className="stars2"></div>
       <div className="stars3"></div>
       <div className="container mx-auto mt-10 overflow-auto rounded-lg py-12 px-6">
-        <div className="float-left">
-          <h1 className="text-3xl font-bold text-white">All Tasks</h1>
-        </div>
+        {/* <div className="float-left">
+          <h1 className="text-sm font-bold text-white xl:text-3xl">All Tasks</h1>
+        </div> */}
 
         <div className="mx-auto my-3 ml-3 flex flex-row justify-end">
           <input
