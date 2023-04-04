@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent, useRef } from 'react';
 import { useRouter, NextRouter } from 'next/router';
-import { Loading } from '@/components';
+import { Loading, LoadingFile } from '@/components';
 import { getTaskById, UpdateTaskById } from '@/services/task.services';
 import { ParsedUrlQuery } from 'querystring';
 import { ITestCases } from '@/interface/upload';
@@ -17,10 +17,12 @@ interface TaskPageQuery extends ParsedUrlQuery {
 
 function Task() {
   const [taskDataById, setTaskDataById] = useState<ITaskByID>(InitialTaskBtyId);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router: NextRouter = useRouter();
   const { id } = router.query as TaskPageQuery;
   const inputRef = useRef<null>(null);
+
   useEffect(() => {
     const fetchDataById = async () => {
       try {
@@ -280,7 +282,7 @@ function Task() {
                           for (let i = 0; i < event.target.files!.length; i++) {
                             fileData.append('files', event.target.files![i]);
                           }
-
+                          setIsUploading(true);
                           try {
                             const data = await uploadFiles(
                               fileData as unknown as File[],
@@ -290,27 +292,28 @@ function Task() {
                               ...taskDataById,
                               files: newFiles as IFiles[],
                             });
+                            setIsUploading(false);
                           } catch (error) {
+                            setIsUploading(false);
                             return error;
                           }
                         }}
                         ref={inputRef}
                       />
-                      {taskDataById.files.map(
-                        (file: { key: string; url: string }, index: number) => (
-                          <div className="mb-6 flex flex-wrap" key={index}>
-                            <p>{file.key}</p>
-                            <br />
-                            <button
-                              type="button"
-                              className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
-                              onClick={() => handleRemoveFile(file)}
-                            >
-                              remove
-                            </button>
-                          </div>
-                        ),
-                      )}
+                      {isUploading && <LoadingFile />}
+                      {taskDataById.files.map((file: IFiles, index: number) => (
+                        <div className="my-5 flex flex-wrap" key={index}>
+                          <p>{file.key}</p>
+                          <br />
+                          <button
+                            type="button"
+                            className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
+                            onClick={() => handleRemoveFile(file)}
+                          >
+                            remove
+                          </button>
+                        </div>
+                      ))}
                     </div>
                   </div>
 

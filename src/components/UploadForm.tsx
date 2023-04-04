@@ -6,9 +6,11 @@ import { createTask } from '@/services/task.services';
 import { uploadFiles, deleteFiles } from '@/services/file.servies';
 import { InitialForm, AvariablesTags } from '@/constants/task';
 import { useRouter, NextRouter } from 'next/router';
+import { LoadingFile } from '@/components';
 
 const UploadForm = () => {
   const [formData, setFormData] = useState<IForm>(InitialForm);
+  const [isUploading, setIsUploading] = useState(false);
   const inputRef = useRef<null>(null);
   const router: NextRouter = useRouter();
 
@@ -71,7 +73,6 @@ const UploadForm = () => {
       setFormData({ ...formData, tags: [...formData.tags, tag] });
     }
   };
-  const [isUploading, setIsUploading] = useState(false);
 
   const uploadFilesHandle = async (fileData: File[]) => {
     setIsUploading(true);
@@ -79,6 +80,7 @@ const UploadForm = () => {
       const data = await uploadFiles(fileData);
       const newFiles = [...formData.files, ...data];
       setFormData({ ...formData, files: newFiles as IFiles[] });
+      setIsUploading(false);
     } catch (error) {
       return error;
     } finally {
@@ -248,32 +250,20 @@ const UploadForm = () => {
                     }}
                     ref={inputRef}
                   />
-                  {isUploading && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                      <div className="rounded bg-white p-5 shadow-lg">
-                        <p className="mb-3 text-xl font-bold">
-                          Uploading files...
-                        </p>
-                        <div className="loader"></div>
-                      </div>
+                  {isUploading && <LoadingFile />}
+                  {formData.files.map((file: IFiles, index: number) => (
+                    <div className="my-5 flex flex-wrap" key={index}>
+                      <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
+                      <br />
+                      <button
+                        type="button"
+                        className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
+                        onClick={() => handleRemoveFile(file)}
+                      >
+                        remove
+                      </button>
                     </div>
-                  )}
-
-                  {formData.files.map(
-                    (file: { key: string; url: string }, index: number) => (
-                      <div className="my-5 flex flex-wrap" key={index}>
-                        <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
-                        <br />
-                        <button
-                          type="button"
-                          className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
-                          onClick={() => handleRemoveFile(file)}
-                        >
-                          remove
-                        </button>
-                      </div>
-                    ),
-                  )}
+                  ))}
                 </div>
               </div>
 

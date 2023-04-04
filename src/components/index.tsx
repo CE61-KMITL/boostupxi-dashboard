@@ -4,3 +4,4 @@ export { default as Navbar } from './Navbar';
 export { default as TaskTable } from './TaskTable';
 export { default as UploadForm } from './UploadForm';
 export { default as Comment } from './Comment';
+export { default as LoadingFile } from './LoadingFile';
