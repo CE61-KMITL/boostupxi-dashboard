@@ -5,21 +5,22 @@ import { getTaskById, UpdateTaskById } from '@/services/task.services';
 import { ParsedUrlQuery } from 'querystring';
 import { ITestCases } from '@/interface/upload';
 import { toast } from 'react-hot-toast';
-import { IFiles } from '@/interface/task';
+import { IFiles, ITaskByID } from '@/interface/task';
 import { uploadFiles, deleteFiles } from '@/services/file.servies';
 import Layouts from '@/layouts/Layouts';
 import { AvariablesTags } from '@/constants/task';
+import { InitialTaskBtyId } from '@/constants/task';
 
 interface TaskPageQuery extends ParsedUrlQuery {
   id: string;
 }
 
 function Task() {
-  const [taskDataById, setTaskDataById] = useState<any>(); // TODO: do not use any
-  const [isLoading, setIsLoading] = useState(true);
+  const [taskDataById, setTaskDataById] = useState<ITaskByID>(InitialTaskBtyId);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const router: NextRouter = useRouter();
   const { id } = router.query as TaskPageQuery;
-  const inputRef = useRef<any>(null); // TODO: do not use any
+  const inputRef = useRef<null>(null);
   useEffect(() => {
     const fetchDataById = async () => {
       try {
@@ -33,7 +34,7 @@ function Task() {
     fetchDataById();
   }, [id]);
 
-  const addTestCase = (e: any) => {
+  const addTestCase = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
       setTaskDataById({
@@ -44,11 +45,14 @@ function Task() {
         ],
       });
       toast.success('Add Test Case');
-    } catch (err: Error | any) { // TODO: do not use any
+    } catch (err) {
       return err;
     }
   };
-  const removeTestCase = (e: any, index: number) => { // TODO: do not use any
+  const removeTestCase = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    index: number,
+  ) => {
     try {
       e.preventDefault();
       const newTestCases = [...taskDataById.testcases];
@@ -57,7 +61,7 @@ function Task() {
         ...taskDataById,
         testcases: newTestCases as ITestCases[],
       });
-    } catch (err: Error | any) { // TODO: do not use any
+    } catch (err) {
       return err;
     }
   };
@@ -75,12 +79,15 @@ function Task() {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
       return data;
-    } catch (err: Error | any) { // TODO: do not use any
+    } catch (err) {
       return err;
     }
   };
 
-  const handleTagClick = (tag: string, event: any) => { // TODO: do not use any
+  const handleTagClick = (
+    tag: string,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     event.preventDefault();
     if (taskDataById.tags.includes(tag)) {
       setTaskDataById({
@@ -92,7 +99,7 @@ function Task() {
     }
   };
 
-  const submitTask = (e: any) => {
+  const submitTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
       UpdateTaskById(taskDataById, id);
@@ -121,7 +128,7 @@ function Task() {
       testCaseInput.value = '';
       testCaseOutput.value = '';
       router.push('/dashboard');
-    } catch (err: Error | any) { // TODO: do not use any
+    } catch (err) {
       return err;
     }
   };
@@ -159,7 +166,7 @@ function Task() {
                         className="mt-1 h-10 w-full rounded border bg-gray-50 px-4"
                         placeholder="Task Name"
                         value={taskDataById.title}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setTaskDataById({
                             ...taskDataById,
                             title: e.target.value,
@@ -223,7 +230,9 @@ function Task() {
                         className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 pb-10 text-sm text-gray-900"
                         placeholder="Task Hint"
                         value={taskDataById.hint}
-                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                        onChange={(
+                          e: React.ChangeEvent<HTMLTextAreaElement>,
+                        ) => {
                           setTaskDataById({
                             ...taskDataById,
                             hint: e.target.value,
@@ -263,19 +272,23 @@ function Task() {
                         id="fileInput"
                         className="block w-full rounded border border-gray-200 text-sm shadow-sm file:mr-4 file:border-0 file:bg-slate-600 file:py-3 file:px-4 file:text-white"
                         multiple
-                        onChange={async (event: any) => {
+                        onChange={async (
+                          event: React.ChangeEvent<HTMLInputElement>,
+                        ) => {
                           const fileData = new FormData();
 
-                          for (let i = 0; i < event.target.files.length; i++) {
-                            fileData.append('files', event.target.files[i]);
+                          for (let i = 0; i < event.target.files!.length; i++) {
+                            fileData.append('files', event.target.files![i]);
                           }
 
                           try {
-                            const data = await uploadFiles(fileData as any);
+                            const data = await uploadFiles(
+                              fileData as unknown as File[],
+                            );
                             const newFiles = [...taskDataById.files, ...data];
                             setTaskDataById({
                               ...taskDataById,
-                              files: newFiles as any[], // TODO: do not use any
+                              files: newFiles as IFiles[],
                             });
                           } catch (error) {
                             return error;
@@ -283,19 +296,21 @@ function Task() {
                         }}
                         ref={inputRef}
                       />
-                      {taskDataById.files.map((file: any, index: any) => ( // TODO: do not use any
-                        <div className="mb-6 flex flex-wrap" key={index}>
-                          <p>{file.key}</p>
-                          <br />
-                          <button
-                            type="button"
-                            className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
-                            onClick={() => handleRemoveFile(file)}
-                          >
-                            remove
-                          </button>
-                        </div>
-                      ))}
+                      {taskDataById.files.map(
+                        (file: { key: string; url: string }, index: number) => (
+                          <div className="mb-6 flex flex-wrap" key={index}>
+                            <p>{file.key}</p>
+                            <br />
+                            <button
+                              type="button"
+                              className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
+                              onClick={() => handleRemoveFile(file)}
+                            >
+                              remove
+                            </button>
+                          </div>
+                        ),
+                      )}
                     </div>
                   </div>
 
@@ -319,108 +334,112 @@ function Task() {
                   </div>
 
                   <ul>
-                    {taskDataById.testcases.map((value: any, index: any) => { // TODO: do not use any
-                      return (
-                        <li className="-mx-3 mb-2 flex flex-wrap" key={index}>
-                          <div className="mb-6 w-full px-3 md:w-1/2">
-                            <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
-                              Test Case {index + 1} Input
-                            </label>
-                            <textarea
-                              className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 pb-10 text-sm text-gray-900"
-                              placeholder={`Test Case ${index + 1} Input`}
-                              onChange={(
-                                e: ChangeEvent<HTMLTextAreaElement>,
-                              ) => {
-                                setTaskDataById({
-                                  ...taskDataById,
-                                  testcases: taskDataById.testcases.map(
-                                    (item: any, i: number) => {
-                                      if (i === index) {
-                                        return {
-                                          ...item,
-                                          input: e.target.value,
-                                        };
-                                      }
-                                      return item;
-                                    },
-                                  ),
-                                });
-                              }}
-                              id={`testCaseInput${index}`}
-                              value={value.input}
-                            ></textarea>
-                          </div>
-
-                          <div className="mb-6 w-full px-3 md:w-1/2">
-                            <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
-                              Test Case {index + 1} Output
-                              <label className="float-right mx-3 inline-block">
-                                Publish
-                                <input
-                                  className="float-left mx-1 inline-block px-2"
-                                  type="checkbox"
-                                  id={`testCaseOutput${index}`}
-                                  checked={value.published}
-                                  onChange={() =>
-                                    setTaskDataById({
-                                      ...taskDataById,
-                                      testcases: taskDataById.testcases.map(
-                                        (item: any, i: number) => { // TODO: do not use any
-                                          if (i === index) {
-                                            return {
-                                              ...item,
-                                              published: !item.published,
-                                            };
-                                          }
-                                          return item;
-                                        },
-                                      ),
-                                    })
-                                  }
-                                />
+                    {taskDataById.testcases.map(
+                      (value: ITestCases, index: any) => {
+                        return (
+                          <li className="-mx-3 mb-2 flex flex-wrap" key={index}>
+                            <div className="mb-6 w-full px-3 md:w-1/2">
+                              <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
+                                Test Case {index + 1} Input
                               </label>
-                            </label>
+                              <textarea
+                                className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 pb-10 text-sm text-gray-900"
+                                placeholder={`Test Case ${index + 1} Input`}
+                                onChange={(
+                                  e: ChangeEvent<HTMLTextAreaElement>,
+                                ) => {
+                                  setTaskDataById({
+                                    ...taskDataById,
+                                    testcases: taskDataById.testcases.map(
+                                      (item: ITestCases, i: number) => {
+                                        if (i === index) {
+                                          return {
+                                            ...item,
+                                            input: e.target.value,
+                                          };
+                                        }
+                                        return item;
+                                      },
+                                    ),
+                                  });
+                                }}
+                                id={`testCaseInput${index}`}
+                                value={value.input}
+                              ></textarea>
+                            </div>
 
-                            <textarea
-                              className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 pb-10 text-sm text-gray-900"
-                              placeholder={`Test Case ${index + 1} Output`}
-                              onChange={(
-                                e: ChangeEvent<HTMLTextAreaElement>,
-                              ) => {
-                                setTaskDataById({
-                                  ...taskDataById,
-                                  testcases: taskDataById.testcases.map(
-                                    (item: any, i: number) => { // TODO: do not use any
-                                      if (i === index) {
-                                        return {
-                                          ...item,
-                                          output: e.target.value,
-                                        };
-                                      }
-                                      return item;
-                                    },
-                                  ),
-                                });
-                              }}
-                              id={`testCaseOutput${index}`}
-                              value={value.output}
-                            ></textarea>
-                          </div>
+                            <div className="mb-6 w-full px-3 md:w-1/2">
+                              <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
+                                Test Case {index + 1} Output
+                                <label className="float-right mx-3 inline-block">
+                                  Publish
+                                  <input
+                                    className="float-left mx-1 inline-block px-2"
+                                    type="checkbox"
+                                    id={`testCaseOutput${index}`}
+                                    checked={value.published}
+                                    onChange={() =>
+                                      setTaskDataById({
+                                        ...taskDataById,
+                                        testcases: taskDataById.testcases.map(
+                                          (item: ITestCases, i: number) => {
+                                            if (i === index) {
+                                              return {
+                                                ...item,
+                                                published: !item.published,
+                                              };
+                                            }
+                                            return item;
+                                          },
+                                        ),
+                                      })
+                                    }
+                                  />
+                                </label>
+                              </label>
 
-                          {index != 0 ? (
-                            <button
-                              onClick={(e: any) => removeTestCase(e, index)}
-                              className="ml-auto mt-3 rounded-full bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
-                            >
-                              Remove Test Case
-                            </button>
-                          ) : (
-                            ''
-                          )}
-                        </li>
-                      );
-                    })}
+                              <textarea
+                                className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 pb-10 text-sm text-gray-900"
+                                placeholder={`Test Case ${index + 1} Output`}
+                                onChange={(
+                                  e: ChangeEvent<HTMLTextAreaElement>,
+                                ) => {
+                                  setTaskDataById({
+                                    ...taskDataById,
+                                    testcases: taskDataById.testcases.map(
+                                      (item: ITestCases, i: number) => {
+                                        if (i === index) {
+                                          return {
+                                            ...item,
+                                            output: e.target.value,
+                                          };
+                                        }
+                                        return item;
+                                      },
+                                    ),
+                                  });
+                                }}
+                                id={`testCaseOutput${index}`}
+                                value={value.output}
+                              ></textarea>
+                            </div>
+
+                            {index != 0 ? (
+                              <button
+                                onClick={(
+                                  e: React.MouseEvent<HTMLButtonElement>,
+                                ) => removeTestCase(e, index)}
+                                className="ml-auto mt-3 rounded-full bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
+                              >
+                                Remove Test Case
+                              </button>
+                            ) : (
+                              ''
+                            )}
+                          </li>
+                        );
+                      },
+                    )}
                   </ul>
                   <div className="mb-6 flex flex-wrap">
                     <button

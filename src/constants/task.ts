@@ -1,5 +1,6 @@
 import { IAuthor, ITaskByID } from '@/interface/task';
 import { IForm } from '@/interface/upload';
+import { IComment } from '@/interface/comment';
 
 interface TaskForm {
   index?: number;
@@ -9,13 +10,6 @@ interface TaskForm {
   level: number;
   tags: string[];
   status: string;
-}
-
-interface IComment {
-  id: number;
-  auditor: string;
-  comment: string;
-  date: string;
 }
 
 export const TaskList: TaskForm[] = [
