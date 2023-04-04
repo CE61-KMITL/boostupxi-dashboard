@@ -32,7 +32,7 @@ export interface ITaskByID {
   level: number;
   tags: string[];
   hint: string;
-  files: any[]; // TODO: files type
+  files: IFiles[];
   testcases: {
     input: string;
     output: string;
@@ -49,6 +49,7 @@ export interface ITaskByID {
 export interface IFiles {
   url: string;
   key: string;
+  originalName?: string;
 }
 export interface ITestCases {
   input: string;

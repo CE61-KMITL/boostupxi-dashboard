@@ -12,9 +12,7 @@ const UploadForm = () => {
   const inputRef = useRef<null>(null);
   const router: NextRouter = useRouter();
 
-  const addTestCase = (e: any) => {
-    // TODO: change any to event
-
+  const addTestCase = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
       setFormData({
@@ -28,14 +26,16 @@ const UploadForm = () => {
       return err;
     }
   };
-  const removeTestCase = (e: any, index: number) => {
-    // TODO: change any to event
+  const removeTestCase = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    index: number,
+  ) => {
     try {
       e.preventDefault();
       const newTestCases = [...formData.testcases];
       newTestCases.splice(index, 1);
       setFormData({ ...formData, testcases: newTestCases as ITestCases[] });
-    } catch (err: Error | any) {
+    } catch (err) {
       return err;
     }
   };
@@ -57,8 +57,10 @@ const UploadForm = () => {
     }
   };
 
-  const handleTagClick = (tag: string, event: any) => {
-    // TODO: change any to event
+  const handleTagClick = (
+    tag: string,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     event.preventDefault();
     if (formData.tags.includes(tag)) {
       setFormData({
@@ -71,20 +73,20 @@ const UploadForm = () => {
   };
   const [isUploading, setIsUploading] = useState(false);
 
-  const uploadFilesHandle = async (fileData: FormData) => {
+  const uploadFilesHandle = async (fileData: File[]) => {
     setIsUploading(true);
     try {
-      const data = await uploadFiles(fileData as any); // TODO: change any to file type
+      const data = await uploadFiles(fileData);
       const newFiles = [...formData.files, ...data];
-      setFormData({ ...formData, files: newFiles as any[] }); // TODO: change any to file type
+      setFormData({ ...formData, files: newFiles as IFiles[] });
     } catch (error) {
       return error;
     } finally {
       setIsUploading(false);
     }
   };
-  const submitTask = (e: any) => {
-    // TODO: change any to event
+
+  const submitTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
       createTask(formData);
@@ -114,9 +116,7 @@ const UploadForm = () => {
       testCaseInput.value = '';
       testCaseOutput.value = '';
       router.push('/dashboard');
-    } catch (err: Error | any) {
-      // TODO: err type is any why ?
-      // if err is any type why you use Error type ?
+    } catch (err) {
       return err;
     }
   };
@@ -183,7 +183,9 @@ const UploadForm = () => {
                            : 'bg-gray-600'
                        }`}
                       key={tag}
-                      onClick={(event: any) => handleTagClick(tag, event)} // Todo: change any to event
+                      onClick={(
+                        event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+                      ) => handleTagClick(tag, event)}
                       style={{ cursor: 'pointer' }}
                     >
                       {tag}
@@ -235,13 +237,14 @@ const UploadForm = () => {
                     id="fileInput"
                     className="block w-full rounded border border-gray-200 text-sm shadow-sm file:mr-4 file:border-0 file:bg-slate-600 file:py-3 file:px-4 file:text-white"
                     multiple
-                    onChange={async (event: any) => { // Todo: change any to event
+                    onChange={async (
+                      event: React.ChangeEvent<HTMLInputElement>,
+                    ) => {
                       const fileData = new FormData();
-
-                      for (let i = 0; i < event.target.files.length; i++) {
-                        fileData.append('files', event.target.files[i]);
+                      for (let i = 0; i < event.target.files!.length; i++) {
+                        fileData.append('files', event.target.files![i]);
                       }
-                      uploadFilesHandle(fileData);
+                      uploadFilesHandle(fileData as unknown as File[]);
                     }}
                     ref={inputRef}
                   />
@@ -256,19 +259,21 @@ const UploadForm = () => {
                     </div>
                   )}
 
-                  {formData.files.map((file: any, index: number) => ( // Todo: change any to file
-                    <div className="my-5 flex flex-wrap" key={index}>
-                      <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
-                      <br />
-                      <button
-                        type="button"
-                        className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
-                        onClick={() => handleRemoveFile(file)}
-                      >
-                        remove
-                      </button>
-                    </div>
-                  ))}
+                  {formData.files.map(
+                    (file: { key: string; url: string }, index: number) => (
+                      <div className="my-5 flex flex-wrap" key={index}>
+                        <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
+                        <br />
+                        <button
+                          type="button"
+                          className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
+                          onClick={() => handleRemoveFile(file)}
+                        >
+                          remove
+                        </button>
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
 
@@ -371,7 +376,7 @@ const UploadForm = () => {
 
                       {index != 0 ? (
                         <button
-                          onClick={(e: any) => removeTestCase(e, index)} // Todo: change any to event
+                          onClick={(e) => removeTestCase(e, index)}
                           className="ml-auto mt-3 rounded-full bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
                         >
                           Remove Test Case

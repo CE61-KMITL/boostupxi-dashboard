@@ -1,7 +1,7 @@
 export interface IForm {
   title: string;
   level: number;
-  files: any[]; // TODO: files type
+  files: IFiles[];
   tags: string[];
   hint: string;
   description: string;
@@ -17,4 +17,9 @@ export interface ITestCases {
   input: string;
   output: string;
   published: boolean;
+}
+
+export interface IFiles {
+  url: string;
+  key: string;
 }
