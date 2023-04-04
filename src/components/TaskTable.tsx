@@ -62,20 +62,20 @@ const TaskTable = ({
           )}
         </td>
         {status == 'approved' ? (
-          <td className="px-6 py-4  sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-            <span className="inline-flex rounded-full px-2 text-base font-semibold leading-5  text-green-500">
+          <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+            <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5  text-green-500">
               {status}
             </span>
           </td>
         ) : status == 'queue' ? (
-          <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-            <span className="inline-flex rounded-full px-2 text-base font-semibold leading-5 text-yellow-500">
+          <td className="px-6 py-4 uppercase dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+            <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-yellow-500">
               {status}
             </span>
           </td>
         ) : (
-          <td className="px-6 py-4  sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-            <span className="inline-flex rounded-full px-2 text-base font-semibold leading-5  text-red-500">
+          <td className="px-6 py-4  uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+            <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5  text-red-500">
               {status}
             </span>
           </td>
