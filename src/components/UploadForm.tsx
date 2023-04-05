@@ -82,44 +82,77 @@ const UploadForm = () => {
       setFormData({ ...formData, files: newFiles as IFiles[] });
       setIsUploading(false);
     } catch (error) {
-      return error;
+      console.error(error);
+      toast.error('Upload File Error \n Please try again');
     } finally {
       setIsUploading(false);
     }
   };
+  const FormValidation = () => {
+    if (formData.title === '') {
+      toast.error('Please enter task name');
+      return false;
+    }
+    if (formData.level === 0) {
+      toast.error('Please enter task level');
+      return false;
+    }
+    if (formData.tags.length === 0) {
+      toast.error('Please enter task tags');
+      return false;
+    }
+    if (formData.description === '') {
+      toast.error('Please enter task description');
+      return false;
+    }
+    if (formData.solution_code === '') {
+      toast.error('Please enter task solution code');
+      return false;
+    }
+    if (formData.testcases.length === 0) {
+      toast.error('Please enter task testcases');
+      return false;
+    }
+  };
 
   const submitTask = (e: React.MouseEvent<HTMLButtonElement>) => {
-    try {
-      e.preventDefault();
-      createTask(formData);
-      toast.success('Create Task Success');
+    if (FormValidation() != false) {
+      try {
+        e.preventDefault();
+        createTask(formData);
+        toast.success('Create Task Success');
 
-      setFormData({
-        ...formData,
-        title: '',
-        level: 1,
-        tags: [],
-        hint: '',
-        description: '',
-        files: [],
-        testcases: [{ input: '', output: '', published: false }],
-        solution_code: '',
-      });
-      let fileInput = document.getElementById('fileInput') as HTMLInputElement;
-      let testCaseInput = document.getElementById(
-        'testCaseInput0',
-      ) as HTMLInputElement;
+        setFormData({
+          ...formData,
+          title: '',
+          level: 1,
+          tags: [],
+          hint: '',
+          description: '',
+          files: [],
+          testcases: [{ input: '', output: '', published: false }],
+          solution_code: '',
+        });
+        let fileInput = document.getElementById(
+          'fileInput',
+        ) as HTMLInputElement;
+        let testCaseInput = document.getElementById(
+          'testCaseInput0',
+        ) as HTMLInputElement;
 
-      let testCaseOutput = document.getElementById(
-        'testCaseOutput0',
-      ) as HTMLInputElement;
+        let testCaseOutput = document.getElementById(
+          'testCaseOutput0',
+        ) as HTMLInputElement;
 
-      fileInput.value = '';
-      testCaseInput.value = '';
-      testCaseOutput.value = '';
-      router.push('/dashboard');
-    } catch (err) {
-      return err;
+        fileInput.value = '';
+        testCaseInput.value = '';
+        testCaseOutput.value = '';
+        router.push('/dashboard');
+      } catch (error) {
+        toast.error('Create Task Error \n Please try again');
+      }
+    } else {
+      return false;
     }
   };
 
@@ -224,6 +257,7 @@ const UploadForm = () => {
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
                       setFormData({ ...formData, description: e.target.value });
                     }}
+                    required
                   ></textarea>
                 </div>
               </div>
@@ -237,6 +271,7 @@ const UploadForm = () => {
                     type="file"
                     name="fileInput"
                     id="fileInput"
+                    accept=".jpg,.png,.zip,.jpeg"
                     className="block w-full rounded border border-gray-200 text-sm shadow-sm file:mr-4 file:border-0 file:bg-slate-600 file:py-3 file:px-4 file:text-white"
                     multiple
                     onChange={async (
@@ -253,7 +288,11 @@ const UploadForm = () => {
                   {isUploading && <LoadingFile />}
                   {formData.files.map((file: IFiles, index: number) => (
                     <div className="my-5 flex flex-wrap" key={index}>
-                      <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
+                      <p>
+                        {decodeURIComponent(
+                          file.key.replace(/~.*(?=\.[^.]+$)/, ''),
+                        )}
+                      </p>
                       <br />
                       <button
                         type="button"
@@ -282,6 +321,7 @@ const UploadForm = () => {
                         solution_code: e.target.value,
                       });
                     }}
+                    required
                   ></textarea>
                 </div>
               </div>
@@ -364,7 +404,7 @@ const UploadForm = () => {
                         ></textarea>
                       </div>
 
-                      {index != 0 ? (
+                      {formData.testcases.length > 1 ? (
                         <button
                           onClick={(e) => removeTestCase(e, index)}
                           className="ml-auto mt-3 rounded-full bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
