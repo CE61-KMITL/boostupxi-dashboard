@@ -4,6 +4,7 @@ import {
   getTaskById,
   handleApproveReject,
   deleteTaskById,
+  createComment,
 } from '@/services/task.services';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vs2015 } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -13,6 +14,7 @@ import { toast } from 'react-hot-toast';
 import { NextRouter, useRouter } from 'next/router';
 import { InitialTaskBtyId } from '@/constants/task';
 import { Comment } from '@/components';
+import { IComment } from '@/interface/task';
 
 interface Props {
   id: string;
@@ -22,6 +24,8 @@ interface Props {
 
 const PreviewTask = ({ id, isOpen, onClose }: Props) => {
   const [taskDataById, setTaskDataById] = useState<ITaskByID>(InitialTaskBtyId);
+  const [comments, setComments] = useState<IComment[]>([]);
+  const [commentMessage, setCommentMessage] = useState<string>('');
   const { user, isAuditor } = useAuth();
   const router: NextRouter = useRouter();
   const audit: string = user.username;
@@ -31,6 +35,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
       try {
         const response = await getTaskById({ id });
         setTaskDataById(response);
+        setComments(response.comments);
       } catch (error) {
         return error;
       }
@@ -72,6 +77,17 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
     }
   };
 
+  const submitComment = (e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      e.preventDefault();
+      createComment(id, { message: commentMessage });
+      setCommentMessage('');
+      toast.success('Comment Successfully');
+    } catch (err) {
+      return err;
+    }
+  };
+
   const handleDelete = (id: string) => {
     try {
       deleteTaskById(id);
@@ -97,30 +113,28 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
           <div className="relative rounded-lg bg-white">
             <div className="px-6 py-9 md:px-20 lg:px-28 xl:px-32">
               <div className="-mx-3 mb-5 flex justify-between border-b-2 border-gray-800 pb-2 text-base text-black">
-                <p className="flex items-start justify-start">
-                  Author : {taskDataById.author.username}
-                </p>
-                <p className="flex items-end justify-end">
-                  Last updated : {taskDataById.createdAt}
-                  <button
-                    className="pl-20 pr-5 text-black hover:text-gray-400 focus:outline-none"
-                    onClick={onClose}
+                <div className="flex items-start justify-start space-x-10">
+                  <p>Author : {taskDataById.author.username}</p>
+                  <p>Last updated : {taskDataById.createdAt}</p>
+                </div>
+                <button
+                  className="flex items-end justify-end text-black hover:text-gray-400 focus:outline-none"
+                  onClick={onClose}
+                >
+                  <svg
+                    className="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    <svg
-                      className="h-8 w-8"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                </p>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
               </div>
               <div className="mt-2 mb-8 w-full">
                 <h4 className="text-navy-700 px-2 text-xl font-bold dark:text-black">
@@ -239,7 +253,47 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                   )}
               </div>
             </div>
-            <Comment />
+            <section className="bg-white py-8 lg:py-16">
+              <div className="mx-auto max-w-7xl px-4">
+                <div className="mb-6 flex items-center justify-between">
+                  <h2 className="text-lg font-bold text-gray-900  lg:text-2xl">
+                    Comment ({comments.length})
+                  </h2>
+                </div>
+                <form className="mb-6">
+                  <div className="mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4  ">
+                    <textarea
+                      className="w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0"
+                      placeholder="Write a comment..."
+                      required
+                      value={commentMessage}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                        setCommentMessage(e.target.value);
+                      }}
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    className=" focus:ring-primary-200  hover:bg-primary-800 inline-flex items-center rounded-lg bg-blue-700 py-2.5 px-4 text-center text-base font-medium text-white focus:ring-4"
+                    onClick={submitComment}
+                  >
+                    Post comment
+                  </button>
+                </form>
+                {comments &&
+                  comments.map((val: IComment) => (
+                    <Comment
+                      key={val.id}
+                      taskId={taskDataById._id}
+                      id={val.id}
+                      message={val.message}
+                      author={val.author}
+                      createdAt={val.createdAt}
+                      updatedAt={val.updatedAt}
+                    />
+                  ))}
+              </div>
+            </section>
             <div className="flex justify-end">
               {isAuditor ? (
                 <div>

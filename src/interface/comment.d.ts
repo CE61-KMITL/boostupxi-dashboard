@@ -1,6 +1,14 @@
+import { IAuthor } from './task';
+
 export interface IComment {
-  id: number;
-  auditor: string;
-  comment: string;
-  date: string;
+  message: string;
+  author: IAuthor;
+  createdAt: string;
+  updatedAt: string;
+  taskId: string;
+  id: string;
+}
+
+export interface IMessage {
+  message: string;
 }

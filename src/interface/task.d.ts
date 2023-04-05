@@ -1,3 +1,5 @@
+import { IComment } from './comment';
+
 export interface ITask {
   index_number: number;
 
@@ -21,6 +23,7 @@ export interface ITask {
 }
 
 export interface ITaskByID {
+  [x: string]: any;
   _id: string;
   title: string;
   description: string;
@@ -44,6 +47,7 @@ export interface ITaskByID {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  comments: IComment[];
 }
 
 export interface IFiles {
@@ -66,3 +70,4 @@ export interface IData {
   status: string;
   draft: boolean;
 }
+export { IComment };
