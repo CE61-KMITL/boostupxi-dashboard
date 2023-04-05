@@ -96,6 +96,32 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
         <div className="relative mx-20 mt-14 w-full xl:mx-40">
           <div className="relative rounded-lg bg-white">
             <div className="px-6 py-9 md:px-20 lg:px-28 xl:px-32">
+              <div className="-mx-3 mb-5 flex justify-between border-b-2 border-gray-800 pb-2 text-base text-black">
+                <p className="flex items-start justify-start">
+                  Author : {taskDataById.author.username}
+                </p>
+                <p className="flex items-end justify-end">
+                  Last updated : {taskDataById.createdAt}
+                  <button
+                    className="pl-20 pr-5 text-black hover:text-gray-400 focus:outline-none"
+                    onClick={onClose}
+                  >
+                    <svg
+                      className="h-8 w-8"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </p>
+              </div>
               <div className="mt-2 mb-8 w-full">
                 <h4 className="text-navy-700 px-2 text-xl font-bold dark:text-black">
                   {taskDataById.title}
@@ -214,13 +240,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
               </div>
             </div>
             <Comment />
-            <div className="flex justify-between">
-              <button
-                className="m-5 rounded-xl border border-gray-200 bg-sky-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-sky-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-sky-300 "
-                onClick={onClose}
-              >
-                Close
-              </button>
+            <div className="flex justify-end">
               {isAuditor ? (
                 <div>
                   <button
