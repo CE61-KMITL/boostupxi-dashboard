@@ -13,8 +13,8 @@ const TaskTable = ({
   tags,
   status,
 }: ITask) => {
-  const [openModal, setOpenModal] = useState(false);
-  const [id, setId] = useState('');
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [id, setId] = useState<string>('');
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -67,7 +67,7 @@ const TaskTable = ({
               {status}
             </span>
           </td>
-        ) : status == 'queue' ? (
+        ) : status == 'queued' ? (
           <td className="px-6 py-4 uppercase dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
             <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-yellow-500">
               {status}

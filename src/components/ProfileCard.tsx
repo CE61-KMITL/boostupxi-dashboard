@@ -1,9 +1,9 @@
 import { IUserProfile } from '@/interface/user';
 
 const ProfileCard = ({ _id, username, email, role, tasks }: IUserProfile) => {
-  let taskCount = 0;
-  let rejectCount = 0;
-  let approveCount = 0;
+  let taskCount: number = 0;
+  let rejectCount: number = 0;
+  let approveCount: number = 0;
 
   if (tasks != null) {
     taskCount = tasks.length;
