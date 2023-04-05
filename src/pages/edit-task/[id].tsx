@@ -216,7 +216,9 @@ function Task() {
                            : 'bg-gray-600'
                        }`}
                           key={tag}
-                          onClick={(event: any) => handleTagClick(tag, event)}
+                          onClick={(
+                            event: React.MouseEvent<HTMLButtonElement>,
+                          ) => handleTagClick(tag, event)}
                           style={{ cursor: 'pointer' }}
                         >
                           {tag}
@@ -340,7 +342,7 @@ function Task() {
 
                   <ul>
                     {taskDataById.testcases.map(
-                      (value: ITestCases, index: any) => {
+                      (value: ITestCases, index: number) => {
                         return (
                           <li className="-mx-3 mb-2 flex flex-wrap" key={index}>
                             <div className="mb-6 w-full px-3 md:w-1/2">

@@ -1,6 +1,5 @@
 import { IAuthor, ITaskByID } from '@/interface/task';
 import { IForm } from '@/interface/upload';
-import { IComment } from '@/interface/comment';
 
 interface TaskForm {
   index?: number;
@@ -45,6 +44,7 @@ export const InitialTaskBtyId: ITaskByID = {
   solution_code: '',
   createdAt: '',
   updatedAt: '',
+  comments: [],
   __v: 0,
 };
 
@@ -70,31 +70,4 @@ export const AvariablesTags: string[] = [
   'Reverse Engineer',
   'CTF',
   'Crypto',
-];
-
-export const CommentData: IComment[] = [
-  {
-    id: 1,
-    auditor: 'Khris Bharmmanao',
-    comment: 'Good',
-    date: '1-10-2023',
-  },
-  {
-    id: 2,
-    auditor: 'Khris Bharmmanao',
-    comment: 'Very Good',
-    date: '1-10-2023',
-  },
-  {
-    id: 3,
-    auditor: 'Khris Bharmmanao',
-    comment: 'Very Good',
-    date: '1-10-2023',
-  },
-  {
-    id: 4,
-    auditor: 'Khris Bharmmanao',
-    comment: 'Very Good',
-    date: '1-10-2023',
-  },
 ];

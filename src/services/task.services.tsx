@@ -67,3 +67,37 @@ export const handleApproveReject = async ({
     return response.data;
   }
 };
+
+export const createComment = async (id: string, data: { message: string }) => {
+  const token: string | undefined = Cookies.get('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const response = await axios.post(`/api/tasks/${id}/comment`, data);
+    return response.data;
+  }
+};
+
+export const editComment = async (
+  id: string,
+  taskId: string,
+  data: { message: string },
+) => {
+  const token: string | undefined = Cookies.get('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const response = await axios.patch(
+      `/api/tasks/${taskId}/comment/${id}`,
+      data,
+    );
+    return response.data;
+  }
+};
+
+export const deleteComment = async (id: string, taskId: string) => {
+  const token: string | undefined = Cookies.get('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const response = await axios.delete(`/api/tasks/${taskId}/comment/${id}`);
+    return response.data;
+  }
+};

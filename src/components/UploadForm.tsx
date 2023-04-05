@@ -10,7 +10,7 @@ import { LoadingFile } from '@/components';
 
 const UploadForm = () => {
   const [formData, setFormData] = useState<IForm>(InitialForm);
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
   const inputRef = useRef<null>(null);
   const router: NextRouter = useRouter();
 
