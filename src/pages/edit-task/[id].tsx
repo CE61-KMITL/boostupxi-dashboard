@@ -35,7 +35,45 @@ function Task() {
     };
     fetchDataById();
   }, [id]);
-
+  const FormValidation = () => {
+    if (taskDataById.title === '') {
+      toast.error('Please enter task name');
+      return false;
+    }
+    if (taskDataById.level === 0) {
+      toast.error('Please enter task level');
+      return false;
+    }
+    if (taskDataById.tags.length === 0) {
+      toast.error('Please enter task tags');
+      return false;
+    }
+    if (taskDataById.description === '') {
+      toast.error('Please enter task description');
+      return false;
+    }
+    if (taskDataById.solution_code === '') {
+      toast.error('Please enter task solution code');
+      return false;
+    }
+    if (taskDataById.testcases.length === 0) {
+      toast.error('Please enter task testcases');
+      return false;
+    }
+  };
+  const uploadFilesHandle = async (fileData: File[]) => {
+    setIsUploading(true);
+    try {
+      const data = await uploadFiles(fileData);
+      const newFiles = [...taskDataById.files, ...data];
+      setTaskDataById({ ...taskDataById, files: newFiles as IFiles[] });
+      setIsUploading(false);
+    } catch (error) {
+      toast.error('Upload File Error \n Please try again');
+    } finally {
+      setIsUploading(false);
+    }
+  };
   const addTestCase = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
@@ -102,36 +140,40 @@ function Task() {
   };
 
   const submitTask = (e: React.MouseEvent<HTMLButtonElement>) => {
-    try {
-      e.preventDefault();
-      UpdateTaskById(taskDataById, id);
-      toast.success('Update Task Success');
-      setTaskDataById({
-        ...taskDataById,
-        title: '',
-        level: 1,
-        tags: [],
-        hint: '',
-        description: '',
-        files: [],
-        testcases: [{ input: '', output: '', published: false }],
-        solution_code: '',
-      });
-      let fileInput = document.getElementById('fileInput') as HTMLInputElement;
-      let testCaseInput = document.getElementById(
-        'testCaseInput0',
-      ) as HTMLInputElement;
+    if (FormValidation() != false) {
+      try {
+        e.preventDefault();
+        UpdateTaskById(taskDataById, id);
+        toast.success('Update Task Success');
+        setTaskDataById({
+          ...taskDataById,
+          title: '',
+          level: 1,
+          tags: [],
+          hint: '',
+          description: '',
+          files: [],
+          testcases: [{ input: '', output: '', published: false }],
+          solution_code: '',
+        });
+        let fileInput = document.getElementById(
+          'fileInput',
+        ) as HTMLInputElement;
+        let testCaseInput = document.getElementById(
+          'testCaseInput0',
+        ) as HTMLInputElement;
 
-      let testCaseOutput = document.getElementById(
-        'testCaseOutput0',
-      ) as HTMLInputElement;
+        let testCaseOutput = document.getElementById(
+          'testCaseOutput0',
+        ) as HTMLInputElement;
 
-      fileInput.value = '';
-      testCaseInput.value = '';
-      testCaseOutput.value = '';
-      router.push('/dashboard');
-    } catch (err) {
-      return err;
+        fileInput.value = '';
+        testCaseInput.value = '';
+        testCaseOutput.value = '';
+        router.push('/dashboard');
+      } catch (err) {
+        return err;
+      }
     }
   };
   return (
@@ -276,38 +318,24 @@ function Task() {
                         type="file"
                         name="fileInput"
                         id="fileInput"
+                        accept=".jpg,.png,.zip,.jpeg"
                         className="block w-full rounded border border-gray-200 text-sm shadow-sm file:mr-4 file:border-0 file:bg-slate-600 file:py-3 file:px-4 file:text-white"
                         multiple
                         onChange={async (
                           event: React.ChangeEvent<HTMLInputElement>,
                         ) => {
                           const fileData = new FormData();
-
                           for (let i = 0; i < event.target.files!.length; i++) {
                             fileData.append('files', event.target.files![i]);
                           }
-                          setIsUploading(true);
-                          try {
-                            const data = await uploadFiles(
-                              fileData as unknown as File[],
-                            );
-                            const newFiles = [...taskDataById.files, ...data];
-                            setTaskDataById({
-                              ...taskDataById,
-                              files: newFiles as IFiles[],
-                            });
-                            setIsUploading(false);
-                          } catch (error) {
-                            setIsUploading(false);
-                            return error;
-                          }
+                          uploadFilesHandle(fileData as unknown as File[]);
                         }}
                         ref={inputRef}
                       />
                       {isUploading && <LoadingFile />}
                       {taskDataById.files.map((file: IFiles, index: number) => (
                         <div className="my-5 flex flex-wrap" key={index}>
-                          <p>{file.key}</p>
+                          <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
                           <br />
                           <button
                             type="button"
@@ -378,31 +406,33 @@ function Task() {
                             <div className="mb-6 w-full px-3 md:w-1/2">
                               <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                                 Test Case {index + 1} Output
-                                <label className="float-right mx-3 inline-block">
-                                  Publish
-                                  <input
-                                    className="float-left mx-1 inline-block px-2"
-                                    type="checkbox"
-                                    id={`testCaseOutput${index}`}
-                                    checked={value.published}
-                                    onChange={() =>
-                                      setTaskDataById({
-                                        ...taskDataById,
-                                        testcases: taskDataById.testcases.map(
-                                          (item: ITestCases, i: number) => {
-                                            if (i === index) {
-                                              return {
-                                                ...item,
-                                                published: !item.published,
-                                              };
-                                            }
-                                            return item;
-                                          },
-                                        ),
-                                      })
-                                    }
-                                  />
-                                </label>
+                                <div className="float-right inline-block">
+                                  <label className="mx-3 mt-2 inline-block">
+                                    Publish
+                                    <input
+                                      className="float-left mx-1 inline-block px-2"
+                                      type="checkbox"
+                                      id={`testCaseOutput${index}`}
+                                      checked={value.published}
+                                      onChange={() =>
+                                        setTaskDataById({
+                                          ...taskDataById,
+                                          testcases: taskDataById.testcases.map(
+                                            (item, i) => {
+                                              if (i === index) {
+                                                return {
+                                                  ...item,
+                                                  published: !item.published,
+                                                };
+                                              }
+                                              return item;
+                                            },
+                                          ),
+                                        })
+                                      }
+                                    />
+                                  </label>
+                                </div>
                               </label>
 
                               <textarea
