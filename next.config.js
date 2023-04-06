@@ -12,5 +12,9 @@ module.exports = () => {
   return {
     rewrites,
     reactStrictMode: true,
+
+    //uncomment if production build docker
+    //output: 'standalone',
+
   };
 };
