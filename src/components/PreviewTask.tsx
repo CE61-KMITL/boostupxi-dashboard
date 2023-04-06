@@ -20,6 +20,7 @@ import EditIcon from '/public/edit-icon.svg';
 import { IComment } from '@/interface/task';
 import Image from 'next/image';
 import Avatar from '/public/avatar-image.jpg';
+import { options } from '@/constants/task';
 
 interface Props {
   id: string;
@@ -41,18 +42,6 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
   const router: NextRouter = useRouter();
   const audit: string = user.username;
   const reviewer: string = user.username;
-
-  const pad = (num: number) => {
-    return num.toString().padStart(2, '0');
-  };
-
-  const dateStr = taskDataById.updatedAt;
-  const dateObj = new Date(dateStr.replace('Z', ''));
-  const formattedDate = `${dateObj.getFullYear()} ${pad(
-    dateObj.getMonth() + 1,
-  )} ${pad(dateObj.getDate())} at ${pad(dateObj.getHours() + 7)}:${pad(
-    dateObj.getMinutes(),
-  )}:${pad(dateObj.getSeconds())}`;
 
   useEffect(() => {
     const fetchDataById = async () => {
@@ -183,7 +172,13 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
               <div className="-mx-3 mb-5 flex justify-between border-b-2 border-gray-800 pb-2 text-base text-black">
                 <div className="flex items-start justify-start space-x-10">
                   <p>Author : {taskDataById.author.username}</p>
-                  <p>Last updated : {formattedDate}</p>
+                  <p>
+                    Last updated :{' '}
+                    {new Date(taskDataById.updatedAt).toLocaleString(
+                      'en-us',
+                      options,
+                    )}
+                  </p>
                 </div>
                 <button
                   className="flex items-end justify-end text-black hover:text-gray-400 focus:outline-none"
@@ -371,8 +366,13 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                               {val.author?.username}
                             </p>
                             <p className="text-sm text-gray-600 ">
-                              <time title="February 8th, 2022">
-                                {val.createdAt}
+                              <time
+                                title={new Date(val.updatedAt).toLocaleString()}
+                              >
+                                {new Date(val.updatedAt).toLocaleString(
+                                  'en-us',
+                                  options,
+                                )}
                               </time>
                             </p>
                           </div>
