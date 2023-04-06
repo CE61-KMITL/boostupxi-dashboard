@@ -45,7 +45,9 @@ const UploadForm = () => {
   const handleRemoveFile = (file: IFiles) => {
     try {
       const newFiles = [...formData.files];
-      const index = newFiles.findIndex((file: IFiles) => file.key === file.key);
+      const index = newFiles.findIndex(
+        (newFiles: IFiles) => newFiles.key === file.key,
+      );
 
       newFiles.splice(index, 1);
       setFormData({ ...formData, files: newFiles });
@@ -321,7 +323,9 @@ const UploadForm = () => {
                   {isUploading && <LoadingFile />}
                   {formData.files.map((file: IFiles, index: number) => (
                     <div className="my-5 flex flex-wrap" key={index}>
-                      <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
+                      <p>
+                        {file.key.split('~')[0] + '.' + file.key.split('.')[2]}
+                      </p>
                       <br />
                       <button
                         type="button"

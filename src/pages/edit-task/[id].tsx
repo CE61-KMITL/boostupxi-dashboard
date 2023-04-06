@@ -110,7 +110,9 @@ function Task() {
   const handleRemoveFile = (file: IFiles) => {
     try {
       const newFiles = [...taskDataById.files];
-      const index = newFiles.findIndex((file: IFiles) => file.key === file.key);
+      const index = newFiles.findIndex(
+        (newFiles: IFiles) => newFiles.key === file.key,
+      );
 
       newFiles.splice(index, 1);
       setTaskDataById({ ...taskDataById, files: newFiles });
@@ -374,7 +376,11 @@ function Task() {
                       {isUploading && <LoadingFile />}
                       {taskDataById.files.map((file: IFiles, index: number) => (
                         <div className="my-5 flex flex-wrap" key={index}>
-                          <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
+                          <p>
+                            {file.key.split('~')[0] +
+                              '.' +
+                              file.key.split('.')[2]}
+                          </p>
                           <br />
                           <button
                             type="button"
