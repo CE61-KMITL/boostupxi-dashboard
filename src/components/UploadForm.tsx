@@ -89,7 +89,6 @@ const UploadForm = () => {
       setFormData({ ...formData, files: newFiles as IFiles[] });
       setIsUploading(false);
     } catch (error) {
-      //console.log(error);
       toast.error('Upload File Error \n Please upload image file or zip file');
     } finally {
       setIsUploading(false);
@@ -290,7 +289,6 @@ const UploadForm = () => {
                           'files',
                           event.target.files![i] as File,
                         );
-                        //console.log(event.target.files![i].type, event.target.files![i]);
 
                         if (event.target.files![i].size > 1024 * 1024 * 5) {
                           toast.error('File size is too large.');
@@ -309,11 +307,6 @@ const UploadForm = () => {
                           return;
                         }
                       }
-                      // const pairs = Array.from(fileData.entries());
-                      // for (let pair of pairs) {
-                      //     console.log(pair[1].name);
-                      // }
-                      //console.log((fileData.get('files') as File).name);
                       if (fileData.getAll('files').length > 0) {
                         uploadFilesHandle(fileData as unknown as File[]);
                       }

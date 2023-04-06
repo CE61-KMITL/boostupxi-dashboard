@@ -73,7 +73,7 @@ export const AvariablesTags: string[] = [
 ];
 
 export const options: Object = {
-  timeZone: 'Asia/Urumqi',
+  timeZone: 'Asia/Bangkok',
   day: 'numeric',
   month: 'numeric',
   year: 'numeric',
