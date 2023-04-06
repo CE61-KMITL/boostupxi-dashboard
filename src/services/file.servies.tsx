@@ -8,17 +8,19 @@ export const uploadFiles = async (files: File[]) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const formDatax = new FormData();
     files.forEach((file) => {
-      formDatax.append('files', file);
+      formDatax.append('files', file as Blob, file.name);
     });
+    try {
+      const response = await axios.post(`/api/files`, formDatax, {
+        headers: {
+          'Content-Type': 'application/form-data',
+        },
+      });
 
-    const response = await axios.post(`/api/files`, formDatax, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Accept: '*/*',
-      },
-    });
-
-    return response.data;
+      return response.data;
+    } catch (error) {
+      return;
+    }
   }
 };
 

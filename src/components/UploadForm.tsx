@@ -74,6 +74,11 @@ const UploadForm = () => {
     }
   };
 
+  const checkEnglishName = (name: string) => {
+    const regex = /^[a-zA-Z0-9]+([ _-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/;
+    return regex.test(name);
+  };
+
   const uploadFilesHandle = async (fileData: File[]) => {
     setIsUploading(true);
     try {
@@ -82,7 +87,8 @@ const UploadForm = () => {
       setFormData({ ...formData, files: newFiles as IFiles[] });
       setIsUploading(false);
     } catch (error) {
-      toast.error('Upload File Error \n Please try again');
+      //console.log(error);
+      toast.error('Upload File Error \n Please upload image file or zip file');
     } finally {
       setIsUploading(false);
     }
@@ -278,20 +284,44 @@ const UploadForm = () => {
                     ) => {
                       const fileData = new FormData();
                       for (let i = 0; i < event.target.files!.length; i++) {
-                        fileData.append('files', event.target.files![i]);
+                        fileData.append(
+                          'files',
+                          event.target.files![i] as File,
+                        );
+                        //console.log(event.target.files![i].type, event.target.files![i]);
+
+                        if (event.target.files![i].size > 1024 * 1024 * 5) {
+                          toast.error('File size is too large.');
+                          return;
+                        }
+                        if (event.target.files![i].name.length > 50) {
+                          toast.error(
+                            'File name is too long. Please upload files with name less than 50 characters',
+                          );
+                          return;
+                        }
+                        if (!checkEnglishName(event.target.files![i].name)) {
+                          toast.error(
+                            'File name is not in English.\n Please upload files with name in English',
+                          );
+                          return;
+                        }
                       }
-                      uploadFilesHandle(fileData as unknown as File[]);
+                      // const pairs = Array.from(fileData.entries());
+                      // for (let pair of pairs) {
+                      //     console.log(pair[1].name);
+                      // }
+                      //console.log((fileData.get('files') as File).name);
+                      if (fileData.getAll('files').length > 0) {
+                        uploadFilesHandle(fileData as unknown as File[]);
+                      }
                     }}
                     ref={inputRef}
                   />
                   {isUploading && <LoadingFile />}
                   {formData.files.map((file: IFiles, index: number) => (
                     <div className="my-5 flex flex-wrap" key={index}>
-                      <p>
-                        {decodeURIComponent(
-                          file.key.replace(/~.*(?=\.[^.]+$)/, ''),
-                        )}
-                      </p>
+                      <p>{file.key.replace(/~.*(?=\.[^.]+$)/, '')}</p>
                       <br />
                       <button
                         type="button"
