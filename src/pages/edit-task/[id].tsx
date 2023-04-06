@@ -10,6 +10,7 @@ import { uploadFiles, deleteFiles } from '@/services/file.servies';
 import Layouts from '@/layouts/Layouts';
 import { AvariablesTags } from '@/constants/task';
 import { InitialTaskBtyId } from '@/constants/task';
+import { options } from '@/constants/task';
 
 interface TaskPageQuery extends ParsedUrlQuery {
   id: string;
@@ -199,7 +200,11 @@ function Task() {
                       Author : {taskDataById.author.username}
                     </p>
                     <p className="flex items-end justify-end">
-                      Last updated : {taskDataById.createdAt}
+                      Last updated :{' '}
+                      {new Date(taskDataById.updatedAt).toLocaleString(
+                        'en-us',
+                        options,
+                      )}
                     </p>
                   </div>
 

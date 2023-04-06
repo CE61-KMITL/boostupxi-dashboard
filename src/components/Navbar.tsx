@@ -18,7 +18,7 @@ const Navbar = () => {
         <div className="container mx-auto justify-between py-2 px-4 md:flex md:items-center md:py-0 md:px-8">
           <div>
             <div className="flex items-center justify-between md:block md:py-5">
-              <Link href="/">
+              <Link href="/dashboard">
                 <h2 className="text-2x text-white">
                   CE Boostup Task Management
                 </h2>
