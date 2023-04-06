@@ -18,6 +18,7 @@ const AuthContext = createContext<IAuthContext>({
   login: async () => {},
   logout: async () => {},
   isAuditor: false,
+  isLogged: false,
 });
 
 interface ChildrenProps {
@@ -26,6 +27,7 @@ interface ChildrenProps {
 
 export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isAuditor, setIsAuditor] = useState<boolean>(false);
   const [user, setUser] = useState<IUserProfile | null>(null);
 
@@ -33,8 +35,14 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
     const fetchUser = async () => {
       try {
         const response = await getProfile();
-        setUser(response);
         setIsLoading(false);
+        if (response.role === 'auditor' || response.role === 'staff') {
+          setUser(response);
+          setIsLogged(true);
+        } else {
+          setUser(null);
+          setIsLogged(false);
+        }
         response.role === 'auditor' ? setIsAuditor(true) : setIsAuditor(false);
       } catch (err) {
         setIsLoading(false);
@@ -52,6 +60,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
         login,
         logout,
         isAuditor,
+        isLogged,
       }}
     >
       {children}
@@ -62,7 +71,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
 export const useAuth = () => useContext(AuthContext);
 
 const ProtectRoute = ({ children }: ChildrenProps) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, isLogged } = useAuth();
   const router: NextRouter = useRouter();
 
   if (isLoading) {
@@ -71,6 +80,7 @@ const ProtectRoute = ({ children }: ChildrenProps) => {
 
   if (
     !isAuthenticated &&
+    !isLogged &&
     router.pathname !== '/' &&
     router.pathname !== '/login'
   ) {

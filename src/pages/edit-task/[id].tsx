@@ -23,6 +23,18 @@ function Task() {
   const { id } = router.query as TaskPageQuery;
   const inputRef = useRef<null>(null);
 
+  const pad = (num: number) => {
+    return num.toString().padStart(2, '0');
+  };
+
+  const dateStr = taskDataById.updatedAt;
+  const dateObj = new Date(dateStr.replace('Z', ''));
+  const formattedDate = `${dateObj.getFullYear()}-${pad(
+    dateObj.getMonth() + 1,
+  )}-${pad(dateObj.getDate())} at ${pad(dateObj.getHours() + 7)}:${pad(
+    dateObj.getMinutes(),
+  )}:${pad(dateObj.getSeconds())}`;
+
   useEffect(() => {
     const fetchDataById = async () => {
       try {
@@ -153,7 +165,7 @@ function Task() {
                       Author : {taskDataById.author.username}
                     </p>
                     <p className="flex items-end justify-end">
-                      Last updated : {taskDataById.createdAt}
+                      Last updated : {formattedDate}
                     </p>
                   </div>
 
