@@ -341,7 +341,6 @@ function Task() {
                               'files',
                               event.target.files![i] as File,
                             );
-                            //console.log(event.target.files![i].type, event.target.files![i]);
 
                             if (event.target.files![i].size > 1024 * 1024 * 5) {
                               toast.error('File size is too large.');
@@ -362,11 +361,6 @@ function Task() {
                               return;
                             }
                           }
-                          // const pairs = Array.from(fileData.entries());
-                          // for (let pair of pairs) {
-                          //     console.log(pair[1].name);
-                          // }
-                          //console.log((fileData.get('files') as File).name);
                           if (fileData.getAll('files').length > 0) {
                             uploadFilesHandle(fileData as unknown as File[]);
                           }
