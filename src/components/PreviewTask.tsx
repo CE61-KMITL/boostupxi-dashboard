@@ -175,7 +175,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                   <p>
                     Last updated :{' '}
                     {new Date(taskDataById.updatedAt).toLocaleString(
-                      'en-GB',
+                      'en-TH',
                       options,
                     )}
                   </p>
