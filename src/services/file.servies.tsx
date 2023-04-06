@@ -6,11 +6,19 @@ export const uploadFiles = async (files: File[]) => {
   const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const formData = new FormData();
+    const formDatax = new FormData();
     files.forEach((file) => {
-      formData.append('files', file);
+      formDatax.append('files', file);
     });
-    const response = await axios.post(`/api/files`, formData);
+
+    const response = await axios.post(`/api/files`, formDatax, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: '*/*',
+      },
+    });
+
+    console.log(JSON.stringify(response.data));
     return response.data;
   }
 };
