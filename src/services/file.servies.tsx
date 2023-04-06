@@ -18,7 +18,6 @@ export const uploadFiles = async (files: File[]) => {
       },
     });
 
-    console.log(JSON.stringify(response.data));
     return response.data;
   }
 };

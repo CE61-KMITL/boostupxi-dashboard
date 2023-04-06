@@ -82,7 +82,6 @@ const UploadForm = () => {
       setFormData({ ...formData, files: newFiles as IFiles[] });
       setIsUploading(false);
     } catch (error) {
-      console.error(error);
       toast.error('Upload File Error \n Please try again');
     } finally {
       setIsUploading(false);

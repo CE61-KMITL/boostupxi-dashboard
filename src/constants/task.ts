@@ -71,3 +71,14 @@ export const AvariablesTags: string[] = [
   'CTF',
   'Crypto',
 ];
+
+export const options: Object = {
+  timeZone: 'Asia/Urumqi',
+  day: 'numeric',
+  month: 'numeric',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  second: 'numeric',
+  hour12: false,
+};
