@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/auth';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Stars } from '@/components';
 
 const formSchema = z.object({
   email: z.string().email('Invalid email').min(1, 'Email is required'),
@@ -32,9 +33,7 @@ const LoginPage: NextPage = () => {
 
   return (
     <Fragment>
-      <div className="stars"></div>
-      <div className="stars2"></div>
-      <div className="stars3"></div>
+      <Stars />
       <div className="space-y-8px-4 flex min-h-screen flex-col items-center justify-center">
         <div className="flex w-full max-w-5xl flex-row overflow-hidden rounded-2xl shadow">
           <div className="hidden flex-auto flex-col items-center space-y-10 bg-indigo-200 md:flex">

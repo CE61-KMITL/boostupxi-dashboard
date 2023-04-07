@@ -1,7 +1,7 @@
 import { ITask } from '@/interface/task';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
-import PreviewTask from './PreviewTask';
+import { PreviewTask } from '@/components';
 
 const TaskTable = ({
   index_number,

@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent, useRef } from 'react';
 import { useRouter, NextRouter } from 'next/router';
-import { Loading, LoadingFile } from '@/components';
+import { LoadingFile } from '@/components';
 import { getTaskById, UpdateTaskById } from '@/services/task.services';
 import { ParsedUrlQuery } from 'querystring';
 import { ITestCases } from '@/interface/upload';
@@ -8,9 +8,7 @@ import { toast } from 'react-hot-toast';
 import { IFiles, ITaskByID } from '@/interface/task';
 import { uploadFiles, deleteFiles } from '@/services/file.servies';
 import Layouts from '@/layouts/Layouts';
-import { AvariablesTags } from '@/constants/task';
-import { InitialTaskBtyId } from '@/constants/task';
-import { options } from '@/constants/task';
+import { AvariablesTags, Options, InitialTaskBtyId } from '@/constants/task';
 
 interface TaskPageQuery extends ParsedUrlQuery {
   id: string;
@@ -186,13 +184,9 @@ function Task() {
   return (
     <>
       {isLoading ? (
-        <Loading />
+        <LoadingFile />
       ) : (
         <Layouts>
-          <div className="stars"></div>
-          <div className="stars2"></div>
-          <div className="stars3"></div>
-
           <div className="flex min-h-screen items-center justify-center overflow-y-auto px-6 pt-20">
             <div className="container mx-auto max-w-screen-lg">
               <div className="mb-6 rounded bg-white p-4 px-4 shadow-lg md:p-8">
@@ -205,7 +199,7 @@ function Task() {
                       Last updated :{' '}
                       {new Date(taskDataById.updatedAt).toLocaleString(
                         'en-us',
-                        options,
+                        Options,
                       )}
                     </p>
                   </div>
