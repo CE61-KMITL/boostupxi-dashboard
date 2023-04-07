@@ -10,13 +10,11 @@ specifiers:
   '@types/react-dom': 18.0.10
   '@types/react-syntax-highlighter': ^15.5.6
   autoprefixer: ^10.4.14
-  axios: ^1.3.4
-  date-fns: ^2.29.3
+  axios: 1.3.5
   eslint: 8.32.0
   eslint-config-next: 13.2.4
   eslint-config-prettier: ^8.8.0
   eslint-plugin-prettier: ^4.2.1
-  fuse.js: ^6.6.2
   husky: ^8.0.3
   js-cookie: ^3.0.1
   next: 13.2.4
@@ -34,11 +32,9 @@ specifiers:
 
 dependencies:
   '@hookform/resolvers': 3.0.0_react-hook-form@7.43.8
-  axios: 1.3.4
-  date-fns: 2.29.3
+  axios: 1.3.5
   eslint: 8.32.0
   eslint-config-next: 13.2.4_7uibuqfxkfaozanbtbziikiqje
-  fuse.js: 6.6.2
   js-cookie: 3.0.1
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -804,11 +800,6 @@ packages:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: false
 
-  /auto-bind/4.0.0:
-    resolution: {integrity: sha512-Hdw8qdNiqdJ8LqT0iK0sVzkFbzg6fhnQqqfWhBDxcHZvU75+B+ayzTy8x+k5Ix0Y92XOhOUlx74ps+bA6BeYMQ==}
-    engines: {node: '>=8'}
-    dev: false
-
   /autoprefixer/10.4.14_postcss@8.4.21:
     resolution: {integrity: sha512-FQzyfOsTlwVzjHxKEqRIAdJx9niO6VCBCoEwax/VLSoQF29ggECcPuBqUMZ+u8jCZOPSy8b8/8KnuFbp0SaFZQ==}
     engines: {node: ^10 || ^12 || >=14}
@@ -833,25 +824,6 @@ packages:
   /axe-core/4.6.3:
     resolution: {integrity: sha512-/BQzOX780JhsxDnPpH4ZiyrJAzcd8AfzFPkv+89veFSr1rcMjuq2JDCwypKaPeB6ljHp9KjXhPpjgCvQlWYuqg==}
     engines: {node: '>=4'}
-    dev: false
-
-  /axios-form-data/1.1.1:
-    resolution: {integrity: sha512-4fD3jcTR1OqHSeIuBsKBFwtJgsQLOGvPuleZBNZaLUbfLR+EcN62wQlfOYHJYgijqHlfk3S91H2VquFSUGAUBA==}
-    dependencies:
-      auto-bind: 4.0.0
-      axios: 0.27.2
-      form-data: 4.0.0
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
-  /axios/0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
-    dependencies:
-      follow-redirects: 1.15.2
-      form-data: 4.0.0
-    transitivePeerDependencies:
-      - debug
     dev: false
 
   /axios/1.3.5:
@@ -1115,11 +1087,6 @@ packages:
     resolution: {integrity: sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==}
     engines: {node: '>=8'}
     dev: true
-
-  /date-fns/2.29.3:
-    resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
-    engines: {node: '>=0.11'}
-    dev: false
 
   /debug/3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
@@ -1827,11 +1794,6 @@ packages:
 
   /functions-have-names/1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
-    dev: false
-
-  /fuse.js/6.6.2:
-    resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
-    engines: {node: '>=10'}
     dev: false
 
   /get-caller-file/2.0.5:

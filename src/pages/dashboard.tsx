@@ -4,45 +4,23 @@ import { TaskTable, LoadingFile } from '@/components';
 import Layouts from '@/layouts/Layouts';
 import { useState, useEffect } from 'react';
 import { getTasksData } from '@/services/task.services';
-import Fuse from 'fuse.js';
 
 const TasksPage: NextPage = () => {
   const [taskData, setTaskData] = useState<ITask[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [limitPage, setLimitPage] = useState<number>(1);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [filteredTasks, setFilteredTasks] = useState<ITask[]>([]);
-  const [fuse, setFuse] = useState<Fuse<ITask>>();
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       const response = await getTasksData(currentPage);
       setTaskData(response.data);
-      setFilteredTasks(response.data);
       setLimitPage(response.pages);
-      setFuse(
-        new Fuse(response.data, {
-          keys: ['title', 'description', 'author', 'level', 'tags'],
-        }),
-      );
       setIsLoading(false);
     };
     fetchData();
   }, [currentPage]);
-  useEffect(() => {
-    if (fuse && searchTerm) {
-      const results = fuse.search(searchTerm);
-      setFilteredTasks(results.map((result) => result.item));
-    } else {
-      setFilteredTasks(taskData);
-    }
-  }, [searchTerm, taskData, fuse]);
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -62,18 +40,8 @@ const TasksPage: NextPage = () => {
         <LoadingFile />
       ) : (
         <div className="container mx-auto mt-10 overflow-auto rounded-lg py-12 px-6">
-          <div className="mb-4 flex flex-row justify-center">
-            <input
-              type="text"
-              placeholder="Search task by name"
-              value={searchTerm}
-              onChange={handleSearch}
-              className="w-full rounded-md border px-4 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <table className="mx-auto my-auto w-full text-sm text-gray-500 shadow-md dark:text-gray-400">
-            <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+          <table className="mx-auto my-auto w-full text-sm text-gray-400 shadow-md">
+            <thead className="bg-gray-700 text-xs uppercase text-gray-100">
               <tr>
                 <th scope="col" className="px-6 py-1">
                   #
@@ -102,7 +70,7 @@ const TasksPage: NextPage = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredTasks.map((val: ITask, index: number) => (
+              {taskData.map((val: ITask, index: number) => (
                 <TaskTable
                   index_number={index + (currentPage - 1) * 10 + 1}
                   key={val._id}
@@ -126,15 +94,10 @@ const TasksPage: NextPage = () => {
           </table>
           <div className="mt-3 flex justify-between pb-2">
             <div className="mt-3 flex items-start justify-start">
-              <span className="text-sm text-gray-700 dark:text-gray-400">
+              <span className="text-sm text-gray-400">
                 Showing{' '}
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  {currentPage}
-                </span>{' '}
-                of{' '}
-                <span className="font-semibold text-gray-900 dark:text-white">
-                  {limitPage}
-                </span>{' '}
+                <span className="font-semibold text-white">{currentPage}</span>{' '}
+                of <span className="font-semibold text-white">{limitPage}</span>{' '}
                 Page
               </span>
             </div>
