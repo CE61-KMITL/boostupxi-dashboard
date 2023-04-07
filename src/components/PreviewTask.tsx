@@ -14,13 +14,12 @@ import Link from 'next/link';
 import { IFiles, ITaskByID, ITestCases } from '@/interface/task';
 import { toast } from 'react-hot-toast';
 import { NextRouter, useRouter } from 'next/router';
-import { InitialTaskBtyId } from '@/constants/task';
+import { InitialTaskBtyId, Options } from '@/constants/task';
 import DeleteIcon from '/public/delete-icon.svg';
 import EditIcon from '/public/edit-icon.svg';
 import { IComment } from '@/interface/task';
 import Image from 'next/image';
 import Avatar from '/public/avatar-image.jpg';
-import { options } from '@/constants/task';
 
 interface Props {
   id: string;
@@ -34,9 +33,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
   const [commentsId, setCommentsId] = useState<string>('');
   const [commentMessage, setCommentMessage] = useState<string>('');
   const [updateCommentMessage, setUpdateCommentMessage] = useState<string>('');
-  const [createSuccessfully, setCreateSuccessfully] = useState<boolean>(false);
-  const [deleteSuccessfully, setDeleteSuccessfully] = useState<boolean>(false);
-  const [editSuccessfully, setEditSuccessfully] = useState<boolean>(false);
+  const [actionState, setActionState] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const { user, isAuditor } = useAuth();
   const router: NextRouter = useRouter();
@@ -55,19 +52,11 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
     };
     fetchDataById();
 
-    if (createSuccessfully) {
+    if (actionState) {
       fetchDataById();
-      setCreateSuccessfully(false);
+      setActionState(false);
     }
-    if (deleteSuccessfully) {
-      fetchDataById();
-      setDeleteSuccessfully(false);
-    }
-    if (editSuccessfully) {
-      fetchDataById();
-      setEditSuccessfully(false);
-    }
-  }, [createSuccessfully, deleteSuccessfully, editSuccessfully, id]);
+  }, [actionState, id]);
 
   const handleApprove = (id: string) => {
     try {
@@ -109,7 +98,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
       createComment(id, { message: commentMessage });
       setCommentMessage('');
       toast.success('Comment Successfully');
-      setCreateSuccessfully(true);
+      setActionState(true);
     } catch (err) {
       return err;
     }
@@ -119,7 +108,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
     try {
       deleteComment(comment_id, task_id);
       toast.success('Comment deleted successfully');
-      setDeleteSuccessfully(true);
+      setActionState(true);
     } catch (err) {
       toast.error('Failed to delete comment');
     }
@@ -130,7 +119,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
       editComment(comment_id, task_id, { message: updateCommentMessage });
       toast.success('Comment updated successfully');
       setIsEdit(false);
-      setEditSuccessfully(true);
+      setActionState(true);
     } catch (err) {
       toast.error('Failed to update comment');
     }
@@ -176,7 +165,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                     Last updated :{' '}
                     {new Date(taskDataById.updatedAt).toLocaleString(
                       'en-TH',
-                      options,
+                      Options,
                     )}
                   </p>
                 </div>
@@ -371,7 +360,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                               >
                                 {new Date(val.updatedAt).toLocaleString(
                                   'en-TH',
-                                  options,
+                                  Options,
                                 )}
                               </time>
                             </p>

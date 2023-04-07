@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from 'react';
 import { NextRouter, useRouter } from 'next/router';
-import { Errors, Loading } from '@/components';
+import { Errors, LoadingFile } from '@/components';
 import { login, logout, getProfile } from '@/services/user.services';
 import { IUserProfile } from '@/interface/user';
 import { IAuthContext } from '@/interface/auth';
@@ -35,10 +35,10 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
     const fetchUser = async () => {
       try {
         const response = await getProfile();
-        setIsLoading(false);
         if (response.role === 'auditor' || response.role === 'staff') {
           setUser(response);
           setIsLogged(true);
+          setIsLoading(false);
         } else {
           setUser(null);
           setIsLogged(false);
@@ -75,7 +75,7 @@ const ProtectRoute = ({ children }: ChildrenProps) => {
   const router: NextRouter = useRouter();
 
   if (isLoading) {
-    return <Loading />;
+    return <LoadingFile />;
   }
 
   if (
