@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>CE Boostup Task</title>
       </Head>
       <div className={kanit.className}>
-        <main className="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <main className="min-h-screen bg-gray-900">
           <Fragment>
             <Toaster
               toastOptions={{

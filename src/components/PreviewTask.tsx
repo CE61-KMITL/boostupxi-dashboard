@@ -189,7 +189,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                 </button>
               </div>
               <div className="mt-2 mb-8 w-full">
-                <h4 className="text-navy-700 px-2 text-xl font-bold dark:text-black">
+                <h4 className="text-navy-700 px-2 text-xl font-bold text-black">
                   {taskDataById.title}
                 </h4>
                 <p className="mt-2 px-2 text-base text-gray-600">
@@ -197,21 +197,21 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                 </p>
               </div>
               <div className="grid w-full grid-cols-2 gap-4 px-2">
-                <div className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none">
+                <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <label className="text-sm text-gray-600">Author</label>
-                  <p className="text-navy-700 text-base font-medium dark:text-black">
+                  <p className="text-navy-700 text-base font-medium text-black">
                     {taskDataById.author?.username}
                   </p>
                 </div>
 
-                <div className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none">
+                <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <p className="text-sm text-gray-600">Level</p>
-                  <p className="text-navy-700 text-base font-medium dark:text-black">
+                  <p className="text-navy-700 text-base font-medium text-black">
                     {taskDataById.level}
                   </p>
                 </div>
               </div>
-              <div className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none">
+              <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                 <p className="text-sm text-gray-600">Solution Code</p>
                 <SyntaxHighlighter language="c" style={vs2015}>
                   {taskDataById.solution_code}
@@ -219,12 +219,12 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
               </div>
 
               <div className="grid w-full grid-cols-3 gap-2 px-2 py-4">
-                <div className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none">
+                <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <p className="text-sm text-gray-600">Task Category</p>
                   {taskDataById.tags &&
                     taskDataById.tags.map((val: string, index: number) => (
                       <li
-                        className="text-navy-700 text-base font-medium dark:text-black"
+                        className="text-navy-700 text-base font-medium text-black"
                         key={index}
                       >
                         {val}
@@ -232,28 +232,28 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                     ))}
                 </div>
 
-                <div className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none">
+                <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <p className="text-sm text-gray-600">Task Hints</p>
-                  <p className="text-navy-700 text-base font-medium dark:text-black">
+                  <p className="text-navy-700 text-base font-medium text-black">
                     {taskDataById.hint}
                   </p>
                 </div>
 
-                <div className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none">
+                <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <p className="text-sm text-gray-600">Task Status</p>
-                  <p className="text-navy-700 text-base font-medium dark:text-black">
+                  <p className="text-navy-700 text-base font-medium text-black">
                     {taskDataById.status}
                   </p>
                 </div>
               </div>
 
               <div>
-                <div className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none">
+                <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <p className="text-sm text-gray-600">Task Files</p>
                   {taskDataById.files &&
                     taskDataById.files.map((val: IFiles) => (
                       <p
-                        className="text-navy-700 text-base font-medium dark:text-black"
+                        className="text-navy-700 text-base font-medium text-black"
                         key={val.key}
                       >
                         <Link href={val.url}>{val.url}</Link>
@@ -267,40 +267,40 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                     (val: ITestCases, length: number) => (
                       <>
                         <div
-                          className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none"
+                          className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none"
                           key={length}
                         >
                           <p className="text-sm text-gray-600">
                             Task Input {length + 1}
                           </p>
                           <textarea
-                            className="text-navy-700 text-base font-medium focus:outline-none dark:text-black"
+                            className="text-navy-700 text-base font-medium text-black focus:outline-none"
                             readOnly
                           >
                             {val.input}
                           </textarea>
                         </div>
                         <div
-                          className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none"
+                          className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none"
                           key={length}
                         >
                           <p className="text-sm text-gray-600">
                             Task Output {length + 1}
                           </p>
                           <textarea
-                            className="text-navy-700 text-base font-medium focus:outline-none dark:text-black"
+                            className="text-navy-700 text-base font-medium text-black focus:outline-none"
                             readOnly
                           >
                             {val.output}
                           </textarea>
                         </div>
                         <div
-                          className="shadow-3xl shadow-shadow-500 dark:!bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:shadow-none"
+                          className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none"
                           key={length}
                         >
                           <p className="text-sm text-gray-600">Published</p>
                           <textarea
-                            className="text-navy-700 text-base font-medium focus:outline-none dark:text-black"
+                            className="text-navy-700 text-base font-medium text-black focus:outline-none"
                             readOnly
                           >
                             {val.published ? 'Published' : 'Not Published'}
@@ -310,6 +310,32 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                     ),
                   )}
               </div>
+            </div>
+            <div className="flex justify-end">
+              {isAuditor ? (
+                <div>
+                  <button
+                    className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300"
+                    onClick={() => handleApprove(id)}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="m-5 rounded-xl border border-gray-200 bg-yellow-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-yellow-300"
+                    onClick={() => handleReject(id)}
+                  >
+                    Reject
+                  </button>
+                </div>
+              ) : null}
+              {audit === taskDataById.author?.username ? (
+                <button
+                  className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
+                  onClick={() => handleDelete(id)}
+                >
+                  Delete
+                </button>
+              ) : null}
             </div>
             <section className="bg-white py-8 lg:py-16">
               <div className="mx-auto max-w-7xl px-4">
@@ -426,32 +452,6 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                   ))}
               </div>
             </section>
-            <div className="flex justify-end">
-              {isAuditor ? (
-                <div>
-                  <button
-                    className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300"
-                    onClick={() => handleApprove(id)}
-                  >
-                    Approve
-                  </button>
-                  <button
-                    className="m-5 rounded-xl border border-gray-200 bg-yellow-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-yellow-300"
-                    onClick={() => handleReject(id)}
-                  >
-                    Reject
-                  </button>
-                </div>
-              ) : null}
-              {audit === taskDataById.author?.username ? (
-                <button
-                  className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
-                  onClick={() => handleDelete(id)}
-                >
-                  Delete
-                </button>
-              ) : null}
-            </div>
           </div>
         </div>
       </div>

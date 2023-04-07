@@ -26,23 +26,23 @@ const TaskTable = ({
 
   return (
     <Fragment>
-      <tr className="border-b bg-white text-center hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
-        <td className="border-r-2 border-gray-700 px-1 py-4 dark:text-white sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
+      <tr className="border-b border-gray-700 bg-gray-800 text-center hover:bg-gray-600">
+        <td className="border-r-2 border-gray-700 px-1 py-4 text-white sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
           {index_number}
         </td>
         <th
           scope="row"
-          className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+          className="whitespace-nowrap px-6 py-4 font-medium text-white"
         >
           {title}
         </th>
-        <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
+        <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
           {description}
         </td>
-        <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+        <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {author.username}
         </td>
-        <td className="px-6 py-4 dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+        <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {level}
         </td>
         <td className="px-6 py-4">
@@ -56,37 +56,35 @@ const TaskTable = ({
               </span>
             ))
           ) : (
-            <span className="text-sm leading-none text-gray-600 dark:text-white">
-              No tags
-            </span>
+            <span className="text-sm leading-none text-white">No tags</span>
           )}
         </td>
         {status == 'approved' ? (
           <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-            <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5  text-green-500">
+            <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-green-500">
               {status}
             </span>
           </td>
         ) : status == 'queued' ? (
-          <td className="px-6 py-4 uppercase dark:text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+          <td className="px-6 py-4 uppercase text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
             <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-yellow-500">
               {status}
             </span>
           </td>
         ) : (
-          <td className="px-6 py-4  uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-            <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5  text-red-500">
+          <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+            <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-red-500">
               {status}
             </span>
           </td>
         )}
 
         <td className="px-6 py-4">
-          <button className="px-2 font-bold text-blue-600 hover:underline dark:text-blue-400">
+          <button className="px-2 font-bold  text-blue-400 hover:underline">
             <Link href={`/edit-task/${_id}`}>Edit</Link>
           </button>
           <button
-            className="font-bold text-blue-600 hover:underline dark:text-blue-500"
+            className="font-bold text-blue-500 hover:underline"
             onClick={() => (handleOpenModal(), setId(`${_id}`))}
           >
             Preview
