@@ -2,6 +2,7 @@ import { ITask } from '@/interface/task';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { PreviewTask } from '@/components';
+import { useAuth } from '@/contexts/auth';
 
 const TaskTable = ({
   index_number,
@@ -15,7 +16,7 @@ const TaskTable = ({
 }: ITask) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [id, setId] = useState<string>('');
-
+  const { user } = useAuth();
   const handleOpenModal = () => {
     setOpenModal(true);
   };
@@ -80,9 +81,11 @@ const TaskTable = ({
         )}
 
         <td className="px-6 py-4">
-          <button className="px-2 font-bold  text-blue-400 hover:underline">
-            <Link href={`/edit-task/${_id}`}>Edit</Link>
-          </button>
+          {user.username == author.username ? (
+            <button className="px-2 font-bold  text-blue-400 hover:underline">
+              <Link href={`/edit-task/${_id}`}>Edit</Link>
+            </button>
+          ) : null}
           <button
             className="font-bold text-blue-500 hover:underline"
             onClick={() => (handleOpenModal(), setId(`${_id}`))}

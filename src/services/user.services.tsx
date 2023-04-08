@@ -19,16 +19,7 @@ export const login = async (email: string, password: string) => {
 export const logout = async () => {
   Cookies.remove('token');
   router.push('/');
-  toast.custom(() => (
-    <div
-      className="rounded-lg bg-white p-4 shadow-lg"
-      style={{ color: '#713200', border: '1px solid #713200' }}
-    >
-      <div className="flex">
-        <p className="text-sm font-medium">Logout Succesfully 🖐️</p>
-      </div>
-    </div>
-  ));
+  toast.success('Logged out successfully.');
 };
 
 export const getProfile = async () => {

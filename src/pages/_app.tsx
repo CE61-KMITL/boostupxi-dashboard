@@ -22,15 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <div className={kanit.className}>
         <main className="min-h-screen bg-gray-900">
           <Fragment>
-            <Toaster
-              toastOptions={{
-                style: {
-                  border: '1px solid #713200',
-                  padding: '16px',
-                  color: '#713200',
-                },
-              }}
-            />
+            <Toaster />
           </Fragment>
           <AuthProvider>
             <ProtectRoute>

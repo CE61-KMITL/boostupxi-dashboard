@@ -312,7 +312,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
               </div>
             </div>
             <div className="flex justify-end">
-              {isAuditor ? (
+              {isAuditor && audit !== taskDataById.author?.username ? (
                 <div>
                   <button
                     className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300"
