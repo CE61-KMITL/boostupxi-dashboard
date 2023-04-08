@@ -20,6 +20,7 @@ import EditIcon from '/public/edit-icon.svg';
 import { IComment } from '@/interface/task';
 import Image from 'next/image';
 import Avatar from '/public/avatar-image.jpg';
+import Zip from '/public/zip-icon.svg';
 
 interface Props {
   id: string;
@@ -248,16 +249,35 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
               </div>
 
               <div>
-                <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
+                <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 items-start justify-center space-x-3 rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <p className="text-sm text-gray-600">Task Files</p>
                   {taskDataById.files &&
-                    taskDataById.files.map((val: IFiles) => (
-                      <p
-                        className="text-navy-700 text-base font-medium text-black"
-                        key={val.key}
+                    taskDataById.files.map((files: IFiles) => (
+                      <Link
+                        href={files.url}
+                        className="text-dark mt-4 inline-flex items-center justify-center rounded-md border border-transparent bg-slate-200 text-base font-medium shadow-sm hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        key={files.key}
                       >
-                        <Link href={val.url}>{val.url}</Link>
-                      </p>
+                        {files.url.split('.').pop() === 'jpg' ||
+                        files.url.split('.').pop() === 'png' ||
+                        files.url.split('.').pop() === 'jpeg' ? (
+                          <Image
+                            src={files.url}
+                            height={100}
+                            width={100}
+                            alt={files.key}
+                            className="m-4 h-16 w-16 rounded-lg object-cover"
+                          />
+                        ) : (
+                          <Image
+                            src={Zip}
+                            height={100}
+                            width={100}
+                            alt={files.key}
+                            className=" m-4 h-16 w-16 rounded-lg object-cover"
+                          />
+                        )}
+                      </Link>
                     ))}
                 </div>
               </div>
