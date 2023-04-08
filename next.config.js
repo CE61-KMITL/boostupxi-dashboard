@@ -12,9 +12,11 @@ module.exports = () => {
   return {
     rewrites,
     reactStrictMode: true,
+    images: {
+      domains: ['ce-boostup-xi.s3.amazonaws.com'],
+    },
 
     //uncomment if production build docker
     //output: 'standalone',
-
   };
 };
