@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
         } else {
           setUser(null);
           setIsLogged(false);
+          setIsLoading(false);
         }
         response.role === 'auditor' ? setIsAuditor(true) : setIsAuditor(false);
       } catch (err) {
