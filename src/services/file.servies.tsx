@@ -24,11 +24,11 @@ export const uploadFiles = async (files: File[]) => {
   }
 };
 
-export const deleteFiles = async (files: IFiles) => {
+export const deleteFiles = async (files: IFiles[]) => {
   const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response = await axios.delete(`/api/files`, { data: [files] });
+    const response = await axios.delete(`/api/files`, { data: files });
 
     return response.data;
   }
