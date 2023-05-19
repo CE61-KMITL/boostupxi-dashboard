@@ -1,8 +1,8 @@
-import { ITask } from '@/interface/task';
-import Link from 'next/link';
 import { Fragment, useState } from 'react';
+import Link from 'next/link';
 import { PreviewTask } from '@/components';
 import { useAuth } from '@/contexts/auth';
+import { ITask } from '@/interface/task';
 
 const TaskTable = ({
   index_number,
@@ -12,6 +12,7 @@ const TaskTable = ({
   author,
   level,
   tags,
+  draft,
   status,
 }: ITask) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -79,7 +80,21 @@ const TaskTable = ({
             </span>
           </td>
         )}
-
+        <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+          {draft ? (
+            <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+              <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-yellow-500">
+                Queued
+              </span>
+            </td>
+          ) : (
+            <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+              <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-green-500">
+                Deployed
+              </span>
+            </td>
+          )}
+        </td>
         <td className="px-6 py-4">
           {user.username == author.username ? (
             <button className="px-2 font-bold  text-blue-400 hover:underline">

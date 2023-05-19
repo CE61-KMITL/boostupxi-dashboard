@@ -1,9 +1,9 @@
-import { NextPage } from 'next';
-import { IUserProfile } from '@/interface/user';
-import Layouts from '@/layouts/Layouts';
-import { TaskTable, ProfileCard, LoadingFile } from '@/components';
-import { ITask } from '@/interface/task';
 import { useState, useEffect } from 'react';
+import { NextPage } from 'next';
+import { TaskTable, ProfileCard, LoadingFile } from '@/components';
+import { IUserProfile } from '@/interface/user';
+import { ITask } from '@/interface/task';
+import Layouts from '@/layouts/Layouts';
 import { getProfile } from '@/services/user.services';
 
 const ProfilePage: NextPage = () => {

@@ -1,11 +1,10 @@
-import { NextPage } from 'next';
 import { Fragment } from 'react';
+import { NextPage } from 'next';
+import { Stars } from '@/components';
 import { useAuth } from '../contexts/auth';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Stars } from '@/components';
-
 const formSchema = z.object({
   email: z.string().email('Invalid email').min(1, 'Email is required'),
   password: z

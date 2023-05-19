@@ -1,12 +1,12 @@
 import { ChangeEvent, useState, useRef, Fragment } from 'react';
-import { toast } from 'react-hot-toast';
+import { useRouter, NextRouter } from 'next/router';
+import { LoadingFile } from '@/components';
+import { InitialForm, AvariablesTags } from '@/constants/task';
 import { IFiles } from '@/interface/task';
 import { IForm, ITestCases } from '@/interface/upload';
 import { createTask } from '@/services/task.services';
 import { uploadFiles, deleteFiles } from '@/services/file.servies';
-import { InitialForm, AvariablesTags } from '@/constants/task';
-import { useRouter, NextRouter } from 'next/router';
-import { LoadingFile } from '@/components';
+import { toast } from 'react-hot-toast';
 
 const UploadForm = () => {
   const [formData, setFormData] = useState<IForm>(InitialForm);

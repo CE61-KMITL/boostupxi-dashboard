@@ -1,13 +1,8 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
+import { IError } from '@/interface/error';
 
-interface ErrorsProps {
-  status: number;
-  title: string;
-  description: string;
-}
-
-const Errors = ({ status, title, description }: ErrorsProps) => {
+const Errors = ({ status, title, description }: IError) => {
   return (
     <Fragment>
       <div className="error-bg 22 flex min-h-screen items-center justify-center bg-indigo-500 bg-cover bg-fixed bg-bottom">
