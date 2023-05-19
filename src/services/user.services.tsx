@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
 import router from 'next/router';
+import axios, { AxiosResponse } from 'axios';
+import { toast } from 'react-hot-toast';
 import Cookies from 'js-cookie';
 
 export const login = async (email: string, password: string) => {
@@ -26,7 +26,7 @@ export const getProfile = async () => {
   const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const res = await axios.get(`/api/user/profile`);
-    return res.data;
+    const response: AxiosResponse = await axios.get(`/api/user/profile`);
+    return response.data;
   }
 };

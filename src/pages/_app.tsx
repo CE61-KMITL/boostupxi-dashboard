@@ -1,11 +1,11 @@
-import { Kanit } from 'next/font/google';
-import '../styles/globals.css';
-import '../styles/star.css';
-import type { AppProps } from 'next/app';
-import { Toaster } from 'react-hot-toast';
 import { Fragment } from 'react';
+import type { AppProps } from 'next/app';
+import { Kanit } from 'next/font/google';
 import { AuthProvider } from '../contexts/auth';
 import ProtectRoute from '../contexts/auth';
+import { Toaster } from 'react-hot-toast';
+import '../styles/globals.css';
+import '../styles/star.css';
 
 const kanit = Kanit({
   subsets: ['latin'],

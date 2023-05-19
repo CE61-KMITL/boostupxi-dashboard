@@ -1,8 +1,14 @@
 import { useState, useEffect, Fragment } from 'react';
+import Link from 'next/link';
+import { NextRouter, useRouter } from 'next/router';
+import Image from 'next/image';
+import { InitialTaskBtyId, Options } from '@/constants/task';
 import { useAuth } from '@/contexts/auth';
+import { IFiles, ITaskByID, ITestCases, IComment } from '@/interface/task';
 import {
   getTaskById,
   handleApproveReject,
+  adminHandleApproveReject,
   deleteTaskById,
   createComment,
   deleteComment,
@@ -10,15 +16,9 @@ import {
 } from '@/services/task.services';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vs2015 } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import Link from 'next/link';
-import { IFiles, ITaskByID, ITestCases } from '@/interface/task';
 import { toast } from 'react-hot-toast';
-import { NextRouter, useRouter } from 'next/router';
-import { InitialTaskBtyId, Options } from '@/constants/task';
 import DeleteIcon from '/public/delete-icon.svg';
 import EditIcon from '/public/edit-icon.svg';
-import { IComment } from '@/interface/task';
-import Image from 'next/image';
 import Avatar from '/public/avatar-image.jpg';
 import Zip from '/public/zip-icon.svg';
 
@@ -36,7 +36,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
   const [updateCommentMessage, setUpdateCommentMessage] = useState<string>('');
   const [actionState, setActionState] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const { user, isAuditor } = useAuth();
+  const { user, isAuditor, isAdmin } = useAuth();
   const router: NextRouter = useRouter();
   const audit: string = user.username;
   const reviewer: string = user.username;
@@ -67,9 +67,13 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
       });
       toast.success('Approved Succesfully');
       if (router.pathname == '/profile') {
-        window.location.href = '/profile';
+        setTimeout(() => {
+          window.location.href = '/profile';
+        }, 1000);
       } else {
-        window.location.href = '/dashboard';
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
       }
     } catch (err) {
       return err;
@@ -84,9 +88,55 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
       });
       toast.success('Rejected Succesfully');
       if (router.pathname == '/profile') {
-        window.location.href = '/profile';
+        setTimeout(() => {
+          window.location.href = '/profile';
+        }, 1000);
       } else {
-        window.location.href = '/dashboard';
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
+      }
+    } catch (err) {
+      return err;
+    }
+  };
+
+  const handleAdminApprove = (id: string) => {
+    try {
+      adminHandleApproveReject({
+        id: id,
+        data: { draft: false },
+      });
+      toast.success('Deploy Succesfully');
+      if (router.pathname == '/profile') {
+        setTimeout(() => {
+          window.location.href = '/profile';
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
+      }
+    } catch (err) {
+      return err;
+    }
+  };
+
+  const handleAdminReject = (id: string) => {
+    try {
+      adminHandleApproveReject({
+        id: id,
+        data: { draft: true },
+      });
+      toast.success('Cancel Deploy Succesfully');
+      if (router.pathname == '/profile') {
+        setTimeout(() => {
+          window.location.href = '/profile';
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
       }
     } catch (err) {
       return err;
@@ -131,9 +181,13 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
       deleteTaskById(id);
       toast.success('Delete Task Successfully');
       if (router.pathname == '/profile') {
-        window.location.href = '/profile';
+        setTimeout(() => {
+          window.location.href = '/profile';
+        }, 1000);
       } else {
-        window.location.href = '/dashboard';
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
       }
     } catch (err) {
       return err;
@@ -219,7 +273,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                 </SyntaxHighlighter>
               </div>
 
-              <div className="grid w-full grid-cols-3 gap-2 px-2 py-4">
+              <div className="grid w-full grid-cols-2 gap-2 px-2 py-4">
                 <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <p className="text-sm text-gray-600">Task Category</p>
                   {taskDataById.tags &&
@@ -233,17 +287,19 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                     ))}
                 </div>
 
-                <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
-                  <p className="text-sm text-gray-600">Task Hints</p>
-                  <p className="text-navy-700 text-base font-medium text-black">
-                    {taskDataById.hint}
-                  </p>
-                </div>
-
                 <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <p className="text-sm text-gray-600">Task Status</p>
                   <p className="text-navy-700 text-base font-medium text-black">
                     {taskDataById.status}
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
+                  <p className="text-sm text-gray-600">Task Hints</p>
+                  <p className="text-navy-700 text-base font-medium text-black">
+                    {taskDataById.hint}
                   </p>
                 </div>
               </div>
@@ -331,31 +387,52 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                   )}
               </div>
             </div>
-            <div className="flex justify-end">
-              {isAuditor && audit !== taskDataById.author?.username ? (
-                <div>
+            <div className="flex justify-between">
+              <div className="flex justify-start">
+                {isAdmin && (
+                  <div>
+                    <button
+                      className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300"
+                      onClick={() => handleAdminApprove(id)}
+                    >
+                      Deploy
+                    </button>
+                    <button
+                      className="m-5 rounded-xl border border-gray-200 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
+                      onClick={() => handleAdminReject(id)}
+                    >
+                      Cancel Deploy
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="flex justify-end">
+                {((isAuditor && audit !== taskDataById.author?.username) ||
+                  (isAdmin && audit !== taskDataById.author?.username)) && (
+                  <div>
+                    <button
+                      className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300"
+                      onClick={() => handleApprove(id)}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="m-5 rounded-xl border border-gray-200 bg-yellow-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-yellow-300"
+                      onClick={() => handleReject(id)}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                )}
+                {audit === taskDataById.author?.username && (
                   <button
-                    className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300"
-                    onClick={() => handleApprove(id)}
+                    className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
+                    onClick={() => handleDelete(id)}
                   >
-                    Approve
+                    Delete
                   </button>
-                  <button
-                    className="m-5 rounded-xl border border-gray-200 bg-yellow-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-yellow-300"
-                    onClick={() => handleReject(id)}
-                  >
-                    Reject
-                  </button>
-                </div>
-              ) : null}
-              {audit === taskDataById.author?.username ? (
-                <button
-                  className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
-                  onClick={() => handleDelete(id)}
-                >
-                  Delete
-                </button>
-              ) : null}
+                )}
+              </div>
             </div>
             <section className="bg-white py-8 lg:py-16">
               <div className="mx-auto max-w-7xl px-4">

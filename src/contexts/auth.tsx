@@ -7,9 +7,9 @@ import React, {
 } from 'react';
 import { NextRouter, useRouter } from 'next/router';
 import { Errors, LoadingFile } from '@/components';
-import { login, logout, getProfile } from '@/services/user.services';
 import { IUserProfile } from '@/interface/user';
 import { IAuthContext } from '@/interface/auth';
+import { login, logout, getProfile } from '@/services/user.services';
 
 const AuthContext = createContext<IAuthContext>({
   isAuthenticated: false,
@@ -18,6 +18,7 @@ const AuthContext = createContext<IAuthContext>({
   login: async () => {},
   logout: async () => {},
   isAuditor: false,
+  isAdmin: false,
   isLogged: false,
 });
 
@@ -29,13 +30,18 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isAuditor, setIsAuditor] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [user, setUser] = useState<IUserProfile | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await getProfile();
-        if (response.role === 'auditor' || response.role === 'staff') {
+        if (
+          response.role === 'auditor' ||
+          response.role === 'staff' ||
+          response.role === 'admin'
+        ) {
           setUser(response);
           setIsLogged(true);
           setIsLoading(false);
@@ -45,6 +51,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
           setIsLoading(false);
         }
         response.role === 'auditor' ? setIsAuditor(true) : setIsAuditor(false);
+        response.role === 'admin' ? setIsAdmin(true) : setIsAdmin(false);
       } catch (err) {
         setIsLoading(false);
       }
@@ -61,6 +68,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
         login,
         logout,
         isAuditor,
+        isAdmin,
         isLogged,
       }}
     >

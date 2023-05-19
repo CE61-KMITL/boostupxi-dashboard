@@ -1,8 +1,8 @@
-import { NextPage } from 'next';
-import { ITask } from '@/interface/task';
-import { TaskTable, LoadingFile } from '@/components';
-import Layouts from '@/layouts/Layouts';
 import { useState, useEffect } from 'react';
+import { NextPage } from 'next';
+import { TaskTable, LoadingFile } from '@/components';
+import { ITask } from '@/interface/task';
+import Layouts from '@/layouts/Layouts';
 import { getTasksData } from '@/services/task.services';
 
 const TasksPage: NextPage = () => {
@@ -65,6 +65,9 @@ const TasksPage: NextPage = () => {
                   Status
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Deploy
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Action
                 </th>
               </tr>
@@ -82,6 +85,7 @@ const TasksPage: NextPage = () => {
                   status={val.status}
                   tags={val.tags}
                   hint={val.hint}
+                  draft={val.draft}
                   files={val.files}
                   testcases={val.testcases}
                   solution_code={val.solution_code}

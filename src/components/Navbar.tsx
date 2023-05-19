@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { useState, Fragment } from 'react';
-import { useAuth } from '../contexts/auth';
+import Link from 'next/link';
+import { useAuth } from '@/contexts/auth';
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState<boolean>(false);
