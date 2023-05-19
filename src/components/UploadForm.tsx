@@ -42,11 +42,11 @@ const UploadForm = () => {
     }
   };
 
-  const handleRemoveFile = (file: IFiles) => {
+  const handleRemoveFile = (file: IFiles[]) => {
     try {
       const newFiles = [...formData.files];
       const index = newFiles.findIndex(
-        (newFiles: IFiles) => newFiles.key === file.key,
+        (newFiles: IFiles) => newFiles.key === file[0].key,
       );
 
       newFiles.splice(index, 1);
@@ -323,7 +323,7 @@ const UploadForm = () => {
                       <button
                         type="button"
                         className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
-                        onClick={() => handleRemoveFile(file)}
+                        onClick={() => handleRemoveFile([file])}
                       >
                         remove
                       </button>
