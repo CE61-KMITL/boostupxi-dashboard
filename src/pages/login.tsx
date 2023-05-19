@@ -1,10 +1,11 @@
 import { Fragment } from 'react';
-import { NextPage } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { Stars } from '@/components';
 import { useAuth } from '../contexts/auth';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 const formSchema = z.object({
   email: z.string().email('Invalid email').min(1, 'Email is required'),
   password: z
@@ -312,3 +313,22 @@ const LoginPage: NextPage = () => {
 };
 
 export default LoginPage;
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext,
+) => {
+  const token = context.req.cookies.token;
+
+  if (token) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
