@@ -33,25 +33,22 @@ const ProfilePage: NextPage = () => {
                   #
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Task Name
+                  Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Task Description
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Author
+                  Description
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Level
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Task Tags
+                  Tags
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Status
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Deploy
+                  Publication Status
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Action
@@ -79,6 +76,7 @@ const ProfilePage: NextPage = () => {
                     created_at={val.created_at}
                     updated_at={val.updated_at}
                     __v={val.__v}
+                    isProfile={true}
                   />
                 ))}
             </tbody>
