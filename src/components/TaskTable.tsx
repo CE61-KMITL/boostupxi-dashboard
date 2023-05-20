@@ -96,11 +96,11 @@ const TaskTable = ({
           )}
         </td>
         <td className="px-6 py-4">
-          {user.username == author.username ? (
+          {user.username == author.username && (
             <button className="px-2 font-bold  text-blue-400 hover:underline">
-              <Link href={`/edit-task/${_id}`}>Edit</Link>
+              <Link href={`/task/edit/${_id}`}>Edit</Link>
             </button>
-          ) : null}
+          )}
           <button
             className="font-bold text-blue-500 hover:underline"
             onClick={() => (handleOpenModal(), setId(`${_id}`))}
