@@ -488,7 +488,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                               </time>
                             </p>
                           </div>
-                          {val.author?.username === reviewer ? (
+                          {val.author?.username === reviewer && (
                             <div className="items-end justify-end space-x-3 rounded-lg bg-white p-2 text-center text-sm font-medium focus:outline-none focus:ring-4 ">
                               <button
                                 type="button"
@@ -513,7 +513,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                                 />
                               </button>
                             </div>
-                          ) : null}
+                          )}
                         </footer>
                         {isEdit && val.id == commentsId ? (
                           <div>

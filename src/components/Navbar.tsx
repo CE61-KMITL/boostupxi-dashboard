@@ -69,7 +69,7 @@ const Navbar = () => {
             >
               <ul className="items-center justify-center space-y-8 text-center md:flex md:space-x-6 md:space-y-0">
                 <li className="text-white hover:text-second-color">
-                  <Link href="/upload-task" onClick={() => setNavbar(false)}>
+                  <Link href="/task/upload" onClick={() => setNavbar(false)}>
                     <button className="w-full rounded-xl bg-green-600 py-1 px-3 md:hover:animate-[shake_1s]">
                       Create
                     </button>

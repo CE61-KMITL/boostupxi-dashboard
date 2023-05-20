@@ -26,7 +26,7 @@ export const getProfile = async () => {
   const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response: AxiosResponse = await axios.get(`/api/user/profile`);
+    const response: AxiosResponse = await axios.get(`/api/users/profile`);
     return response.data;
   }
 };

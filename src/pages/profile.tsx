@@ -19,7 +19,6 @@ const ProfilePage: NextPage = () => {
     };
     fetchData();
   }, []);
-
   return (
     <Layouts>
       {isLoading ? (
@@ -52,6 +51,9 @@ const ProfilePage: NextPage = () => {
                   Status
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Deploy
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Action
                 </th>
               </tr>
@@ -72,6 +74,7 @@ const ProfilePage: NextPage = () => {
                     files={val.files}
                     testcases={val.testcases}
                     status={val.status}
+                    draft={val.draft}
                     solution_code={val.solution_code}
                     created_at={val.created_at}
                     updated_at={val.updated_at}
