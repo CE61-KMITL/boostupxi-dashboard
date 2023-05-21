@@ -5,10 +5,12 @@ import { IUserProfile } from '@/interface/user';
 import { ITask } from '@/interface/task';
 import Layouts from '@/layouts/Layouts';
 import { getProfile } from '@/services/user.services';
+import UpdateProfile from '@/components/UpdateProfile';
 
 const ProfilePage: NextPage = () => {
   const [taskData, setTaskData] = useState<IUserProfile>({} as IUserProfile);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,13 +21,22 @@ const ProfilePage: NextPage = () => {
     };
     fetchData();
   }, []);
+
+  const handleOpenModal = () => setOpenModal(true);
+
+  const handleCloseModal = () => setOpenModal(false);
+
+  const updateProfile = (data: IUserProfile) => {
+    setTaskData(data);
+  };
+
   return (
     <Layouts>
       {isLoading ? (
         <LoadingFile />
       ) : (
         <div className="container mx-auto my-auto  mt-10 w-full overflow-auto rounded-lg py-12  px-6">
-          <ProfileCard {...taskData} />
+          <ProfileCard {...taskData} handleOpenModal={handleOpenModal} />
           <table className="mx-auto my-auto w-full text-sm text-gray-400 shadow-md">
             <thead className=" bg-gray-700 text-xs uppercase text-gray-100">
               <tr>
@@ -81,6 +92,13 @@ const ProfilePage: NextPage = () => {
                 ))}
             </tbody>
           </table>
+          {openModal && (
+            <UpdateProfile
+              {...taskData}
+              handleCloseModal={handleCloseModal}
+              updateProfile={updateProfile}
+            />
+          )}
         </div>
       )}
     </Layouts>

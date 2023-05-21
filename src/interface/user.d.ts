@@ -7,3 +7,8 @@ export interface IUserProfile {
   role: string;
   tasks: TaskForm[];
 }
+
+export interface IUpdateUser {
+  username?: string;
+  password?: string | undefined;
+}

@@ -1,11 +1,21 @@
 import { IUserProfile } from '@/interface/user';
 
-const ProfileCard = ({ _id, username, email, role, tasks }: IUserProfile) => {
+type Props = IUserProfile & {
+  handleOpenModal: () => void;
+};
+
+const ProfileCard = ({
+  username,
+  email,
+  role,
+  tasks,
+  handleOpenModal,
+}: Props) => {
   let taskCount: number = 0;
   let rejectCount: number = 0;
   let approveCount: number = 0;
 
-  if (tasks != null) {
+  if (tasks) {
     taskCount = tasks.length;
     tasks.forEach((task) => {
       if (task.status === 'rejected') {
@@ -24,9 +34,17 @@ const ProfileCard = ({ _id, username, email, role, tasks }: IUserProfile) => {
             <h1 className="text-dark-800 text-dark-200 text-6xl font-semibold text-red-600">
               {username}
             </h1>
-            <p className="text-2xl text-gray-400">{_id}</p>
             <p className="text-3xl text-gray-400">{email}</p>
-            <p className="text-3xl text-green-400">{role}</p>
+            <div className="flex items-center">
+              <p className="text-3xl text-green-400">{role}</p>
+              <button
+                type="button"
+                onClick={handleOpenModal}
+                className="bg-white"
+              >
+                Edit Profile
+              </button>
+            </div>
           </div>
         </div>
       </div>
