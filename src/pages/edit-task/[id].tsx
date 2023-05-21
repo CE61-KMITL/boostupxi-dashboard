@@ -21,6 +21,7 @@ function Task() {
   const router: NextRouter = useRouter();
   const { id } = router.query as TaskPageQuery;
   const inputRef = useRef<null>(null);
+  const [removeAfterUpdate, setremoveAfterUpdate] = useState<IFiles[]>([]);
 
   useEffect(() => {
     const fetchDataById = async () => {
@@ -114,15 +115,19 @@ function Task() {
 
       newFiles.splice(index, 1);
       setTaskDataById({ ...taskDataById, files: newFiles });
-      const data = deleteFiles(file);
-
+      //const data = deleteFiles(file);
+      setremoveAfterUpdate([...removeAfterUpdate, file]);
       if (taskDataById.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
-      return data;
     } catch (err) {
       return err;
     }
+  };
+  const RemoveFileAfterUpdate = async () => {
+    try {
+      await deleteFiles(removeAfterUpdate);
+    } catch (err) {}
   };
 
   const handleTagClick = (
@@ -148,6 +153,7 @@ function Task() {
     if (FormValidation() != false) {
       try {
         e.preventDefault();
+        RemoveFileAfterUpdate();
         UpdateTaskById(taskDataById, id);
         toast.success('Update Task Success');
         setTaskDataById({
