@@ -20,6 +20,7 @@ const AuthContext = createContext<IAuthContext>({
   isAuditor: false,
   isAdmin: false,
   isLogged: false,
+  setUser: () => {},
 });
 
 interface ChildrenProps {
@@ -70,6 +71,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
         isAuditor,
         isAdmin,
         isLogged,
+        setUser,
       }}
     >
       {children}

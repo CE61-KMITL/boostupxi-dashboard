@@ -8,4 +8,5 @@ export interface IAuthContext {
   isAuditor: boolean;
   isAdmin: boolean;
   isLogged: boolean;
+  setUser: React.Dispatch<React.SetStateAction<UserProfile | null>>;
 }

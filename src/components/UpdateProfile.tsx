@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { getProfile, updateUser } from '@/services/user.services';
 import { toast } from 'react-hot-toast';
 import { IUpdateUser, IUserProfile } from '@/interface/user';
+import { useAuth } from '@/contexts/auth';
 
 interface Props {
   handleCloseModal: () => void;
@@ -9,7 +10,8 @@ interface Props {
   email: string;
   role: string;
   _id: string;
-  updateProfile: (arg0: IUserProfile) => void;
+  // eslint-disable-next-line no-unused-vars
+  updateProfile: (data: IUserProfile) => void;
 }
 
 const UpdateProfile = ({
@@ -28,6 +30,8 @@ const UpdateProfile = ({
     confirmPassword: '',
   });
 
+  const { setUser: setUserContext } = useAuth();
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -44,6 +48,7 @@ const UpdateProfile = ({
       await updateUser(id, userData);
 
       const updatedUser = await getProfile();
+      setUserContext(updatedUser);
       updateProfile(updatedUser);
     } else {
       toast.error('Password does not match.');
