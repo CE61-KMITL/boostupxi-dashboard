@@ -23,7 +23,7 @@ const Errors = ({ status, title, description }: IError) => {
               <p className="mt-2 mb-6 text-gray-100">{description}</p>
               <Link
                 className="rounded-full  bg-green-400 px-5 py-3 text-sm font-medium tracking-wider text-gray-50 shadow-sm hover:shadow-lg"
-                href="/"
+                href="/login"
               >
                 Go back to login page
               </Link>
