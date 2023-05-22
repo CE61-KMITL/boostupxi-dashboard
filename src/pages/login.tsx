@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/auth';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 
 const formSchema = z.object({
   email: z.string().email('Invalid email').min(1, 'Email is required'),
@@ -34,7 +35,42 @@ const LoginPage: NextPage = () => {
   return (
     <Fragment>
       <Stars />
-      <div className="space-y-8px-4 flex min-h-screen flex-col items-center justify-center">
+      <div className="space-y-8px-4 relative flex min-h-screen flex-col items-center justify-center">
+        <div className="absolute bottom-0 mb-3 text-center text-sm font-medium text-white">
+          <p>
+            Made by{' '}
+            <Link
+              className="hover:text-green-300"
+              target="_blank"
+              rel="noopener noreferer"
+              href="https://github.com/deviate-team"
+            >
+              Deviate Team
+            </Link>{' '}
+            x{' '}
+            <Link
+              className="hover:text-green-300"
+              target="_blank"
+              rel="noopener noreferer"
+              href="https://github.com/CE61-KMITL"
+            >
+              CE61 @KMITL
+            </Link>
+            ❤️
+          </p>
+
+          <p>
+            Approved By{' '}
+            <Link
+              className="hover:text-green-300"
+              target="_blank"
+              rel="noopener noreferer"
+              href="https://github.com/ISAG-Lab"
+            >
+              ISAG LAB✅
+            </Link>
+          </p>
+        </div>
         <div className="flex w-full max-w-5xl flex-row overflow-hidden rounded-2xl shadow">
           <div className="hidden flex-auto flex-col items-center space-y-10 bg-indigo-200 md:flex">
             <div className="mt-16 flex flex-row items-center self-start"></div>

@@ -14,7 +14,10 @@ const TaskTable = ({
   tags,
   draft,
   status,
-}: ITask) => {
+  isProfile,
+}: ITask & {
+  isProfile: boolean;
+}) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [id, setId] = useState<string>('');
   const { user } = useAuth();
@@ -41,9 +44,11 @@ const TaskTable = ({
         <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
           {description}
         </td>
-        <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-          {author.username}
-        </td>
+        {!isProfile && (
+          <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+            {author.username}
+          </td>
+        )}
         <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {level}
         </td>
@@ -84,13 +89,13 @@ const TaskTable = ({
           {draft ? (
             <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
               <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-yellow-500">
-                Queued
+                Draft
               </span>
             </td>
           ) : (
             <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
               <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-green-500">
-                Deployed
+                Published
               </span>
             </td>
           )}
