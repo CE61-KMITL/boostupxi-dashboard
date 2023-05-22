@@ -66,38 +66,40 @@ const TaskTable = ({
             <span className="text-sm leading-none text-white">No tags</span>
           )}
         </td>
-        {status == 'approved' ? (
-          <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-            <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-green-500">
-              {status}
-            </span>
-          </td>
-        ) : status == 'queued' ? (
-          <td className="px-6 py-4 uppercase text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-            <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-yellow-500">
-              {status}
-            </span>
-          </td>
-        ) : (
-          <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-            <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-red-500">
-              {status}
-            </span>
-          </td>
-        )}
+        <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+          {status == 'approved' ? (
+            <div className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+              <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-green-500">
+                {status}
+              </span>
+            </div>
+          ) : status == 'queued' ? (
+            <div className="px-6 py-4 uppercase text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+              <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-yellow-500">
+                {status}
+              </span>
+            </div>
+          ) : (
+            <div className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+              <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-red-500">
+                {status}
+              </span>
+            </div>
+          )}
+        </td>
         <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {draft ? (
-            <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+            <div className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
               <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-yellow-500">
                 Draft
               </span>
-            </td>
+            </div>
           ) : (
-            <td className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+            <div className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
               <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-green-500">
                 Published
               </span>
-            </td>
+            </div>
           )}
         </td>
         <td className="px-6 py-4">
