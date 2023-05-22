@@ -7,6 +7,7 @@ import UpdateProfile from '@/components/UpdateProfile';
 import { getProfile } from '@/services/user.services';
 import { LoadingFile } from '@/components';
 import { useAuth } from '@/contexts/auth';
+import Link from 'next/link';
 
 const ProfilePage: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -66,29 +67,43 @@ const ProfilePage: NextPage = () => {
               </tr>
             </thead>
             <tbody>
-              {taskData.tasks &&
-                taskData.tasks.map((val: ITask, index: number) => (
-                  <TaskTable
-                    index_number={index + 1}
-                    key={val._id}
-                    _id={val._id}
-                    title={val.title}
-                    description={val.description}
-                    author={val.author}
-                    level={val.level}
-                    tags={val.tags}
-                    hint={val.hint}
-                    files={val.files}
-                    testcases={val.testcases}
-                    status={val.status}
-                    draft={val.draft}
-                    solution_code={val.solution_code}
-                    created_at={val.created_at}
-                    updated_at={val.updated_at}
-                    __v={val.__v}
-                    isProfile={true}
-                  />
-                ))}
+              {taskData.tasks.length === 0 ? (
+                <tr className="bg-gray-700 text-xs uppercase text-gray-100">
+                  <td colSpan={9} className="py-12 text-center">
+                    No task in the system. <br />
+                    If you want to create a new task,{' '}
+                    <Link className="text-red-500" href="/task/upload">
+                      click here
+                    </Link>
+                    .
+                  </td>
+                </tr>
+              ) : (
+                <>
+                  {taskData.tasks.map((val: ITask, index: number) => (
+                    <TaskTable
+                      index_number={index + 1}
+                      key={val._id}
+                      _id={val._id}
+                      title={val.title}
+                      description={val.description}
+                      author={val.author}
+                      level={val.level}
+                      tags={val.tags}
+                      hint={val.hint}
+                      files={val.files}
+                      testcases={val.testcases}
+                      status={val.status}
+                      draft={val.draft}
+                      solution_code={val.solution_code}
+                      created_at={val.created_at}
+                      updated_at={val.updated_at}
+                      __v={val.__v}
+                      isProfile={true}
+                    />
+                  ))}
+                </>
+              )}
             </tbody>
           </table>
           {openModal && (
