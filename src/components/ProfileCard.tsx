@@ -40,7 +40,7 @@ const ProfileCard = ({
               <button
                 type="button"
                 onClick={handleOpenModal}
-                className="bg-white"
+                className="ml-2 rounded-md bg-white px-2 py-1 text-xs text-gray-400 shadow-md"
               >
                 Edit Profile
               </button>
