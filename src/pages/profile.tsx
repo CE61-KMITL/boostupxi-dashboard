@@ -1,16 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import { TaskTable, ProfileCard, LoadingFile } from '@/components';
-import { IUserProfile } from '@/interface/user';
+import { TaskTable, ProfileCard } from '@/components';
 import { ITask } from '@/interface/task';
 import Layouts from '@/layouts/Layouts';
-import { getProfile } from '@/services/user.services';
 import UpdateProfile from '@/components/UpdateProfile';
+import { useAuth } from '@/contexts/auth';
+import { getProfile } from '@/services/user.services';
+import { IUserProfile } from '@/interface/user';
+import { LoadingFile } from '@/components';
 
 const ProfilePage: NextPage = () => {
   const [taskData, setTaskData] = useState<IUserProfile>({} as IUserProfile);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const { setUser } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,13 +26,11 @@ const ProfilePage: NextPage = () => {
     fetchData();
   }, []);
 
+  setUser(taskData);
+
   const handleOpenModal = () => setOpenModal(true);
 
   const handleCloseModal = () => setOpenModal(false);
-
-  const updateProfile = (data: IUserProfile) => {
-    setTaskData(data);
-  };
 
   return (
     <Layouts>
@@ -93,11 +95,7 @@ const ProfilePage: NextPage = () => {
             </tbody>
           </table>
           {openModal && (
-            <UpdateProfile
-              {...taskData}
-              handleCloseModal={handleCloseModal}
-              updateProfile={updateProfile}
-            />
+            <UpdateProfile {...taskData} handleCloseModal={handleCloseModal} />
           )}
         </div>
       )}
