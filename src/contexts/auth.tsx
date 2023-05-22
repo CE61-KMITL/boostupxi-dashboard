@@ -20,7 +20,7 @@ const AuthContext = createContext<IAuthContext>({
   isAuditor: false,
   isAdmin: false,
   isLogged: false,
-  setUser: () => {},
+  setUpdateUser: () => {},
 });
 
 interface ChildrenProps {
@@ -60,6 +60,10 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
     fetchUser();
   }, []);
 
+  const setUpdateUser = (data: IUserProfile) => {
+    setUser(data);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -71,7 +75,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
         isAuditor,
         isAdmin,
         isLogged,
-        setUser,
+        setUpdateUser,
       }}
     >
       {children}

@@ -4,29 +4,26 @@ import { TaskTable, ProfileCard } from '@/components';
 import { ITask } from '@/interface/task';
 import Layouts from '@/layouts/Layouts';
 import UpdateProfile from '@/components/UpdateProfile';
-import { useAuth } from '@/contexts/auth';
 import { getProfile } from '@/services/user.services';
-import { IUserProfile } from '@/interface/user';
 import { LoadingFile } from '@/components';
+import { useAuth } from '@/contexts/auth';
 
 const ProfilePage: NextPage = () => {
-  const [taskData, setTaskData] = useState<IUserProfile>({} as IUserProfile);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const { setUser } = useAuth();
+  const { user: taskData, setUpdateUser } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       const response = await getProfile();
-      setTaskData(response);
+      setUpdateUser(response);
       setIsLoading(false);
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  setUser(taskData);
 
   const handleOpenModal = () => setOpenModal(true);
 

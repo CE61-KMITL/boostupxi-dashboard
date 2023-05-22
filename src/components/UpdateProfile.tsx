@@ -27,7 +27,7 @@ const UpdateProfile = ({
     confirmPassword: '',
   });
 
-  const { setUser: setUserContext } = useAuth();
+  const { setUpdateUser } = useAuth();
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,7 +45,8 @@ const UpdateProfile = ({
       await updateUser(id, userData);
 
       const updatedUser = await getProfile();
-      setUserContext(updatedUser);
+
+      setUpdateUser(updatedUser);
     } else {
       toast.error('Password does not match.');
     }
