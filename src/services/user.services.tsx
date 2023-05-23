@@ -6,8 +6,11 @@ import { IUpdateUser } from '@/interface/user';
 
 export const login = async (email: string, password: string) => {
   try {
-    const res = await axios.post('/api/auth/login', { email, password });
-    const token: string | null = res.headers.authorization;
+    const response: AxiosResponse = await axios.post('/api/auth/login', {
+      email,
+      password,
+    });
+    const token: string | null = response.headers.authorization;
     if (token) {
       Cookies.set('token', token);
       window.location.href = '/profile';

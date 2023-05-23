@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import { TaskTable, ProfileCard } from '@/components';
+import Link from 'next/link';
+import {
+  TaskTable,
+  ProfileCard,
+  LoadingFile,
+  UpdateProfile,
+} from '@/components';
 import { ITask } from '@/interface/task';
 import Layouts from '@/layouts/Layouts';
-import UpdateProfile from '@/components/UpdateProfile';
 import { getProfile } from '@/services/user.services';
-import { LoadingFile } from '@/components';
 import { useAuth } from '@/contexts/auth';
-import Link from 'next/link';
 
 const ProfilePage: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

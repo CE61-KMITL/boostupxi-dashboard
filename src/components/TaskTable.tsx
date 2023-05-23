@@ -21,11 +21,11 @@ const TaskTable = ({
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [id, setId] = useState<string>('');
   const { user } = useAuth();
-  const handleOpenModal = () => {
+  const handleOpenModal = (): void => {
     setOpenModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (): void => {
     setOpenModal(false);
   };
 
@@ -68,38 +68,28 @@ const TaskTable = ({
         </td>
         <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {status == 'approved' ? (
-            <div className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-              <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-green-500">
-                {status}
-              </span>
-            </div>
+            <span className="inline-flex rounded-full px-6 py-4 text-sm font-semibold uppercase leading-5 text-green-500 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+              {status}
+            </span>
           ) : status == 'queued' ? (
-            <div className="px-6 py-4 uppercase text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-              <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-yellow-500">
-                {status}
-              </span>
-            </div>
+            <span className="inline-flex rounded-full px-6 py-4 text-sm font-semibold uppercase leading-5 text-green-500 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+              {status}
+            </span>
           ) : (
-            <div className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-              <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-red-500">
-                {status}
-              </span>
-            </div>
+            <span className="inline-flex rounded-full px-6 py-4 text-sm font-semibold uppercase leading-5 text-red-500 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+              {status}
+            </span>
           )}
         </td>
         <td className="px-6 py-4 text-white sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
           {draft ? (
-            <div className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-              <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-yellow-500">
-                Draft
-              </span>
-            </div>
+            <span className="inline-flex rounded-full px-6 py-4 text-sm font-semibold uppercase leading-5 text-yellow-500 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+              Draft
+            </span>
           ) : (
-            <div className="px-6 py-4 uppercase sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
-              <span className="inline-flex rounded-full px-2 text-sm font-semibold leading-5 text-green-500">
-                Published
-              </span>
-            </div>
+            <span className=" inline-flex rounded-full px-6 py-4 text-sm font-semibold uppercase leading-5 text-green-500 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+              Published
+            </span>
           )}
         </td>
         <td className="px-6 py-4">
@@ -116,11 +106,11 @@ const TaskTable = ({
           </button>
         </td>
       </tr>
-      <div>
+      <>
         {openModal && (
           <PreviewTask id={id} isOpen={openModal} onClose={handleCloseModal} />
         )}
-      </div>
+      </>
     </Fragment>
   );
 };
