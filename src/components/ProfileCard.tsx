@@ -1,11 +1,21 @@
 import { IUserProfile } from '@/interface/user';
 
-const ProfileCard = ({ _id, username, email, role, tasks }: IUserProfile) => {
+type Props = IUserProfile & {
+  handleOpenModal: () => void;
+};
+
+const ProfileCard = ({
+  username,
+  email,
+  role,
+  tasks,
+  handleOpenModal,
+}: Props) => {
   let taskCount: number = 0;
   let rejectCount: number = 0;
   let approveCount: number = 0;
 
-  if (tasks != null) {
+  if (tasks) {
     taskCount = tasks.length;
     tasks.forEach((task) => {
       if (task.status === 'rejected') {
@@ -21,14 +31,20 @@ const ProfileCard = ({ _id, username, email, role, tasks }: IUserProfile) => {
       <div className="w-1/2">
         <div className="w-2/10 my-5">
           <div className="flex min-w-max flex-col md:items-start">
-            <h1 className="text-dark-800 dark:text-dark-200 text-6xl font-semibold text-red-600">
+            <h1 className="text-dark-800 text-dark-200 text-6xl font-semibold text-red-600">
               {username}
             </h1>
-            <p className="text-2xl text-gray-500 dark:text-gray-400">{_id}</p>
-            <p className="text-3xl text-gray-500 dark:text-gray-400">{email}</p>
-            <p className="text-3xl text-green-500 dark:text-green-400">
-              {role}
-            </p>
+            <p className="text-3xl text-gray-400">{email}</p>
+            <div className="flex items-center">
+              <p className="text-3xl text-green-400">{role}</p>
+              <button
+                type="button"
+                onClick={handleOpenModal}
+                className="ml-2 rounded-md bg-white px-2 py-1 text-xs text-gray-400 shadow-md"
+              >
+                Edit Profile
+              </button>
+            </div>
           </div>
         </div>
       </div>

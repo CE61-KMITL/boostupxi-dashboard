@@ -6,10 +6,10 @@ import React, {
   ReactNode,
 } from 'react';
 import { NextRouter, useRouter } from 'next/router';
-import { Errors, Loading } from '@/components';
-import { login, logout, getProfile } from '@/services/user.services';
+import { Errors, LoadingFile } from '@/components';
 import { IUserProfile } from '@/interface/user';
 import { IAuthContext } from '@/interface/auth';
+import { login, logout, getProfile } from '@/services/user.services';
 
 const AuthContext = createContext<IAuthContext>({
   isAuthenticated: false,
@@ -18,7 +18,9 @@ const AuthContext = createContext<IAuthContext>({
   login: async () => {},
   logout: async () => {},
   isAuditor: false,
+  isAdmin: false,
   isLogged: false,
+  setUpdateUser: () => {},
 });
 
 interface ChildrenProps {
@@ -29,27 +31,38 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isAuditor, setIsAuditor] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [user, setUser] = useState<IUserProfile | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await getProfile();
-        setIsLoading(false);
-        if (response.role === 'auditor' || response.role === 'staff') {
+        if (
+          response.role === 'auditor' ||
+          response.role === 'staff' ||
+          response.role === 'admin'
+        ) {
           setUser(response);
           setIsLogged(true);
+          setIsLoading(false);
         } else {
           setUser(null);
           setIsLogged(false);
+          setIsLoading(false);
         }
         response.role === 'auditor' ? setIsAuditor(true) : setIsAuditor(false);
+        response.role === 'admin' ? setIsAdmin(true) : setIsAdmin(false);
       } catch (err) {
         setIsLoading(false);
       }
     };
     fetchUser();
   }, []);
+
+  const setUpdateUser = (data: IUserProfile) => {
+    setUser(data);
+  };
 
   return (
     <AuthContext.Provider
@@ -60,7 +73,9 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<{}>) => {
         login,
         logout,
         isAuditor,
+        isAdmin,
         isLogged,
+        setUpdateUser,
       }}
     >
       {children}
@@ -75,7 +90,7 @@ const ProtectRoute = ({ children }: ChildrenProps) => {
   const router: NextRouter = useRouter();
 
   if (isLoading) {
-    return <Loading />;
+    return <LoadingFile />;
   }
 
   if (

@@ -72,7 +72,7 @@ export const AvariablesTags: string[] = [
   'Crypto',
 ];
 
-export const options: Object = {
+export const Options: Object = {
   timeZone: 'Asia/Bangkok',
   day: 'numeric',
   month: 'numeric',

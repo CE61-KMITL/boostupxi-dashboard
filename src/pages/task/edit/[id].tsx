@@ -1,16 +1,14 @@
 import { useState, useEffect, ChangeEvent, useRef } from 'react';
 import { useRouter, NextRouter } from 'next/router';
-import { Loading, LoadingFile } from '@/components';
-import { getTaskById, UpdateTaskById } from '@/services/task.services';
-import { ParsedUrlQuery } from 'querystring';
+import { LoadingFile } from '@/components';
+import { AvariablesTags, Options, InitialTaskBtyId } from '@/constants/task';
 import { ITestCases } from '@/interface/upload';
-import { toast } from 'react-hot-toast';
 import { IFiles, ITaskByID } from '@/interface/task';
-import { uploadFiles, deleteFiles } from '@/services/file.servies';
 import Layouts from '@/layouts/Layouts';
-import { AvariablesTags } from '@/constants/task';
-import { InitialTaskBtyId } from '@/constants/task';
-import { options } from '@/constants/task';
+import { getTaskById, UpdateTaskById } from '@/services/task.services';
+import { uploadFiles, deleteFiles } from '@/services/file.servies';
+import { ParsedUrlQuery } from 'querystring';
+import { toast } from 'react-hot-toast';
 
 interface TaskPageQuery extends ParsedUrlQuery {
   id: string;
@@ -23,6 +21,7 @@ function Task() {
   const router: NextRouter = useRouter();
   const { id } = router.query as TaskPageQuery;
   const inputRef = useRef<null>(null);
+  const [removeAfterUpdate, setremoveAfterUpdate] = useState<IFiles[]>([]);
 
   useEffect(() => {
     const fetchDataById = async () => {
@@ -116,15 +115,19 @@ function Task() {
 
       newFiles.splice(index, 1);
       setTaskDataById({ ...taskDataById, files: newFiles });
-      const data = deleteFiles(file);
-
+      //const data = deleteFiles(file);
+      setremoveAfterUpdate([...removeAfterUpdate, file]);
       if (taskDataById.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
       }
-      return data;
     } catch (err) {
       return err;
     }
+  };
+  const RemoveFileAfterUpdate = async () => {
+    try {
+      await deleteFiles(removeAfterUpdate);
+    } catch (err) {}
   };
 
   const handleTagClick = (
@@ -150,6 +153,7 @@ function Task() {
     if (FormValidation() != false) {
       try {
         e.preventDefault();
+        RemoveFileAfterUpdate();
         UpdateTaskById(taskDataById, id);
         toast.success('Update Task Success');
         setTaskDataById({
@@ -186,13 +190,9 @@ function Task() {
   return (
     <>
       {isLoading ? (
-        <Loading />
+        <LoadingFile />
       ) : (
         <Layouts>
-          <div className="stars"></div>
-          <div className="stars2"></div>
-          <div className="stars3"></div>
-
           <div className="flex min-h-screen items-center justify-center overflow-y-auto px-6 pt-20">
             <div className="container mx-auto max-w-screen-lg">
               <div className="mb-6 rounded bg-white p-4 px-4 shadow-lg md:p-8">
@@ -205,7 +205,7 @@ function Task() {
                       Last updated :{' '}
                       {new Date(taskDataById.updatedAt).toLocaleString(
                         'en-us',
-                        options,
+                        Options,
                       )}
                     </p>
                   </div>
