@@ -3,32 +3,23 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import Image from 'next/image';
 import { Stars } from '@/components';
 import { useAuth } from '@/contexts/auth';
-import { z } from 'zod';
+import { loginSchema, loginSchemaType } from '@/schemas/login.schema';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-
-const formSchema = z.object({
-  email: z.string().email('Invalid email').min(1, 'Email is required'),
-  password: z
-    .string()
-    .min(1, 'Password is required')
-    .min(8, 'Password must have more than 8 characters'),
-});
-type FormSchemaType = z.infer<typeof formSchema>;
 
 const LoginPage: NextPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormSchemaType>({
-    resolver: zodResolver(formSchema),
+  } = useForm<loginSchemaType>({
+    resolver: zodResolver(loginSchema),
   });
   const [loading, setLoading] = useState<boolean>(false);
   const { login } = useAuth();
 
-  const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
+  const onSubmit: SubmitHandler<loginSchemaType> = async (data) => {
     try {
       setLoading(true);
       await login(data.email, data.password);

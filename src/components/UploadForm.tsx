@@ -1,5 +1,4 @@
 import { ChangeEvent, useState, useRef, Fragment } from 'react';
-import { useRouter, NextRouter } from 'next/router';
 import { LoadingFile } from '@/components';
 import { InitialForm, AvariablesTags } from '@/constants/task';
 import { IFiles } from '@/interface/task';
@@ -12,7 +11,6 @@ const UploadForm = () => {
   const [formData, setFormData] = useState<IForm>(InitialForm);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const inputRef = useRef<null>(null);
-  const router: NextRouter = useRouter();
 
   const addTestCase = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {

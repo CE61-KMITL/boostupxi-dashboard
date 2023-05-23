@@ -362,7 +362,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
             </div>
             <div className="flex justify-between">
               <div className="flex justify-start">
-                {isAdmin && (
+                {isAdmin && taskDataById.status === 'approved' && (
                   <div>
                     {taskDataById.draft ? (
                       <button

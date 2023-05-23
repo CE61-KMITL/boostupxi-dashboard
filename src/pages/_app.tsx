@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Fragment>
       <Head>
-        <title>CE Boostup Task</title>
+        <title>Dashboard ― CE Boostup XI</title>
       </Head>
       <div className={kanit.className}>
         <main className="min-h-screen bg-gray-900">
