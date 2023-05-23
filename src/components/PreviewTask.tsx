@@ -341,49 +341,39 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
               <div className="grid w-full grid-cols-3 gap-2 px-2 py-4">
                 {taskDataById.testcases &&
                   taskDataById.testcases.map(
-                    (val: ITestCases, length: number) => (
-                      <>
-                        <div
-                          className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none"
-                          key={length}
-                        >
+                    (val: ITestCases, index: number) => (
+                      <Fragment key={index}>
+                        <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                           <p className="text-sm text-gray-600">
                             Task Input {length + 1}
                           </p>
                           <textarea
+                            value={val.input}
                             className="text-navy-700 text-base font-medium text-black focus:outline-none"
                             readOnly
-                          >
-                            {val.input}
-                          </textarea>
+                          ></textarea>
                         </div>
-                        <div
-                          className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none"
-                          key={length}
-                        >
+                        <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                           <p className="text-sm text-gray-600">
                             Task Output {length + 1}
                           </p>
                           <textarea
                             className="text-navy-700 text-base font-medium text-black focus:outline-none"
                             readOnly
-                          >
-                            {val.output}
-                          </textarea>
+                            value={val.output}
+                          ></textarea>
                         </div>
-                        <div
-                          className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none"
-                          key={length}
-                        >
+                        <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                           <p className="text-sm text-gray-600">Published</p>
                           <textarea
                             className="text-navy-700 text-base font-medium text-black focus:outline-none"
                             readOnly
-                          >
-                            {val.published ? 'Published' : 'Not Published'}
-                          </textarea>
+                            value={
+                              val.published ? 'Published' : 'Not Published'
+                            }
+                          ></textarea>
                         </div>
-                      </>
+                      </Fragment>
                     ),
                   )}
               </div>
