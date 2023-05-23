@@ -41,12 +41,10 @@ const UpdateProfile = ({
       if (user.password === '' && user.confirmPassword === '') {
         userData.password = undefined;
       }
-
       await updateUser(id, userData);
-
       const updatedUser = await getProfile();
-
       setUpdateUser(updatedUser);
+      handleCloseModal();
     } else {
       toast.error('Password does not match.');
     }
@@ -75,7 +73,6 @@ const UpdateProfile = ({
                 />
               </svg>
             </button>
-            {/* <h1>Update Profile</h1> */}
             <form className="w-full" onSubmit={onSubmit}>
               <div className="-mx-3 mb-6 flex flex-wrap">
                 <div className="mb-6 w-full px-3 md:mb-0 md:w-1/2">

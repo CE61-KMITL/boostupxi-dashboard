@@ -38,6 +38,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const { user, isAuditor, isAdmin } = useAuth();
   const router: NextRouter = useRouter();
+
   const audit: string = user.username;
   const reviewer: string = user.username;
 
