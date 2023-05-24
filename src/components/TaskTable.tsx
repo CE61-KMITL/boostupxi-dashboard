@@ -59,7 +59,7 @@ const TaskTable = ({
           {tags ? (
             tags.map((tag: string, index: number) => (
               <span
-                className="mr-3 mb-3 inline-block rounded-lg bg-third-color px-2 py-1 text-xs font-medium text-gray-600"
+                className="mr-3 mb-3 inline-block rounded-lg bg-indigo-400 px-2 py-1 text-xs font-medium text-gray-200 ring-2 ring-indigo-200"
                 key={index}
               >
                 {tag}
