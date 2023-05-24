@@ -32,8 +32,8 @@ const TaskTable = ({
 
   return (
     <Fragment>
-      <tr className="border-b border-gray-700 bg-gray-800 text-center hover:bg-gray-600">
-        <td className="border-r-2 border-gray-700 px-1 py-4 text-white sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
+      <tr className="border-b border-gray-500 bg-gray-800 text-center outline-none backdrop-blur-sm  backdrop-filter hover:bg-gray-600">
+        <td className="border-r-2 border-gray-300 px-1 py-4 text-white sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
           {index_number}
         </td>
         <th
