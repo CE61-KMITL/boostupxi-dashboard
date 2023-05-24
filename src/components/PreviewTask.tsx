@@ -393,7 +393,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                           className="m-5 rounded-xl border border-gray-200 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
                           onClick={() => handleAdminReject(id)}
                         >
-                          Draft
+                          Cancel Publish
                         </button>
                       )}
                     </div>
