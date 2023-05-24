@@ -15,7 +15,6 @@ module.exports = () => {
     images: {
       domains: ['boostup-xi.s3.amazonaws.com'],
     },
-
     //uncomment if production build docker
     //output: 'standalone',
   };
