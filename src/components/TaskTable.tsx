@@ -44,7 +44,7 @@ const TaskTable = ({
         </th>
         <td className="px-6 py-4 text-left text-white sm:max-w-xs md:max-w-md lg:max-w-xl xl:max-w-2xl">
           {description.length > 200
-            ? description.substring(0, 50) + '...'
+            ? description.substring(0, 200) + '...'
             : description}
         </td>
         {!isProfile && (
