@@ -291,7 +291,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                   <p
                     className={`${kanit.className} mt-2 whitespace-pre-wrap px-2 text-base text-gray-600`}
                   >
-                    {taskDataById.hint}
+                    {taskDataById.hint ? taskDataById.hint : 'No Hint'}
                   </p>
                 </div>
               </div>
@@ -299,7 +299,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
               <div>
                 <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 items-start justify-center space-x-3 rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <p className="text-sm text-gray-600">Task Files</p>
-                  {taskDataById.files &&
+                  {taskDataById.files.length > 0 ? (
                     taskDataById.files.map((files: IFiles) => (
                       <Link
                         href={files.url}
@@ -326,7 +326,14 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                           />
                         )}
                       </Link>
-                    ))}
+                    ))
+                  ) : (
+                    <p
+                      className={`${kanit.className} mt-2 whitespace-pre-wrap px-2 text-base text-gray-600`}
+                    >
+                      No Files
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="grid w-full grid-cols-3 gap-2 px-2 py-4">
@@ -338,9 +345,11 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                           <p className="text-sm text-gray-600">
                             Task Input {length + 1}
                           </p>
-                          <pre className="text-navy-700 text-base font-medium text-black focus:outline-none">
-                            {!val.input ? 'No Input' : val.input}
-                          </pre>
+                          <p
+                            className={`${kanit.className} mt-2 h-20 overflow-auto whitespace-pre-wrap px-2 text-base text-gray-600`}
+                          >
+                            {val.input ? val.input : 'No Input'}
+                          </p>
                         </div>
                         <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                           <p className="text-sm text-gray-600">
@@ -349,14 +358,16 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                           <p
                             className={`${kanit.className} mt-2 h-20 overflow-auto whitespace-pre-wrap px-2 text-base text-gray-600`}
                           >
-                            {!val.output ? 'No Output' : val.output}
+                            {val.output ? val.output : 'No Output'}
                           </p>
                         </div>
                         <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                           <p className="text-sm text-gray-600">Published</p>
-                          <pre className="text-navy-700 text-base font-medium text-black focus:outline-none">
+                          <p
+                            className={`${kanit.className} mt-2 h-20 overflow-auto whitespace-pre-wrap px-2 text-base text-gray-600`}
+                          >
                             {val.published ? 'Published' : 'Not Published'}
-                          </pre>
+                          </p>
                         </div>
                       </Fragment>
                     ),
