@@ -58,7 +58,7 @@ const UpdateProfile = ({
   return (
     <Fragment>
       <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-70">
-        <div className="flex min-h-screen items-center justify-center">
+        <div className="container mx-auto flex min-h-screen max-w-screen-lg items-center justify-center px-7">
           <div className="relative w-full max-w-3xl rounded-xl bg-white p-12">
             <button
               onClick={handleCloseModal}

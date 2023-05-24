@@ -166,7 +166,7 @@ const UploadForm = () => {
 
   return (
     <Fragment>
-      <div className="flex min-h-screen items-center justify-center  px-6 pt-20">
+      <div className="flex min-h-screen items-center justify-center px-6 pt-20">
         <div className="container mx-auto max-w-screen-lg">
           <div className="mb-6 rounded bg-white p-4 px-4 shadow-lg md:p-8">
             <form className="w-full">
@@ -380,7 +380,6 @@ const UploadForm = () => {
                           value={value.input}
                         ></textarea>
                       </div>
-
                       <div className="mb-6 w-full px-3 md:w-1/2">
                         <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                           Test Case {index + 1} Output
@@ -431,7 +430,6 @@ const UploadForm = () => {
                           value={value.output}
                         ></textarea>
                       </div>
-
                       {formData.testcases.length > 1 ? (
                         <button
                           onClick={(e) => removeTestCase(e, index)}
@@ -467,6 +465,10 @@ const UploadForm = () => {
               <p>Example</p>
               <p>boostup_example1.jpg ✅</p>
               <p>myfilehello.png ❌</p>
+              <p className="py-9 font-bold text-blue-500">
+                ** Publish คือ แสดง test-case ว่าเป็น case อะไร เวลาทำโจทย์
+                ถ้าไม่ติ๊กคือซ่อน test-case ไว้ **
+              </p>
             </div>
             <div className="text-right md:col-span-5">
               <div className="inline-flex items-end">
