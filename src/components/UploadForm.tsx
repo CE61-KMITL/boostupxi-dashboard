@@ -75,9 +75,7 @@ const UploadForm = () => {
   };
 
   const checkEnglishName = (name: string) => {
-    const regex = /^[a-zA-Z0-9]+([ _-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/;
-    // const regex = /^[a-zA-Z0-9_]+$/;
-
+    const regex = /^boostup_[a-zA-Z0-9_]+\.(png|jpeg|jpg|zip)$/;
     return regex.test(name);
   };
 
@@ -89,7 +87,9 @@ const UploadForm = () => {
       setFormData({ ...formData, files: newFiles as IFiles[] });
       setIsUploading(false);
     } catch (error) {
-      toast.error('Upload File Error \n Please upload image file or zip file');
+      toast.error(
+        'Please upload an image file or a zip file and check that your filename is in the correct format.',
+      );
     } finally {
       setIsUploading(false);
     }
