@@ -74,7 +74,7 @@ const UploadForm = () => {
     }
   };
 
-  const checkEnglishName = (name: string) => {
+  const checkFileName = (name: string) => {
     const regex = /^boostup_[a-zA-Z0-9_]+\.(png|jpeg|jpg|zip)$/;
     return regex.test(name);
   };
@@ -302,9 +302,9 @@ const UploadForm = () => {
                           );
                           return;
                         }
-                        if (!checkEnglishName(event.target.files![i].name)) {
+                        if (!checkFileName(event.target.files![i].name)) {
                           toast.error(
-                            'File name is not in English.\n Please upload files with name in English',
+                            'File name is not recognized. Please upload files follow this format',
                           );
                           return;
                         }
@@ -455,7 +455,19 @@ const UploadForm = () => {
                 </button>
               </div>
             </form>
-
+            <div className="mb-3 text-center text-sm font-medium text-black">
+              <p>
+                ** หมายเหตุ: ชื่อไฟล์จะต้องเป็น Format boostup_[filename].[jpeg
+                or jpg or png or zip] นี้เท่านั้นนะครับ และชื่อไฟล์ต้องเป็น
+                <span className="font-bold text-red-500">
+                  ภาษาอังกฤษเท่านั้น
+                </span>{' '}
+                **{' '}
+              </p>
+              <p>Example</p>
+              <p>boostup_example1.jpg ✅</p>
+              <p>myfilehello.png ❌</p>
+            </div>
             <div className="text-right md:col-span-5">
               <div className="inline-flex items-end">
                 <button
