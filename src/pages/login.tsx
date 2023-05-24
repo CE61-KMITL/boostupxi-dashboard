@@ -3,46 +3,37 @@ import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import Image from 'next/image';
 import { Stars } from '@/components';
 import { useAuth } from '@/contexts/auth';
-import { z } from 'zod';
+import { loginSchema, loginSchemaType } from '@/schemas/login.schema';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-
-const formSchema = z.object({
-  email: z.string().email('Invalid email').min(1, 'Email is required'),
-  password: z
-    .string()
-    .min(1, 'Password is required')
-    .min(8, 'Password must have more than 8 characters'),
-});
-type FormSchemaType = z.infer<typeof formSchema>;
 
 const LoginPage: NextPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormSchemaType>({
-    resolver: zodResolver(formSchema),
+  } = useForm<loginSchemaType>({
+    resolver: zodResolver(loginSchema),
   });
   const [loading, setLoading] = useState<boolean>(false);
   const { login } = useAuth();
 
-  const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
+  const onSubmit: SubmitHandler<loginSchemaType> = async (data) => {
     try {
       setLoading(true);
       await login(data.email, data.password);
       setLoading(false);
     } catch (err) {
-      return err;
       setLoading(false);
+      return err;
     }
   };
 
   return (
     <Fragment>
       <Stars />
-      <div className="space-y-8px-4 relative flex min-h-screen flex-col items-center justify-center">
+      <div className="relative flex min-h-screen flex-col items-center justify-center space-y-8 px-4">
         <div className="absolute bottom-0 mb-3 text-center text-sm font-medium text-white">
           <p>
             Made by{' '}

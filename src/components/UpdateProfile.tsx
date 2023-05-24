@@ -1,8 +1,13 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { getProfile, updateUser } from '@/services/user.services';
-import { toast } from 'react-hot-toast';
 import { IUpdateUser } from '@/interface/user';
 import { useAuth } from '@/contexts/auth';
+import {
+  updateProfileSchema,
+  updateProfileSchemaType,
+} from '@/schemas/update-profiile.schema';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface Props {
   handleCloseModal: () => void;
@@ -19,35 +24,35 @@ const UpdateProfile = ({
   _id: id,
   handleCloseModal,
 }: Props) => {
-  const [user, setUser] = useState({
-    username: username,
-    email: email,
-    role: role,
-    password: '',
-    confirmPassword: '',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<updateProfileSchemaType>({
+    resolver: zodResolver(updateProfileSchema),
+    defaultValues: {
+      username,
+      email,
+      role,
+    },
   });
 
   const { setUpdateUser } = useAuth();
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<updateProfileSchemaType> = async (data) => {
+    const userData: IUpdateUser = {
+      username: data.username,
+      password: data.password,
+    };
 
-    if (user.password === user.confirmPassword) {
-      const userData: IUpdateUser = {
-        username: user.username,
-        password: user.password,
-      };
-
-      if (user.password === '' && user.confirmPassword === '') {
-        userData.password = undefined;
-      }
-      await updateUser(id, userData);
-      const updatedUser = await getProfile();
-      setUpdateUser(updatedUser);
-      handleCloseModal();
-    } else {
-      toast.error('Password does not match.');
+    if (data.password === '' && data.password === '') {
+      userData.password = undefined;
     }
+
+    await updateUser(id, userData);
+    const updatedUser = await getProfile();
+    setUpdateUser(updatedUser);
+    handleCloseModal();
   };
 
   return (
@@ -73,7 +78,7 @@ const UpdateProfile = ({
                 />
               </svg>
             </button>
-            <form className="w-full" onSubmit={onSubmit}>
+            <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
               <div className="-mx-3 mb-6 flex flex-wrap">
                 <div className="mb-6 w-full px-3 md:mb-0 md:w-1/2">
                   <label
@@ -85,12 +90,13 @@ const UpdateProfile = ({
                   <input
                     className="mt-1 h-10 w-full rounded border bg-gray-50 px-4"
                     type="text"
-                    name="username"
-                    value={user.username}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      setUser({ ...user, username: e.target.value });
-                    }}
+                    {...register('username')}
                   />
+                  {errors.username && (
+                    <span className="mt-2 block text-red-800">
+                      {errors.username?.message}
+                    </span>
+                  )}
                 </div>
                 <div className="w-full px-3 md:w-1/2">
                   <label
@@ -102,8 +108,7 @@ const UpdateProfile = ({
                   <input
                     className="mt-1 h-10 w-full rounded border bg-gray-50 px-4"
                     type="email"
-                    name="email"
-                    value={user.email}
+                    {...register('email')}
                     disabled
                   />
                 </div>
@@ -119,8 +124,7 @@ const UpdateProfile = ({
                   <input
                     className="mt-1 h-10 w-full rounded border bg-gray-50 px-4"
                     type="text"
-                    name="role"
-                    value={user.role}
+                    {...register('role')}
                     disabled
                   />
                 </div>
@@ -137,13 +141,14 @@ const UpdateProfile = ({
                   <input
                     className="mt-1 h-10 w-full rounded border bg-gray-50 px-4"
                     type="password"
-                    name="password"
-                    value={user.password}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      setUser({ ...user, password: e.target.value });
-                    }}
+                    {...register('password')}
                     placeholder="Enter new password"
                   />
+                  {errors.password && (
+                    <span className="mt-2 block text-red-800">
+                      {errors.password?.message}
+                    </span>
+                  )}
                 </div>
                 <div className="w-full px-3 md:w-1/2">
                   <label
@@ -155,18 +160,20 @@ const UpdateProfile = ({
                   <input
                     className="mt-1 h-10 w-full rounded border bg-gray-50 px-4"
                     type="password"
-                    name="confirmPassword"
-                    value={user.confirmPassword}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      setUser({ ...user, confirmPassword: e.target.value });
-                    }}
+                    {...register('confirmPassword')}
                     placeholder="Confirm new password"
                   />
+                  {errors.confirmPassword && (
+                    <span className="mt-2 block text-red-800">
+                      {errors.confirmPassword?.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               >
                 Update Profile
