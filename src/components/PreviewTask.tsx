@@ -19,12 +19,17 @@ import { vs2015 } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { toast } from 'react-hot-toast';
 import Avatar from '/public/avatar-image.jpg';
 import Zip from '/public/zip-icon.svg';
+import { Kanit } from 'next/font/google';
 
 interface Props {
   id: string;
   isOpen: boolean;
   onClose: () => void;
 }
+const kanit = Kanit({
+  subsets: ['latin'],
+  weight: '400',
+});
 
 const PreviewTask = ({ id, isOpen, onClose }: Props) => {
   const [taskDataById, setTaskDataById] = useState<ITaskByID>(InitialTaskBtyId);
@@ -178,7 +183,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
   };
 
   const handleEditClick = (id: string) => {
-    const comment = comments.find((val) => val.id === id);
+    const comment = comments.find((val: IComment) => val.id === id);
     if (comment) {
       setUpdateCommentMessage(comment.message);
     }
@@ -230,9 +235,11 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                 <h4 className="text-navy-700 px-2 text-xl font-bold text-black">
                   {taskDataById.title}
                 </h4>
-                <p className="mt-2 px-2 text-base text-gray-600">
+                <pre
+                  className={`${kanit.className} mt-2 px-2 text-base text-gray-600`}
+                >
                   {taskDataById.description}
-                </p>
+                </pre>
               </div>
               <div className="grid w-full grid-cols-2 gap-4 px-2">
                 <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
@@ -294,7 +301,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                     taskDataById.files.map((files: IFiles) => (
                       <Link
                         href={files.url}
-                        className="text-dark mt-4 inline-flex items-center justify-center rounded-md border border-transparent bg-slate-200 text-base font-medium shadow-sm hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="mt-4 inline-flex items-center justify-center rounded-md border border-transparent bg-slate-200 text-base font-medium shadow-sm hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         key={files.key}
                       >
                         {files.url.split('.').pop() === 'jpg' ||
@@ -329,31 +336,23 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                           <p className="text-sm text-gray-600">
                             Task Input {length + 1}
                           </p>
-                          <textarea
-                            value={val.input}
-                            className="text-navy-700 text-base font-medium text-black focus:outline-none"
-                            readOnly
-                          ></textarea>
+                          <pre className="text-navy-700 text-base font-medium text-black focus:outline-none">
+                            {!val.input ? 'No Input' : val.input}
+                          </pre>
                         </div>
                         <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                           <p className="text-sm text-gray-600">
                             Task Output {length + 1}
                           </p>
-                          <textarea
-                            className="text-navy-700 text-base font-medium text-black focus:outline-none"
-                            readOnly
-                            value={val.output}
-                          ></textarea>
+                          <pre className="text-navy-700 text-base font-medium text-black focus:outline-none">
+                            {!val.output ? 'No Output' : val.output}
+                          </pre>
                         </div>
                         <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                           <p className="text-sm text-gray-600">Published</p>
-                          <textarea
-                            className="text-navy-700 text-base font-medium text-black focus:outline-none"
-                            readOnly
-                            value={
-                              val.published ? 'Published' : 'Not Published'
-                            }
-                          ></textarea>
+                          <pre className="text-navy-700 text-base font-medium text-black focus:outline-none">
+                            {val.published ? 'Published' : 'Not Published'}
+                          </pre>
                         </div>
                       </Fragment>
                     ),
@@ -412,7 +411,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
               <section className="bg-white py-8 lg:py-16">
                 <div className="mx-auto max-w-7xl px-4">
                   <div className="mb-6 flex items-center justify-between">
-                    <h2 className="text-lg font-bold text-gray-900  lg:text-2xl">
+                    <h2 className="text-lg font-bold text-gray-900 lg:text-2xl">
                       Comment ({comments.length})
                     </h2>
                   </div>
@@ -468,14 +467,13 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                         <article className="mb-6 rounded-lg bg-white p-6 text-base ">
                           <footer className="mb-2 flex items-center justify-between">
                             <div className="flex items-center">
-                              <p className="mr-3 inline-flex items-center text-xl text-gray-900 ">
+                              <p className="mr-3 items-center text-base text-gray-900 sm:inline-flex sm:text-xl ">
                                 <Image
                                   src={Avatar}
                                   alt={'Avatar Image'}
                                   width={1000}
                                   className="mr-2 h-6 w-6 rounded-full"
                                 />
-
                                 {val.author?.username}
                               </p>
                               <p className="text-sm text-gray-600 ">
@@ -520,6 +518,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                                       taskDataById._id,
                                     )
                                   }
+                                  className="pr-3"
                                 >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
