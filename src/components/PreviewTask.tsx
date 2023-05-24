@@ -343,7 +343,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                       <Fragment key={index}>
                         <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                           <p className="text-sm text-gray-600">
-                            Task Input {length + 1}
+                            Task Input {index + 1}
                           </p>
                           <p
                             className={`${kanit.className} mt-2 h-20 overflow-auto whitespace-pre-wrap px-2 text-base text-gray-600`}
@@ -353,7 +353,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                         </div>
                         <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                           <p className="text-sm text-gray-600">
-                            Task Output {length + 1}
+                            Task Output {index + 1}
                           </p>
                           <p
                             className={`${kanit.className} mt-2 h-20 overflow-auto whitespace-pre-wrap px-2 text-base text-gray-600`}
