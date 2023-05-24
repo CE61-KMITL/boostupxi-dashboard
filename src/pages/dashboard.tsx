@@ -41,7 +41,7 @@ const TasksPage: NextPage = () => {
         <LoadingFile />
       ) : (
         <div className="container mx-auto mt-14 min-h-screen py-12 px-6">
-          <table className="mx-auto my-auto w-full overflow-hidden rounded-lg border-none bg-white bg-opacity-5 text-sm text-gray-400 shadow-md outline-none backdrop-blur-sm backdrop-filter">
+          <table className="mx-auto my-auto w-auto overflow-hidden rounded-lg border-none bg-white bg-opacity-5 text-sm text-gray-400 shadow-md outline-none backdrop-blur-sm backdrop-filter">
             <thead className="bg-gray-700 text-xs uppercase text-gray-100">
               <tr>
                 <th scope="col" className="px-6 py-1">

@@ -196,7 +196,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
       <div
         className={`${
           isOpen ? 'flex' : 'hidden'
-        } fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-70`}
+        } fixed inset-0 z-50 overflow-y-auto bg-black  bg-opacity-70`}
       >
         <div className="relative mx-20 mt-14 w-full xl:mx-60">
           <div className="relative rounded-lg bg-white">
