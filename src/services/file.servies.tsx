@@ -33,7 +33,7 @@ export const deleteFiles = async (files: IFiles[]) => {
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const response: AxiosResponse = await axios.delete(`/api/files`, {
-      data: [files],
+      data: files,
     });
     return response.data;
   }

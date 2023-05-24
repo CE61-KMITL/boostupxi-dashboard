@@ -40,7 +40,7 @@ const UploadForm = () => {
     }
   };
 
-  const handleRemoveFile = (file: IFiles[]) => {
+  const handleRemoveFile = async (file: IFiles[]) => {
     try {
       const newFiles = [...formData.files];
       const index = newFiles.findIndex(
@@ -49,7 +49,7 @@ const UploadForm = () => {
 
       newFiles.splice(index, 1);
       setFormData({ ...formData, files: newFiles });
-      deleteFiles(file);
+      await deleteFiles(file);
 
       if (formData.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
@@ -76,6 +76,8 @@ const UploadForm = () => {
 
   const checkEnglishName = (name: string) => {
     const regex = /^[a-zA-Z0-9]+([ _-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/;
+    // const regex = /^[a-zA-Z0-9_]+$/;
+
     return regex.test(name);
   };
 
