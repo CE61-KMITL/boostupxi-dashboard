@@ -153,7 +153,9 @@ const UploadForm = () => {
         fileInput.value = '';
         testCaseInput.value = '';
         testCaseOutput.value = '';
-        window.location.href = '/dashboard';
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
       } catch (error) {
         toast.error('Create Task Error \n Please try again');
       }

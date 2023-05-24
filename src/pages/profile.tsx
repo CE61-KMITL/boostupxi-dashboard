@@ -38,7 +38,7 @@ const ProfilePage: NextPage = () => {
       {isLoading ? (
         <LoadingFile />
       ) : (
-        <div className="container mx-auto my-auto  mt-10 w-full overflow-auto rounded-lg py-12  px-6">
+        <div className="container mx-auto my-auto mt-10 min-h-screen w-full overflow-auto rounded-lg py-12  px-6">
           <ProfileCard {...taskData} handleOpenModal={handleOpenModal} />
           <table className="mx-auto my-auto w-full text-sm text-gray-400 shadow-md">
             <thead className=" bg-gray-700 text-xs uppercase text-gray-100">

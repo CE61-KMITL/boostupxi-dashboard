@@ -25,15 +25,15 @@ const LoginPage: NextPage = () => {
       await login(data.email, data.password);
       setLoading(false);
     } catch (err) {
-      return err;
       setLoading(false);
+      return err;
     }
   };
 
   return (
     <Fragment>
       <Stars />
-      <div className="space-y-8px-4 relative flex min-h-screen flex-col items-center justify-center">
+      <div className="relative flex min-h-screen flex-col items-center justify-center space-y-8 px-4">
         <div className="absolute bottom-0 mb-3 text-center text-sm font-medium text-white">
           <p>
             Made by{' '}
