@@ -68,6 +68,7 @@ export const AvariablesTags: string[] = [
   'Loops',
   'Arrays and Function',
   'Pointer',
+  'CTF',
 ];
 
 export const Options: Object = {
