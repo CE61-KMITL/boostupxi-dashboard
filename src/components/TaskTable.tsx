@@ -72,7 +72,7 @@ const TaskTable = ({
               {status}
             </span>
           ) : status == 'queued' ? (
-            <span className="inline-flex rounded-full px-6 py-4 text-sm font-semibold uppercase leading-5 text-green-500 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
+            <span className="inline-flex rounded-full px-6 py-4 text-sm font-semibold uppercase leading-5 text-yellow-500 sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg">
               {status}
             </span>
           ) : (

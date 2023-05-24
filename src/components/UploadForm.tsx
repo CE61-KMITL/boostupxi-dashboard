@@ -1,5 +1,4 @@
 import { ChangeEvent, useState, useRef, Fragment } from 'react';
-import { useRouter, NextRouter } from 'next/router';
 import { LoadingFile } from '@/components';
 import { InitialForm, AvariablesTags } from '@/constants/task';
 import { IFiles } from '@/interface/task';
@@ -12,7 +11,6 @@ const UploadForm = () => {
   const [formData, setFormData] = useState<IForm>(InitialForm);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const inputRef = useRef<null>(null);
-  const router: NextRouter = useRouter();
 
   const addTestCase = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
@@ -42,7 +40,7 @@ const UploadForm = () => {
     }
   };
 
-  const handleRemoveFile = (file: IFiles[]) => {
+  const handleRemoveFile = async (file: IFiles[]) => {
     try {
       const newFiles = [...formData.files];
       const index = newFiles.findIndex(
@@ -51,7 +49,7 @@ const UploadForm = () => {
 
       newFiles.splice(index, 1);
       setFormData({ ...formData, files: newFiles });
-      deleteFiles(file);
+      await deleteFiles(file);
 
       if (formData.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
@@ -78,6 +76,8 @@ const UploadForm = () => {
 
   const checkEnglishName = (name: string) => {
     const regex = /^[a-zA-Z0-9]+([ _-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/;
+    // const regex = /^[a-zA-Z0-9_]+$/;
+
     return regex.test(name);
   };
 
@@ -153,7 +153,7 @@ const UploadForm = () => {
         fileInput.value = '';
         testCaseInput.value = '';
         testCaseOutput.value = '';
-        router.push('/dashboard');
+        window.location.href = '/dashboard';
       } catch (error) {
         toast.error('Create Task Error \n Please try again');
       }
