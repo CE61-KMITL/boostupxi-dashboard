@@ -235,11 +235,11 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                 <h4 className="text-navy-700 px-2 text-xl font-bold text-black">
                   {taskDataById.title}
                 </h4>
-                <pre
-                  className={`${kanit.className} mt-2 px-2 text-base text-gray-600`}
+                <p
+                  className={`${kanit.className} mt-2 whitespace-pre-wrap px-2 text-base text-gray-600`}
                 >
                   {taskDataById.description}
-                </pre>
+                </p>
               </div>
               <div className="grid w-full grid-cols-2 gap-4 px-2">
                 <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
@@ -288,7 +288,9 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
               <div>
                 <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                   <p className="text-sm text-gray-600">Task Hints</p>
-                  <p className="text-navy-700 text-base font-medium text-black">
+                  <p
+                    className={`${kanit.className} mt-2 whitespace-pre-wrap px-2 text-base text-gray-600`}
+                  >
                     {taskDataById.hint}
                   </p>
                 </div>
@@ -344,9 +346,11 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                           <p className="text-sm text-gray-600">
                             Task Output {length + 1}
                           </p>
-                          <pre className="text-navy-700 text-base font-medium text-black focus:outline-none">
+                          <p
+                            className={`${kanit.className} mt-2 h-20 overflow-auto whitespace-pre-wrap px-2 text-base text-gray-600`}
+                          >
                             {!val.output ? 'No Output' : val.output}
-                          </pre>
+                          </p>
                         </div>
                         <div className="shadow-3xl shadow-shadow-500 !bg-navy-700 flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-none">
                           <p className="text-sm text-gray-600">Published</p>
