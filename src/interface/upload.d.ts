@@ -9,6 +9,17 @@ export interface IForm {
   solution_code: string;
 }
 
+export interface IFormUpload {
+  title: string;
+  level: number;
+  files: string[];
+  tags: string[];
+  hint: string;
+  description: string;
+  testcases: ITestCases[];
+  solution_code: string;
+}
+
 export interface IFileUpload {
   file: File;
   name: string;

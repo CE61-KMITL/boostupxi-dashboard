@@ -154,7 +154,13 @@ function Task() {
       try {
         e.preventDefault();
         RemoveFileAfterUpdate();
-        UpdateTaskById(taskDataById, id);
+
+        const data = {
+          ...taskDataById,
+          files: taskDataById.files.map((file: IFiles) => file.id) as string[],
+        };
+
+        UpdateTaskById(data, id);
         toast.success('Update Task Success');
         setTaskDataById({
           ...taskDataById,
