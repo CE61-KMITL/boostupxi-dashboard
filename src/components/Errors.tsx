@@ -1,6 +1,6 @@
-import { Fragment } from 'react';
-import Link from 'next/link';
 import { IError } from '@/interface/error';
+import Link from 'next/link';
+import { Fragment } from 'react';
 
 const Errors = ({ status, title, description }: IError) => {
   return (

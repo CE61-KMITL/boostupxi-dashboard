@@ -1,8 +1,8 @@
-import { IForm } from '@/interface/upload';
 import { IData } from '@/interface/task';
+import { IForm } from '@/interface/upload';
 import axios, { AxiosResponse } from 'axios';
-import { ParsedUrlQuery } from 'querystring';
 import Cookies from 'js-cookie';
+import { ParsedUrlQuery } from 'querystring';
 
 export interface TaskPageQuery extends ParsedUrlQuery {
   id: string;

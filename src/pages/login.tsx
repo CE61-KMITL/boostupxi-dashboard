@@ -1,12 +1,12 @@
-import { Fragment, useState } from 'react';
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
-import Image from 'next/image';
 import { Stars } from '@/components';
 import { useAuth } from '@/contexts/auth';
 import { loginSchema, loginSchemaType } from '@/schemas/login.schema';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
+import { Fragment, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 const LoginPage: NextPage = () => {
   const {

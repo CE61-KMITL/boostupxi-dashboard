@@ -1,5 +1,5 @@
-import { Fragment, ReactNode } from 'react';
 import { Navbar, Stars } from '@/components';
+import { Fragment, ReactNode } from 'react';
 
 interface LayoutProps {
   children: ReactNode;
