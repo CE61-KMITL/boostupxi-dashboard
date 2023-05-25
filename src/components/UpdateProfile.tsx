@@ -1,13 +1,13 @@
-import { Fragment } from 'react';
-import { getProfile, updateUser } from '@/services/user.services';
-import { IUpdateUser } from '@/interface/user';
 import { useAuth } from '@/contexts/auth';
+import { IUpdateUser } from '@/interface/user';
 import {
   updateProfileSchema,
   updateProfileSchemaType,
 } from '@/schemas/update-profiile.schema';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { getProfile, updateUser } from '@/services/user.services';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Fragment } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface Props {
   handleCloseModal: () => void;

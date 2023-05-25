@@ -1,5 +1,5 @@
-import { Fragment } from 'react';
 import { Errors } from '@/components';
+import { Fragment } from 'react';
 
 export default function Custom404() {
   return (

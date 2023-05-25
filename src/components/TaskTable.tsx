@@ -1,8 +1,8 @@
-import { Fragment, useState } from 'react';
-import Link from 'next/link';
 import { PreviewTask } from '@/components';
 import { useAuth } from '@/contexts/auth';
 import { ITask } from '@/interface/task';
+import Link from 'next/link';
+import { Fragment, useState } from 'react';
 
 const TaskTable = ({
   index_number,
@@ -15,12 +15,13 @@ const TaskTable = ({
   draft,
   status,
   isProfile,
+  comments,
 }: ITask & {
   isProfile: boolean;
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [id, setId] = useState<string>('');
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
 
   const handleOpenModal = (): void => {
     setOpenModal(true);
@@ -96,16 +97,22 @@ const TaskTable = ({
           )}
         </td>
         <td className="px-6 py-4">
-          {user.username == author.username && (
-            <button className="px-2 font-bold  text-blue-400 hover:underline">
+          {(user.username == author.username || isAdmin) && (
+            <button className="px-2 font-bold text-blue-400 hover:underline">
               <Link href={`/task/edit/${_id}`}>Edit</Link>
             </button>
           )}
           <button
-            className="font-bold text-blue-500 hover:underline"
+            type="button"
+            className="inline-flex items-center rounded-lg px-5 py-2.5 text-center text-sm font-bold text-blue-400 hover:underline"
             onClick={() => (handleOpenModal(), setId(`${_id}`))}
           >
             Preview
+            {user.username == author.username && comments.length > 0 && (
+              <span className="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-blue-200 text-xs font-semibold text-blue-800">
+                {comments.length}
+              </span>
+            )}
           </button>
         </td>
       </tr>

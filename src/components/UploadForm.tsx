@@ -1,10 +1,10 @@
-import { ChangeEvent, useState, useRef, Fragment } from 'react';
 import { LoadingFile } from '@/components';
-import { InitialForm, AvariablesTags } from '@/constants/task';
+import { AvariablesTags, InitialForm } from '@/constants/task';
 import { IFiles } from '@/interface/task';
 import { IForm, ITestCases } from '@/interface/upload';
+import { deleteFiles, uploadFiles } from '@/services/file.servies';
 import { createTask } from '@/services/task.services';
-import { uploadFiles, deleteFiles } from '@/services/file.servies';
+import { ChangeEvent, Fragment, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 const UploadForm = () => {

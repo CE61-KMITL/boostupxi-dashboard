@@ -19,6 +19,7 @@ export interface ITask {
   created_at: string | null;
   updated_at: string | null;
   draft: boolean | null;
+  comments: IComment[];
   __v: number;
 }
 
