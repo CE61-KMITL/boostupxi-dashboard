@@ -21,7 +21,7 @@ const TaskTable = ({
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [id, setId] = useState<string>('');
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
 
   const handleOpenModal = (): void => {
     setOpenModal(true);
@@ -97,14 +97,14 @@ const TaskTable = ({
           )}
         </td>
         <td className="px-6 py-4">
-          {user.username == author.username && (
+          {(user.username == author.username || isAdmin) && (
             <button className="px-2 font-bold text-blue-400 hover:underline">
               <Link href={`/task/edit/${_id}`}>Edit</Link>
             </button>
           )}
           <button
             type="button"
-            className="inline-flex items-center rounded-lg px-5 py-2.5 text-center text-sm font-medium text-blue-400"
+            className="inline-flex items-center rounded-lg px-5 py-2.5 text-center text-sm font-bold text-blue-400 hover:underline"
             onClick={() => (handleOpenModal(), setId(`${_id}`))}
           >
             Preview

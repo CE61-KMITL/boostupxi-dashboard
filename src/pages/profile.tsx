@@ -71,9 +71,9 @@ const ProfilePage: NextPage = () => {
             </thead>
             <tbody>
               {taskData.tasks.length === 0 ? (
-                <tr className="bg-gray-700 text-xs uppercase text-gray-100">
+                <tr className="border-b border-gray-500 bg-gray-800 text-center outline-none backdrop-blur-sm backdrop-filter hover:bg-gray-600">
                   <td colSpan={9} className="py-12 text-center">
-                    No task in the system. <br />
+                    You haven{`&apos;`}t created any tasks. <br />
                     If you want to create a new task,{' '}
                     <Link className="text-red-500" href="/task/upload">
                       click here

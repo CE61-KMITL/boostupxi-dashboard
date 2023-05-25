@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <Fragment>
       <Head>
         <title>Dashboard ― CE Boostup XI</title>
-        <link rel="icon" href="/new-logo.png" />
+        <link rel="icon" href="/logo.png" />
       </Head>
       <div className={kanit.className}>
         <main className="min-h-screen bg-gray-900">

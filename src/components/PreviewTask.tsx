@@ -401,23 +401,27 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                 </div>
                 <div className="flex justify-end">
                   {((isAuditor && audit !== taskDataById.author?.username) ||
-                    (isAdmin && audit !== taskDataById.author?.username)) && (
-                    <div>
-                      <button
-                        className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300"
-                        onClick={() => handleApprove(id)}
-                      >
-                        Approve
-                      </button>
-                      <button
-                        className="m-5 rounded-xl border border-gray-200 bg-yellow-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-yellow-300"
-                        onClick={() => handleReject(id)}
-                      >
-                        Reject
-                      </button>
-                    </div>
-                  )}
-                  {audit === taskDataById.author?.username && (
+                    (isAdmin && audit !== taskDataById.author?.username)) &&
+                    taskDataById.draft && (
+                      <div>
+                        {taskDataById.status === 'approved' ? (
+                          <button
+                            className="m-5 rounded-xl border border-gray-200 bg-yellow-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
+                            onClick={() => handleReject(id)}
+                          >
+                            Reject
+                          </button>
+                        ) : (
+                          <button
+                            className="m-5 rounded-xl border border-gray-200 bg-green-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-800 focus:z-10 focus:outline-none focus:ring-4 focus:ring-green-300"
+                            onClick={() => handleApprove(id)}
+                          >
+                            Approve
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  {(audit === taskDataById.author?.username || isAdmin) && (
                     <button
                       className="m-5 rounded-xl border border-gray-200 bg-red-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-red-300"
                       onClick={() => handleDelete(id)}
