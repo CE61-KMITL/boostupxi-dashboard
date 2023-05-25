@@ -1,25 +1,25 @@
-import { useState, useEffect, Fragment } from 'react';
-import Link from 'next/link';
-import { NextRouter, useRouter } from 'next/router';
-import Image from 'next/image';
 import { InitialTaskBtyId, Options } from '@/constants/task';
 import { useAuth } from '@/contexts/auth';
-import { IFiles, ITaskByID, ITestCases, IComment } from '@/interface/task';
+import { IComment, IFiles, ITaskByID, ITestCases } from '@/interface/task';
 import {
-  getTaskById,
-  handleApproveReject,
   adminHandleApproveReject,
-  deleteTaskById,
   createComment,
   deleteComment,
+  deleteTaskById,
   editComment,
+  getTaskById,
+  handleApproveReject,
 } from '@/services/task.services';
+import { Kanit } from 'next/font/google';
+import Image from 'next/image';
+import Link from 'next/link';
+import { NextRouter, useRouter } from 'next/router';
+import { Fragment, useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vs2015 } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import { toast } from 'react-hot-toast';
 import Avatar from '/public/avatar-image.jpg';
 import Zip from '/public/zip-icon.svg';
-import { Kanit } from 'next/font/google';
 
 interface Props {
   id: string;

@@ -1,13 +1,13 @@
-import { useState, useEffect, ChangeEvent, useRef } from 'react';
-import { useRouter, NextRouter } from 'next/router';
 import { LoadingFile } from '@/components';
-import { AvariablesTags, Options, InitialTaskBtyId } from '@/constants/task';
-import { ITestCases } from '@/interface/upload';
+import { AvariablesTags, InitialTaskBtyId, Options } from '@/constants/task';
 import { IFiles, ITaskByID } from '@/interface/task';
+import { ITestCases } from '@/interface/upload';
 import Layouts from '@/layouts/Layouts';
-import { getTaskById, UpdateTaskById } from '@/services/task.services';
-import { uploadFiles, deleteFiles } from '@/services/file.servies';
+import { deleteFiles, uploadFiles } from '@/services/file.servies';
+import { UpdateTaskById, getTaskById } from '@/services/task.services';
+import { NextRouter, useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 interface TaskPageQuery extends ParsedUrlQuery {

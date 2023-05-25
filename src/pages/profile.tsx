@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { NextPage } from 'next';
-import Link from 'next/link';
 import {
-  TaskTable,
-  ProfileCard,
   LoadingFile,
+  ProfileCard,
+  TaskTable,
   UpdateProfile,
 } from '@/components';
+import { useAuth } from '@/contexts/auth';
 import { ITask } from '@/interface/task';
 import Layouts from '@/layouts/Layouts';
 import { getProfile } from '@/services/user.services';
-import { useAuth } from '@/contexts/auth';
+import { NextPage } from 'next';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const ProfilePage: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -101,6 +101,7 @@ const ProfilePage: NextPage = () => {
                       solution_code={val.solution_code}
                       created_at={val.created_at}
                       updated_at={val.updated_at}
+                      comments={val.comments}
                       __v={val.__v}
                       isProfile={true}
                     />
