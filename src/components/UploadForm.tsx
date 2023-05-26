@@ -125,7 +125,12 @@ const UploadForm = () => {
     if (FormValidation() != false) {
       try {
         e.preventDefault();
-        createTask(formData);
+        const data = {
+          ...formData,
+          files: formData.files.map((file: IFiles) => file.id) as string[],
+        };
+
+        createTask(data);
         toast.success('Create Task Success');
 
         setFormData({

@@ -1,5 +1,6 @@
 import { LoadingFile } from '@/components';
 import { AvariablesTags, InitialTaskBtyId, Options } from '@/constants/task';
+import { useAuth } from '@/contexts/auth';
 import { IFiles, ITaskByID } from '@/interface/task';
 import { ITestCases } from '@/interface/upload';
 import Layouts from '@/layouts/Layouts';
@@ -22,6 +23,7 @@ function Task() {
   const { id } = router.query as TaskPageQuery;
   const inputRef = useRef<null>(null);
   const [removeAfterUpdate, setremoveAfterUpdate] = useState<IFiles[]>([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchDataById = async () => {
@@ -35,7 +37,7 @@ function Task() {
     };
     fetchDataById();
   }, [id]);
-  const FormValidation = () => {
+  const FormValidation = (): false | undefined => {
     if (taskDataById.title === '') {
       toast.error('Please enter task name');
       return false;
@@ -115,7 +117,6 @@ function Task() {
 
       newFiles.splice(index, 1);
       setTaskDataById({ ...taskDataById, files: newFiles });
-      //const data = deleteFiles(file);
       setremoveAfterUpdate([...removeAfterUpdate, file]);
       if (taskDataById.files.length === 1) {
         (document.getElementById('fileInput') as HTMLInputElement).value = '';
@@ -154,7 +155,13 @@ function Task() {
       try {
         e.preventDefault();
         RemoveFileAfterUpdate();
-        UpdateTaskById(taskDataById, id);
+
+        const data = {
+          ...taskDataById,
+          files: taskDataById.files.map((file: IFiles) => file.id) as string[],
+        };
+
+        UpdateTaskById(data, id);
         toast.success('Update Task Success');
         setTaskDataById({
           ...taskDataById,
@@ -325,64 +332,80 @@ function Task() {
                       <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                         Task Files
                       </label>
-                      <input
-                        type="file"
-                        name="fileInput"
-                        id="fileInput"
-                        accept=".jpg,.png,.zip,.jpeg"
-                        className="block w-full rounded border border-gray-200 text-sm shadow-sm file:mr-4 file:border-0 file:bg-slate-600 file:py-3 file:px-4 file:text-white"
-                        multiple
-                        onChange={async (
-                          event: React.ChangeEvent<HTMLInputElement>,
-                        ) => {
-                          const fileData = new FormData();
-                          for (let i = 0; i < event.target.files!.length; i++) {
-                            fileData.append(
-                              'files',
-                              event.target.files![i] as File,
-                            );
+                      {user.username === taskDataById.author.username && (
+                        <input
+                          type="file"
+                          name="fileInput"
+                          id="fileInput"
+                          accept=".jpg,.png,.zip,.jpeg"
+                          className="block w-full rounded border border-gray-200 text-sm shadow-sm file:mr-4 file:border-0 file:bg-slate-600 file:py-3 file:px-4 file:text-white"
+                          multiple
+                          disabled={
+                            user.username !== taskDataById.author.username
+                          }
+                          onChange={async (
+                            event: React.ChangeEvent<HTMLInputElement>,
+                          ) => {
+                            const fileData = new FormData();
+                            for (
+                              let i = 0;
+                              i < event.target.files!.length;
+                              i++
+                            ) {
+                              fileData.append(
+                                'files',
+                                event.target.files![i] as File,
+                              );
 
-                            if (event.target.files![i].size > 1024 * 1024 * 5) {
-                              toast.error('File size is too large.');
-                              return;
+                              if (
+                                event.target.files![i].size >
+                                1024 * 1024 * 5
+                              ) {
+                                toast.error('File size is too large.');
+                                return;
+                              }
+                              if (event.target.files![i].name.length > 50) {
+                                toast.error(
+                                  'File name is too long. Please upload files with name less than 50 characters',
+                                );
+                                return;
+                              }
+                              if (!checkFileName(event.target.files![i].name)) {
+                                toast.error(
+                                  'File name is not recognized. Please upload files follow this format',
+                                );
+                                return;
+                              }
                             }
-                            if (event.target.files![i].name.length > 50) {
-                              toast.error(
-                                'File name is too long. Please upload files with name less than 50 characters',
-                              );
-                              return;
+                            if (fileData.getAll('files').length > 0) {
+                              uploadFilesHandle(fileData as unknown as File[]);
                             }
-                            if (!checkFileName(event.target.files![i].name)) {
-                              toast.error(
-                                'File name is not recognized. Please upload files follow this format',
-                              );
-                              return;
-                            }
-                          }
-                          if (fileData.getAll('files').length > 0) {
-                            uploadFilesHandle(fileData as unknown as File[]);
-                          }
-                        }}
-                        ref={inputRef}
-                      />
+                          }}
+                          ref={inputRef}
+                        />
+                      )}
                       {isUploading && <LoadingFile />}
-                      {taskDataById.files.map((file: IFiles, index: number) => (
-                        <div className="my-5 flex flex-wrap" key={index}>
-                          <p>
-                            {file.key.split('~')[0] +
-                              '.' +
-                              file.key.split('.')[2]}
-                          </p>
-                          <br />
-                          <button
-                            type="button"
-                            className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
-                            onClick={() => handleRemoveFile(file)}
-                          >
-                            remove
-                          </button>
-                        </div>
-                      ))}
+                      {taskDataById.files.length > 0
+                        ? taskDataById.files.map(
+                            (file: IFiles, index: number) => (
+                              <div className="my-5 flex flex-wrap" key={index}>
+                                <p>
+                                  {file.key.split('~')[0] +
+                                    '.' +
+                                    file.key.split('.')[2]}
+                                </p>
+                                <br />
+                                <button
+                                  type="button"
+                                  className="font-sm ml-4 inline-block rounded bg-red-600 px-5 py-1.5 text-xs uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg"
+                                  onClick={() => handleRemoveFile(file)}
+                                >
+                                  remove
+                                </button>
+                              </div>
+                            ),
+                          )
+                        : 'No File Chosen'}
                     </div>
                   </div>
 

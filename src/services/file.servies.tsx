@@ -6,7 +6,7 @@ export const uploadFiles = async (files: File[]) => {
   const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const formDatax = new FormData();
+    const formDatax: FormData = new FormData();
     files.forEach((file) => {
       formDatax.append('files', file as Blob, file.name);
     });

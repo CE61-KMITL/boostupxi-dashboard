@@ -41,7 +41,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const { user, isAuditor, isAdmin } = useAuth();
-  const router: NextRouter = useRouter();
+  const router = useRouter() as NextRouter;
 
   const audit: string = user.username;
   const reviewer: string = user.username;
@@ -524,7 +524,7 @@ const PreviewTask = ({ id, isOpen, onClose }: Props) => {
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
-                                    stroke-width="1.5"
+                                    strokeWidth="1.5"
                                     stroke="currentColor"
                                     className="h-6 w-6 text-yellow-600"
                                   >
