@@ -52,10 +52,12 @@ export interface ITaskByID {
 }
 
 export interface IFiles {
+  id?: string;
   url: string;
   key: string;
   originalName?: string;
 }
+
 export interface ITestCases {
   input: string;
   output: string;
