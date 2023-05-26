@@ -67,9 +67,8 @@ export const AvariablesTags: string[] = [
   'Conditional Statement',
   'Loops',
   'Arrays and Function',
-  'Reverse Engineer',
+  'Pointer',
   'CTF',
-  'Crypto',
 ];
 
 export const Options: Object = {

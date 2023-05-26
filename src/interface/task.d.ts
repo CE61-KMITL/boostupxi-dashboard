@@ -19,6 +19,7 @@ export interface ITask {
   created_at: string | null;
   updated_at: string | null;
   draft: boolean | null;
+  comments: IComment[];
   __v: number;
 }
 
@@ -51,10 +52,12 @@ export interface ITaskByID {
 }
 
 export interface IFiles {
+  id?: string;
   url: string;
   key: string;
   originalName?: string;
 }
+
 export interface ITestCases {
   input: string;
   output: string;

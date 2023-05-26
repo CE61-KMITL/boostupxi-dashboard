@@ -1,9 +1,9 @@
-import { Fragment } from 'react';
 import type { AppProps } from 'next/app';
 import { Kanit } from 'next/font/google';
-import { AuthProvider } from '../contexts/auth';
-import ProtectRoute from '../contexts/auth';
+import Head from 'next/head';
+import { Fragment } from 'react';
 import { Toaster } from 'react-hot-toast';
+import ProtectRoute, { AuthProvider } from '../contexts/auth';
 import '../styles/globals.css';
 import '../styles/star.css';
 
@@ -11,13 +11,13 @@ const kanit = Kanit({
   subsets: ['latin'],
   weight: '400',
 });
-import Head from 'next/head';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Fragment>
       <Head>
         <title>Dashboard ― CE Boostup XI</title>
+        <link rel="icon" href="/logo.png" />
       </Head>
       <div className={kanit.className}>
         <main className="min-h-screen bg-gray-900">

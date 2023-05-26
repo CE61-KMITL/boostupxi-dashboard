@@ -1,6 +1,7 @@
 .stars {
   width: 1px;
   height: 1px;
+  bottom: 0px;
   background: transparent;
   animation: animStar 50s linear infinite;
   box-shadow: 779px 1331px #fff, 324px 42px #fff, 303px 586px #fff,
@@ -556,7 +557,7 @@
 
 @keyframes animStar {
   from {
-    transform: translateY(0px);
+    transform: translateY(10px);
   }
   to {
     transform: translateY(-100vh);

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { NextPage } from 'next';
-import { TaskTable, LoadingFile } from '@/components';
+import { LoadingFile, TaskTable } from '@/components';
 import { ITask } from '@/interface/task';
 import Layouts from '@/layouts/Layouts';
 import { getTasksData } from '@/services/task.services';
+import { NextPage } from 'next';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const TasksPage: NextPage = () => {
   const [taskData, setTaskData] = useState<ITask[]>([]);
@@ -32,24 +32,96 @@ const TasksPage: NextPage = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-  const isLastPage = () => {
-    return currentPage == limitPage;
+
+  const renderPaginationLinks = () => {
+    const links = [];
+
+    if (currentPage > 1) {
+      links.push(
+        <a
+          key="prev"
+          href="#"
+          className="mr-4 rounded p-2 hover:bg-gray-100"
+          onClick={prevPage}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </a>,
+      );
+    }
+
+    for (let page = 1; page <= limitPage; page++) {
+      links.push(
+        <a
+          key={page}
+          href="#"
+          className={`rounded px-4 py-2 hover:bg-gray-100 ${
+            currentPage === page ? 'bg-gray-200' : ''
+          }`}
+          onClick={() => setCurrentPage(page)}
+        >
+          {page}
+        </a>,
+      );
+    }
+
+    // Next page link
+    if (currentPage < limitPage) {
+      links.push(
+        <a
+          key="next"
+          href="#"
+          className="ml-4 rounded p-2 hover:bg-gray-100"
+          onClick={nextPage}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </a>,
+      );
+    }
+
+    return links;
   };
+
   return (
     <Layouts>
       {isLoading ? (
         <LoadingFile />
       ) : (
-        <div className="container mx-auto mt-10 overflow-auto rounded-lg py-12 px-6">
-          <table className="mx-auto my-auto w-full text-sm text-gray-400 shadow-md">
-            <thead className="bg-gray-700 text-xs uppercase text-gray-100">
+        <div className="container mx-auto mt-14 min-h-screen overflow-auto rounded-lg py-12 px-6">
+          <table className="mx-auto my-auto w-full overflow-hidden rounded-lg border-none bg-white bg-opacity-5 text-sm text-gray-400 shadow-md backdrop-filter">
+            <thead className="bg-gray-700 text-xs uppercase text-gray-100 backdrop-blur-sm">
               <tr>
                 <th scope="col" className="px-6 py-1">
                   #
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-62 py-3">
                   Name
-                </th>
+                </th>{' '}
                 <th scope="col" className="px-6 py-3">
                   Description
                 </th>
@@ -102,6 +174,7 @@ const TasksPage: NextPage = () => {
                       draft={val.draft}
                       files={val.files}
                       testcases={val.testcases}
+                      comments={val.comments}
                       solution_code={val.solution_code}
                       created_at={val.created_at}
                       updated_at={val.updated_at}
@@ -113,6 +186,7 @@ const TasksPage: NextPage = () => {
               )}
             </tbody>
           </table>
+
           {taskData.length > 0 && (
             <div className="mt-3 flex justify-between pb-2">
               <div className="mt-3 flex items-start justify-start">
@@ -126,57 +200,12 @@ const TasksPage: NextPage = () => {
                   Page
                 </span>
               </div>
-              <div className="flex items-end justify-end">
-                <button
-                  type="button"
-                  className={`rounded-l-md border-r border-gray-100 bg-gray-800 py-2 px-3 text-white hover:bg-red-700 hover:text-white ${
-                    currentPage === 1 ? 'disabled' : ''
-                  }`}
-                  onClick={prevPage}
-                  disabled={currentPage === 1}
-                >
-                  <div className="flex flex-row align-middle">
-                    <svg
-                      className="mr-2 w-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-                    <p className="ml-2">Prev</p>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  className={`rounded-r-md border-l border-gray-200 bg-gray-800 py-2 px-3 text-white hover:bg-red-700 hover:text-white ${
-                    isLastPage() ? 'disabled' : ''
-                  }`}
-                  onClick={nextPage}
-                  disabled={isLastPage()}
-                >
-                  <div className="flex flex-row align-middle">
-                    <span className="mr-2">Next</span>
-                    <svg
-                      className="ml-2 w-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
-              </div>
+              <nav
+                aria-label="Pagination"
+                className="flex items-center text-gray-600"
+              >
+                {renderPaginationLinks()}
+              </nav>
             </div>
           )}
         </div>

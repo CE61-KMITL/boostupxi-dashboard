@@ -1,6 +1,6 @@
-import { useState, Fragment } from 'react';
-import Link from 'next/link';
 import { useAuth } from '@/contexts/auth';
+import Link from 'next/link';
+import { Fragment, useState } from 'react';
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState<boolean>(false);
@@ -19,9 +19,7 @@ const Navbar = () => {
           <div>
             <div className="flex items-center justify-between md:block md:py-5">
               <Link href="/dashboard">
-                <h2 className="text-2x text-white">
-                  CE Boostup Task Management
-                </h2>
+                <h2 className="text-2x text-white">CE Boostup Dashboard</h2>
               </Link>
               <div className="md:hidden">
                 <button

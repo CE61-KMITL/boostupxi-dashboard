@@ -1,8 +1,8 @@
-import { IForm } from '@/interface/upload';
 import { IData } from '@/interface/task';
+import { IFormUpload } from '@/interface/upload';
 import axios, { AxiosResponse } from 'axios';
-import { ParsedUrlQuery } from 'querystring';
 import Cookies from 'js-cookie';
+import { ParsedUrlQuery } from 'querystring';
 
 export interface TaskPageQuery extends ParsedUrlQuery {
   id: string;
@@ -28,7 +28,7 @@ export const getTaskById = async ({ id }: TaskPageQuery) => {
   }
 };
 
-export const createTask = async (data: IForm) => {
+export const createTask = async (data: IFormUpload) => {
   const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -37,7 +37,7 @@ export const createTask = async (data: IForm) => {
   }
 };
 
-export const UpdateTaskById = async (data: IForm, id: string) => {
+export const UpdateTaskById = async (data: IFormUpload, id: string) => {
   const token: string | undefined = Cookies.get('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { NextPage } from 'next';
-import Link from 'next/link';
 import {
-  TaskTable,
-  ProfileCard,
   LoadingFile,
+  ProfileCard,
+  TaskTable,
   UpdateProfile,
 } from '@/components';
+import { useAuth } from '@/contexts/auth';
 import { ITask } from '@/interface/task';
 import Layouts from '@/layouts/Layouts';
 import { getProfile } from '@/services/user.services';
-import { useAuth } from '@/contexts/auth';
+import { NextPage } from 'next';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const ProfilePage: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,10 +38,10 @@ const ProfilePage: NextPage = () => {
       {isLoading ? (
         <LoadingFile />
       ) : (
-        <div className="container mx-auto my-auto  mt-10 w-full overflow-auto rounded-lg py-12  px-6">
+        <div className="container mx-auto my-auto mt-10 min-h-screen w-full overflow-auto rounded-lg py-12 px-6">
           <ProfileCard {...taskData} handleOpenModal={handleOpenModal} />
-          <table className="mx-auto my-auto w-full text-sm text-gray-400 shadow-md">
-            <thead className=" bg-gray-700 text-xs uppercase text-gray-100">
+          <table className="mx-auto my-auto w-full overflow-hidden rounded-lg border-none bg-white bg-opacity-5 text-sm text-gray-400 shadow-md outline-none backdrop-filter">
+            <thead className="bg-gray-700 text-xs uppercase text-gray-100 backdrop-blur-sm">
               <tr>
                 <th scope="col" className="px-6 py-1">
                   #
@@ -71,14 +71,16 @@ const ProfilePage: NextPage = () => {
             </thead>
             <tbody>
               {taskData.tasks.length === 0 ? (
-                <tr className="bg-gray-700 text-xs uppercase text-gray-100">
+                <tr className="border-b border-gray-500 bg-gray-800 text-center outline-none backdrop-blur-sm backdrop-filter hover:bg-gray-600">
                   <td colSpan={9} className="py-12 text-center">
-                    No task in the system. <br />
-                    If you want to create a new task,{' '}
-                    <Link className="text-red-500" href="/task/upload">
-                      click here
-                    </Link>
-                    .
+                    <p>
+                      You haven&apos;t created any tasks. <br />
+                      If you want to create a new task,{' '}
+                      <Link className="text-red-500" href="/task/upload">
+                        click here
+                      </Link>
+                      .
+                    </p>
                   </td>
                 </tr>
               ) : (
@@ -101,6 +103,7 @@ const ProfilePage: NextPage = () => {
                       solution_code={val.solution_code}
                       created_at={val.created_at}
                       updated_at={val.updated_at}
+                      comments={val.comments}
                       __v={val.__v}
                       isProfile={true}
                     />

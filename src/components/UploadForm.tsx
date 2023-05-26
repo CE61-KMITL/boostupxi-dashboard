@@ -1,10 +1,10 @@
-import { ChangeEvent, useState, useRef, Fragment } from 'react';
 import { LoadingFile } from '@/components';
-import { InitialForm, AvariablesTags } from '@/constants/task';
+import { AvariablesTags, InitialForm } from '@/constants/task';
 import { IFiles } from '@/interface/task';
 import { IForm, ITestCases } from '@/interface/upload';
+import { deleteFiles, uploadFiles } from '@/services/file.servies';
 import { createTask } from '@/services/task.services';
-import { uploadFiles, deleteFiles } from '@/services/file.servies';
+import { ChangeEvent, Fragment, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 const UploadForm = () => {
@@ -74,7 +74,7 @@ const UploadForm = () => {
     }
   };
 
-  const checkEnglishName = (name: string) => {
+  const checkFileName = (name: string) => {
     const regex = /^boostup_[a-zA-Z0-9_]+\.(png|jpeg|jpg|zip)$/;
     return regex.test(name);
   };
@@ -125,7 +125,12 @@ const UploadForm = () => {
     if (FormValidation() != false) {
       try {
         e.preventDefault();
-        createTask(formData);
+        const data = {
+          ...formData,
+          files: formData.files.map((file: IFiles) => file.id) as string[],
+        };
+
+        createTask(data);
         toast.success('Create Task Success');
 
         setFormData({
@@ -153,7 +158,9 @@ const UploadForm = () => {
         fileInput.value = '';
         testCaseInput.value = '';
         testCaseOutput.value = '';
-        window.location.href = '/dashboard';
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
       } catch (error) {
         toast.error('Create Task Error \n Please try again');
       }
@@ -164,7 +171,7 @@ const UploadForm = () => {
 
   return (
     <Fragment>
-      <div className="flex min-h-screen items-center justify-center  px-6 pt-20">
+      <div className="flex min-h-screen items-center justify-center px-6 pt-20">
         <div className="container mx-auto max-w-screen-lg">
           <div className="mb-6 rounded bg-white p-4 px-4 shadow-lg md:p-8">
             <form className="w-full">
@@ -300,9 +307,9 @@ const UploadForm = () => {
                           );
                           return;
                         }
-                        if (!checkEnglishName(event.target.files![i].name)) {
+                        if (!checkFileName(event.target.files![i].name)) {
                           toast.error(
-                            'File name is not in English.\n Please upload files with name in English',
+                            'File name is not recognized. Please upload files follow this format',
                           );
                           return;
                         }
@@ -378,7 +385,6 @@ const UploadForm = () => {
                           value={value.input}
                         ></textarea>
                       </div>
-
                       <div className="mb-6 w-full px-3 md:w-1/2">
                         <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
                           Test Case {index + 1} Output
@@ -429,7 +435,6 @@ const UploadForm = () => {
                           value={value.output}
                         ></textarea>
                       </div>
-
                       {formData.testcases.length > 1 ? (
                         <button
                           onClick={(e) => removeTestCase(e, index)}
@@ -453,7 +458,23 @@ const UploadForm = () => {
                 </button>
               </div>
             </form>
-
+            <div className="mb-3 text-center text-sm font-medium text-black">
+              <p>
+                ** หมายเหตุ: ชื่อไฟล์จะต้องเป็น Format boostup_[filename].[jpeg
+                or jpg or png or zip] นี้เท่านั้นนะครับ และชื่อไฟล์ต้องเป็น
+                <span className="font-bold text-red-500">
+                  ภาษาอังกฤษเท่านั้น
+                </span>{' '}
+                **{' '}
+              </p>
+              <p>Example</p>
+              <p>boostup_example1.jpg ✅</p>
+              <p>myfilehello.png ❌</p>
+              <p className="py-9 font-bold text-blue-500">
+                ** Publish คือ แสดง test-case ว่าเป็น case อะไร เวลาทำโจทย์
+                ถ้าไม่ติ๊กคือซ่อน test-case ไว้ **
+              </p>
+            </div>
             <div className="text-right md:col-span-5">
               <div className="inline-flex items-end">
                 <button

@@ -7,6 +7,8 @@ export const updateProfileSchema = z
       .regex(/^[a-zA-Z0-9_]+$/, {
         message: 'username must be a alphanumeric character or underscore',
       })
+      .min(3, { message: 'username must be at least 3 characters long' })
+      .max(20, { message: 'username must be at most 20 characters long' })
       .optional(),
     password: z.string().optional(),
     confirmPassword: z.string().optional(),

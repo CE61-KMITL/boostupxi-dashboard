@@ -1,8 +1,8 @@
-import router from 'next/router';
-import axios, { AxiosResponse } from 'axios';
-import { toast } from 'react-hot-toast';
-import Cookies from 'js-cookie';
 import { IUpdateUser } from '@/interface/user';
+import axios, { AxiosResponse } from 'axios';
+import Cookies from 'js-cookie';
+import router from 'next/router';
+import { toast } from 'react-hot-toast';
 
 export const login = async (email: string, password: string) => {
   try {

@@ -1,13 +1,13 @@
-import { Fragment } from 'react';
-import { getProfile, updateUser } from '@/services/user.services';
-import { IUpdateUser } from '@/interface/user';
 import { useAuth } from '@/contexts/auth';
+import { IUpdateUser } from '@/interface/user';
 import {
   updateProfileSchema,
   updateProfileSchemaType,
 } from '@/schemas/update-profiile.schema';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { getProfile, updateUser } from '@/services/user.services';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Fragment } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface Props {
   handleCloseModal: () => void;
@@ -58,7 +58,7 @@ const UpdateProfile = ({
   return (
     <Fragment>
       <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-70">
-        <div className="flex min-h-screen items-center justify-center">
+        <div className="container mx-auto flex min-h-screen max-w-screen-lg items-center justify-center px-7">
           <div className="relative w-full max-w-3xl rounded-xl bg-white p-12">
             <button
               onClick={handleCloseModal}

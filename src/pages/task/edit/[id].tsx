@@ -1,13 +1,13 @@
-import { useState, useEffect, ChangeEvent, useRef } from 'react';
-import { useRouter, NextRouter } from 'next/router';
 import { LoadingFile } from '@/components';
-import { AvariablesTags, Options, InitialTaskBtyId } from '@/constants/task';
-import { ITestCases } from '@/interface/upload';
+import { AvariablesTags, InitialTaskBtyId, Options } from '@/constants/task';
 import { IFiles, ITaskByID } from '@/interface/task';
+import { ITestCases } from '@/interface/upload';
 import Layouts from '@/layouts/Layouts';
-import { getTaskById, UpdateTaskById } from '@/services/task.services';
-import { uploadFiles, deleteFiles } from '@/services/file.servies';
+import { deleteFiles, uploadFiles } from '@/services/file.servies';
+import { UpdateTaskById, getTaskById } from '@/services/task.services';
+import { NextRouter, useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 interface TaskPageQuery extends ParsedUrlQuery {
@@ -144,8 +144,8 @@ function Task() {
       setTaskDataById({ ...taskDataById, tags: [...taskDataById.tags, tag] });
     }
   };
-  const checkEnglishName = (name: string) => {
-    const regex = /^[a-zA-Z0-9]+([ _-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/;
+  const checkFileName = (name: string) => {
+    const regex = /^boostup_[a-zA-Z0-9_]+\.(png|jpeg|jpg|zip)$/;
     return regex.test(name);
   };
 
@@ -154,7 +154,13 @@ function Task() {
       try {
         e.preventDefault();
         RemoveFileAfterUpdate();
-        UpdateTaskById(taskDataById, id);
+
+        const data = {
+          ...taskDataById,
+          files: taskDataById.files.map((file: IFiles) => file.id) as string[],
+        };
+
+        UpdateTaskById(data, id);
         toast.success('Update Task Success');
         setTaskDataById({
           ...taskDataById,
@@ -352,11 +358,9 @@ function Task() {
                               );
                               return;
                             }
-                            if (
-                              !checkEnglishName(event.target.files![i].name)
-                            ) {
+                            if (!checkFileName(event.target.files![i].name)) {
                               toast.error(
-                                'File name is not in English.\n Please upload files with name in English',
+                                'File name is not recognized. Please upload files follow this format',
                               );
                               return;
                             }
@@ -526,6 +530,21 @@ function Task() {
                     </button>
                   </div>
                 </form>
+
+                <div className="mb-3 text-center text-sm font-medium text-black">
+                  <p>
+                    ** หมายเหตุ: ชื่อไฟล์จะต้องเป็น Format
+                    boostup_[filename].[jpeg or jpg or png or zip]
+                    นี้เท่านั้นนะครับ และชื่อไฟล์ต้องเป็น
+                    <span className="font-bold text-red-500">
+                      ภาษาอังกฤษเท่านั้น
+                    </span>{' '}
+                    **{' '}
+                  </p>
+                  <p>Example</p>
+                  <p>boostup_example1.jpg ✅</p>
+                  <p>myfilehello.png ❌</p>
+                </div>
 
                 <div className="text-right md:col-span-5">
                   <div className="inline-flex items-end">
