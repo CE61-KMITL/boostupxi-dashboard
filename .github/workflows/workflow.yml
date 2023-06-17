@@ -13,19 +13,19 @@ jobs:
       - uses: actions/checkout@v3
       - name: Clear Cache
         run: |
-          docker stop ceboostxi-api || true
-          docker rm ceboostxi-api || true
-          docker rmi ceboostxi-api:latest || true
+          docker stop ceboostxi-dashboard || true
+          docker rm ceboostxi-dashboard || true
+          docker rmi ceboostxi-dashboard:latest || true
       - name: Build Image
         run: |
           docker build --no-cache . \
             --file Dockerfile \
-            --tag ceboostxi-api
+            --tag ceboostxi-dashboard
       - name: Run Image
         run: |
           docker run --restart always -d \
             -e PORT=${{ secrets.PORT }} \
             -e NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
             --network reverse-proxy_default \
-            --name ceboostxi-api \
-            ceboostxi-api:latest
+            --name ceboostxi-dashboard \
+            ceboostxi-dashboard:latest
