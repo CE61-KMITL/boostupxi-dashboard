@@ -20,7 +20,7 @@ jobs:
         run: |
           docker build --no-cache . \
             --file Dockerfile \
-            --tag ceboostxi-dashboard
+            --tag ceboostupxi-dashboard
       - name: Run Image
         run: |
           docker run --restart always -d \
