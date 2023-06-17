@@ -1,27 +1,31 @@
-name: "Run TODO to Issue"
+name: Deploy to Self-Hosted
+
 on:
-  pull_request:
-  workflow_dispatch:
-    inputs:
-      MANUAL_COMMIT_REF:
-        description: "The SHA of the commit to get the diff for"
-        required: true
-      MANUAL_BASE_REF:
-        description: "By default, the commit entered above is compared to the one directly before it; to go back further, enter an earlier SHA here"
-        required: false
   push:
-    branches:
-      - "main"
-      - "dev"
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
 jobs:
   build:
-    runs-on: "ubuntu-latest"
+    runs-on: self-hosted
     steps:
-      - uses: "actions/checkout@v3"
-      - name: "TODO to Issue"
-        uses: "alstr/todo-to-issue-action@master"
-        with:
-          AUTO_P: true
-        env:
-          MANUAL_COMMIT_REF: ${{ inputs.MANUAL_COMMIT_REF }}
-          MANUAL_BASE_REF: ${{ inputs.MANUAL_BASE_REF }}
+      - uses: actions/checkout@v3
+      - name: Clear Cache
+        run: |
+          docker stop ceboostxi-api || true
+          docker rm ceboostxi-api || true
+          docker rmi ceboostxi-api:latest || true
+      - name: Build Image
+        run: |
+          docker build --no-cache . \
+            --file Dockerfile \
+            --tag ceboostxi-api
+      - name: Run Image
+        run: |
+          docker run --restart always -d \
+            -e PORT=${{ secrets.PORT }} \
+            -e NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
+            --network reverse-proxy_default \
+            --name ceboostxi-api \
+            ceboostxi-api:latest
