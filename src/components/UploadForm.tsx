@@ -6,11 +6,21 @@ import { deleteFiles, uploadFiles } from '@/services/file.servies';
 import { createTask } from '@/services/task.services';
 import { ChangeEvent, Fragment, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import BanModal from './BanModal';
 
 const UploadForm = () => {
   const [formData, setFormData] = useState<IForm>(InitialForm);
   const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [openModal, OpenModal] = useState<boolean>(false);
   const inputRef = useRef<null>(null);
+
+  const handleOpenModal = () => {
+    OpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    OpenModal(false);
+  };
 
   const addTestCase = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
@@ -171,6 +181,7 @@ const UploadForm = () => {
 
   return (
     <Fragment>
+      {openModal && <BanModal handleCloseModal={handleCloseModal} />}
       <div className="flex min-h-screen items-center justify-center px-6 pt-20">
         <div className="container mx-auto max-w-screen-lg">
           <div className="mb-6 rounded bg-white p-4 px-4 shadow-lg md:p-8">
@@ -342,9 +353,18 @@ const UploadForm = () => {
 
               <div className="-mx-3 mb-2 flex flex-wrap">
                 <div className="w-full px-3">
-                  <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
-                    Solution Code
-                  </label>
+                  <div className="flex items-center space-x-4">
+                    <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700">
+                      Solution Code
+                    </label>
+                    <button
+                      className="mb-2 rounded-md bg-red-700 py-[0.5] px-2 text-sm text-white"
+                      type="button"
+                      onClick={handleOpenModal}
+                    >
+                      Banned Libraries and Functions
+                    </button>
+                  </div>
                   <textarea
                     className="block w-full rounded border border-gray-300 bg-gray-50 p-2.5 pb-24 text-sm text-gray-900"
                     placeholder="Solution Code"

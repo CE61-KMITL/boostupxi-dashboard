@@ -41,7 +41,7 @@ const ProfilePage: NextPage = () => {
         <div className="container mx-auto my-auto mt-10 min-h-screen w-full overflow-auto rounded-lg py-12 px-6">
           <ProfileCard {...taskData} handleOpenModal={handleOpenModal} />
           <table className="mx-auto my-auto w-full overflow-hidden rounded-lg border-none bg-white bg-opacity-5 text-sm text-gray-400 shadow-md outline-none backdrop-filter">
-            <thead className="bg-gray-700 text-xs uppercase text-gray-100 backdrop-blur-sm">
+            <thead className="bg-gray-700 text-xs uppercase text-gray-100">
               <tr>
                 <th scope="col" className="px-6 py-1">
                   #
@@ -71,7 +71,7 @@ const ProfilePage: NextPage = () => {
             </thead>
             <tbody>
               {taskData.tasks.length === 0 ? (
-                <tr className="border-b border-gray-500 bg-gray-800 text-center outline-none backdrop-blur-sm backdrop-filter hover:bg-gray-600">
+                <tr className="border-b border-gray-500 bg-gray-800 text-center outline-none hover:bg-gray-600">
                   <td colSpan={9} className="py-12 text-center">
                     <p>
                       You haven&apos;t created any tasks. <br />
