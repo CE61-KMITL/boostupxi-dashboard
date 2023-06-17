@@ -2,14 +2,16 @@ import { LoadingFile, TaskTable } from '@/components';
 import { ITask } from '@/interface/task';
 import Layouts from '@/layouts/Layouts';
 import { getTasksData } from '@/services/task.services';
+import Cookies from 'js-cookie';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const TasksPage: NextPage = () => {
+  const dashboardPage: string | undefined = Cookies.get('dashboardPage');
   const [taskData, setTaskData] = useState<ITask[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(Number(dashboardPage));
   const [limitPage, setLimitPage] = useState<number>(1);
 
   useEffect(() => {
@@ -25,11 +27,20 @@ const TasksPage: NextPage = () => {
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
+    Cookies.set('dashboardPage', String(currentPage + 1));
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      Cookies.set('dashboardPage', String(currentPage - 1));
+    }
+  };
+
+  const setPage = (page: number) => {
+    setCurrentPage(page);
+    if (page > 1) {
+      Cookies.set('dashboardPage', String(page));
     }
   };
 
@@ -70,14 +81,13 @@ const TasksPage: NextPage = () => {
           className={`rounded px-4 py-2 hover:bg-gray-100 ${
             currentPage === page ? 'bg-gray-200' : ''
           }`}
-          onClick={() => setCurrentPage(page)}
+          onClick={() => setPage(page)}
         >
           {page}
         </a>,
       );
     }
 
-    // Next page link
     if (currentPage < limitPage) {
       links.push(
         <a

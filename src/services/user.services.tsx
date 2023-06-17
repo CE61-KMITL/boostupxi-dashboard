@@ -13,6 +13,7 @@ export const login = async (email: string, password: string) => {
     const token: string | null = response.headers.authorization;
     if (token) {
       Cookies.set('token', token);
+      Cookies.set('dashboardPage', '1');
       window.location.href = '/profile';
     }
   } catch (error) {
@@ -22,6 +23,7 @@ export const login = async (email: string, password: string) => {
 
 export const logout = async () => {
   Cookies.remove('token');
+  Cookies.remove('dashboardPage');
   router.push('/');
   toast.success('Logged out successfully.');
 };
