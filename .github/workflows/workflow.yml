@@ -18,9 +18,7 @@ jobs:
           docker rmi ceboostupxi-dashboard:latest || true
       - name: Build Image
         run: |
-          docker build --no-cache . \
-            --file Dockerfile \
-            --tag ceboostupxi-dashboard
+          docker build . --file Dockerfile --tag ceboostupxi-dashboard
       - name: Run Image
         run: |
           docker run --restart always -d \
